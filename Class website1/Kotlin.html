@@ -1,0 +1,2264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kotlin for Android | Beginner's Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables - Matching Swift site */
+        :root {
+            --primary: #7F52FF;
+            --primary-light: #9a7aff;
+            --secondary: #FF6E4A;
+            --accent: #FF4081;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --gray: #94a3b8;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation - Exactly matching Swift site */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav {
+            width: 100%;
+            order: 1;
+            margin-top: 15px;
+            display: none;
+        }
+
+        nav.active {
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: block;
+            cursor: pointer;
+            font-size: 1.5rem;
+            order: 1;
+        }
+
+        /* Hero Section - Matching Swift site */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://developer.android.com/static/images/cluster-illustrations/kotlin-hero.svg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 64, 129, 0.6);
+        }
+
+        /* Content Section */
+        .content-section {
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        /* Content Cards - Matching Swift site */
+        .content-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .content-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .content-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .code-example {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            border-left: 4px solid var(--primary);
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            border: none;
+            color: var(--dark);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .example-image {
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        /* Box Styles - Matching Swift site */
+        .tip-box {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .note-box {
+            background-color: rgba(127, 82, 255, 0.1);
+            border-left: 4px solid var(--primary-light);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .learning-objectives {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(127, 82, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .learning-objectives h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .learning-objectives ul {
+            margin-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .learning-objectives li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .prerequisites {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(245, 158, 11, 0.05);
+            border-radius: 8px;
+        }
+
+        .prerequisites h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--warning);
+        }
+
+        .prerequisites p {
+            margin-bottom: 5px;
+        }
+
+        .beginner-tips {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(255, 110, 74, 0.05);
+            border-radius: 8px;
+        }
+
+        .beginner-tips h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .beginner-tips p {
+            margin-bottom: 5px;
+        }
+
+        .tutorial-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-link:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .tutorial-link i {
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-link:hover i {
+            margin-left: 10px;
+        }
+
+        /* YouTube Links Section - Matching Swift site */
+        .youtube-links {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .youtube-links::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .youtube-links h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .youtube-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .youtube-thumbnail {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .youtube-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .youtube-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            font-size: 3rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+        }
+
+        .youtube-info {
+            padding: 15px;
+            color: var(--dark);
+        }
+
+        .youtube-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .youtube-info p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Footer - Exactly matching Swift site */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 50px 0 25px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle - Matching Swift site */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Styles - Matching Swift site */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .content-card {
+            background-color: #1e293b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .content-card h3,
+        body.dark-mode .section-title h2 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .code-example {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border-left: 4px solid var(--accent);
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        body.dark-mode .footer-links ul li a:hover {
+            color: var(--primary-light);
+        }
+
+        body.dark-mode .learning-objectives {
+            background-color: rgba(127, 82, 255, 0.1);
+        }
+
+        body.dark-mode .prerequisites {
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        body.dark-mode .beginner-tips {
+            background-color: rgba(255, 110, 74, 0.1);
+        }
+
+        body.dark-mode .youtube-info {
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .youtube-info p {
+            color: #94a3b8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles - Matching Swift site */
+        @media (min-width: 576px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .content-card {
+                padding: 30px;
+            }
+            
+            .youtube-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            nav {
+                width: auto;
+                order: 0;
+                margin-top: 0;
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: row;
+                gap: 25px;
+            }
+            
+            nav ul li a {
+                padding: 5px 0;
+                display: inline-block;
+            }
+            
+            .menu-toggle {
+                display: none;
+            }
+            
+            .hero {
+                padding: 100px 0;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+            
+            .content-card {
+                padding: 40px;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) {
+            section {
+                padding: 80px 0;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .youtube-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation - Exactly matching Swift site -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+            </div>
+            <nav id="navMenu">
+                <ul id="navMenu">
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section - Matching Swift site -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Learn Kotlin for Android</h1>
+            <p>Master Google's preferred language for building modern Android applications</p>
+            <a href="#what-is-kotlin" class="btn">Start Learning</a>
+        </div>
+    </section>
+
+    <!-- What is Kotlin Section -->
+    <section class="content-section" id="what-is-kotlin">
+        <div class="container">
+            <div class="section-title">
+                <h2>What is Kotlin?</h2>
+                <p>Modern programming language for Android and beyond</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>The Future of Android Development</h3>
+                <p><strong>Kotlin</strong> is a modern, statically-typed programming language created by JetBrains in 2011. Designed to be fully interoperable with Java, Kotlin combines object-oriented and functional programming features with a concise syntax that reduces common programming errors.</p>
+                
+                <div class="example-image">
+                    <img src="https://developer.android.com/static/images/cluster-illustrations/kotlin-hero.svg" alt="Kotlin Programming" style="max-width: 800px;">
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Key Features of Kotlin</h4>
+                    <ul>
+                        <li><strong>Concise</strong>: Reduces boilerplate code significantly compared to Java</li>
+                        <li><strong>Safe</strong>: Built-in null safety prevents common NullPointerExceptions</li>
+                        <li><strong>Interoperable</strong>: Works seamlessly with existing Java code and libraries</li>
+                        <li><strong>Functional</strong>: Supports higher-order functions, lambdas, and more</li>
+                        <li><strong>Coroutines</strong>: Built-in support for asynchronous programming</li>
+                        <li><strong>Multiplatform</strong>: Can target JVM, JavaScript, and native platforms</li>
+                    </ul>
+                </div>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Simple Kotlin example
+fun main() {
+    println("Hello, Kotlin!")
+    
+    // Variables and constants
+    var name = "Alice"  // Mutable
+    val age = 30        // Immutable
+    
+    // String interpolation
+    println("My name is $name and I'm $age years old.")
+    
+    // Null safety
+    var nullableString: String? = null
+    println(nullableString?.length) // Safe call operator
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Did you know?</strong> Google announced first-class support for Kotlin on Android in 2017, and in 2019 declared Kotlin as the preferred language for Android development. Most new Android code is now written in Kotlin.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Absolute Beginner's Guide to Kotlin</h4>
+                    <p>If you're completely new to programming or Kotlin, here's what you need to know to get started:</p>
+                    
+                    <h5>1. Understanding Programming Basics</h5>
+                    <p>Before diving into Kotlin, it's helpful to understand some fundamental programming concepts:</p>
+                    <ul>
+                        <li><strong>Variables</strong>: Containers for storing data values</li>
+                        <li><strong>Constants</strong>: Values that don't change after being set</li>
+                        <li><strong>Data Types</strong>: Different kinds of data (numbers, text, true/false)</li>
+                        <li><strong>Control Flow</strong>: How your program makes decisions (if/else statements)</li>
+                        <li><strong>Loops</strong>: Repeating actions multiple times</li>
+                        <li><strong>Functions</strong>: Reusable blocks of code</li>
+                        <li><strong>Classes</strong>: Blueprints for creating objects</li>
+                    </ul>
+                    
+                    <h5>2. Kotlin's Unique Features</h5>
+                    <p>Kotlin has several features that make it beginner-friendly:</p>
+                    <ul>
+                        <li><strong>Null Safety</strong>: Prevents common null reference errors</li>
+                        <li><strong>Type Inference</strong>: Kotlin can often figure out types automatically</li>
+                        <li><strong>Extension Functions</strong>: Add functionality to existing classes</li>
+                        <li><strong>Data Classes</strong>: Automatically generate useful methods</li>
+                        <li><strong>Smart Casts</strong>: Automatically casts types after type checks</li>
+                    </ul>
+                    
+                    <h5>3. Your First Steps in Kotlin</h5>
+                    <p>To write your first Kotlin program:</p>
+                    <ol>
+                        <li>Install IntelliJ IDEA (Community Edition is free)</li>
+                        <li>Create a new Kotlin project</li>
+                        <li>Create a new Kotlin file with a main function</li>
+                        <li>Type the "Hello, World!" example above</li>
+                        <li>Run the program and see the output</li>
+                        <li>Experiment by changing the text and running it again</li>
+                    </ol>
+                    
+                    <h5>4. Learning Resources</h5>
+                    <p>Here are some great places to start learning Kotlin:</p>
+                    <ul>
+                        <li>Official <a href="https://kotlinlang.org/docs/home.html" target="_blank">Kotlin documentation</a></li>
+                        <li>Kotlin Playground for experimenting online</li>
+                        <li>Android's <a href="https://developer.android.com/kotlin/learn" target="_blank">Kotlin for Android</a> guides</li>
+                        <li>YouTube tutorials for visual demonstrations</li>
+                    </ul>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>First Steps Exercise:</strong> Try creating a Kotlin project in IntelliJ IDEA and experiment with printing messages, creating variables, and simple math operations. The Kotlin REPL (Read-Eval-Print Loop) lets you see results immediately as you type.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section class="content-section" id="getting-started">
+        <div class="container">
+            <div class="section-title">
+                <h2>Getting Started</h2>
+                <p>Setting up your Kotlin development environment</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>1. Install Android Studio</h3>
+                <p>Android Studio is the official IDE for Android development with Kotlin support built-in.</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Steps to Install Android Studio</h4>
+                    <ol>
+                        <li>Go to the <a href="https://developer.android.com/studio" target="_blank">Android Studio download page</a></li>
+                        <li>Download the appropriate version for your operating system</li>
+                        <li>Run the installer and follow the instructions</li>
+                        <li>Launch Android Studio and complete the setup wizard</li>
+                        <li>Install the necessary SDK components when prompted</li>
+                    </ol>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://developer.android.com/static/studio/images/studio-homepage-hero.png" alt="Android Studio" style="max-width: 600px;">
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>System Requirements:</strong> Android Studio requires a relatively powerful computer. Check the <a href="https://developer.android.com/studio#requirements" target="_blank">official requirements</a> before installing. Android Studio is large (several GB) so ensure you have enough disk space.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-download"></i> Android Studio Explained for Beginners</h4>
+                    <p>Android Studio might seem overwhelming at first, but here's what you need to know as a beginner:</p>
+                    
+                    <h5>Key Components of Android Studio</h5>
+                    <ul>
+                        <li><strong>Editor Area</strong>: Where you write your code</li>
+                        <li><strong>Project View</strong>: Shows your project files</li>
+                        <li><strong>Tool Windows</strong>: Various panels for logs, Gradle, etc.</li>
+                        <li><strong>Layout Editor</strong>: Visual tool for designing UIs</li>
+                        <li><strong>Toolbar</strong>: Contains buttons to run and debug your app</li>
+                    </ul>
+                    
+                    <h5>First-Time Setup Tips</h5>
+                    <ul>
+                        <li>Install the latest Android SDK when prompted</li>
+                        <li>Familiarize yourself with the interface before starting</li>
+                        <li>Start with simple projects to learn the workflow</li>
+                        <li>Check for updates regularly (Android Studio updates frequently)</li>
+                    </ul>
+                    
+                    <h5>Alternative Options</h5>
+                    <p>If you want to try Kotlin first without Android Studio:</p>
+                    <ul>
+                        <li><strong>IntelliJ IDEA</strong>: JetBrains' IDE with excellent Kotlin support</li>
+                        <li><strong>Kotlin Playground</strong>: Online editor for Kotlin</li>
+                        <li><strong>Command Line</strong>: Compile and run Kotlin from terminal</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>2. Create a New Kotlin Project</h3>
+                <p>Once Android Studio is installed, you can create your first Kotlin project for Android.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// MainActivity.kt in a new Android project
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        
+        // Simple Kotlin code
+        val message = "Hello, Kotlin!"
+        Log.d("MainActivity", message)
+        
+        // Button click handler
+        findViewById<Button>(R.id.my_button).setOnClickListener {
+            Toast.makeText(this, "Button clicked!", Toast.LENGTH_SHORT).show()
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Project Structure:</strong> Android projects have a specific structure. The main Kotlin code goes in the <code>app/src/main/java</code> directory, while resources like layouts and images go in <code>app/src/main/res</code>.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-play-circle"></i> First Android Project Walkthrough</h4>
+                    <p>To create your first Android project with Kotlin:</p>
+                    
+                    <h5>Creating the Project</h5>
+                    <ol>
+                        <li>Open Android Studio and select "Start a new Android Studio project"</li>
+                        <li>Choose a template (start with "Empty Activity")</li>
+                        <li>Set the language to Kotlin</li>
+                        <li>Name your project and set the package name</li>
+                        <li>Click "Finish" and wait for Gradle to build the project</li>
+                    </ol>
+                    
+                    <h5>Understanding the Files</h5>
+                    <ul>
+                        <li><strong>MainActivity.kt</strong>: Your main Kotlin activity file</li>
+                        <li><strong>activity_main.xml</strong>: Layout file for your main activity</li>
+                        <li><strong>AndroidManifest.xml</strong>: Configuration for your app</li>
+                        <li><strong>build.gradle</strong>: Build configuration files</li>
+                    </ul>
+                    
+                    <h5>Running Your App</h5>
+                    <ol>
+                        <li>Connect an Android device or start an emulator</li>
+                        <li>Click the green Run button in Android Studio</li>
+                        <li>Select your device/emulator and click OK</li>
+                        <li>Wait for the app to build and install</li>
+                        <li>Interact with your app on the device/emulator</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>3. Kotlin Playground</h3>
+                <p>For learning Kotlin basics without Android, you can use the Kotlin Playground to experiment with code.</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Using Kotlin Playground</h4>
+                    <ol>
+                        <li>Go to <a href="https://play.kotlinlang.org" target="_blank">play.kotlinlang.org</a></li>
+                        <li>Type or paste Kotlin code in the editor</li>
+                        <li>Click the "Run" button to execute the code</li>
+                        <li>See the output in the bottom panel</li>
+                        <li>Experiment with different Kotlin features</li>
+                    </ol>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://play.kotlinlang.org/resources/images/playground.png" alt="Kotlin Playground" style="max-width: 600px;">
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Playground Features:</strong> The Kotlin Playground supports code sharing, examples, and even multi-file projects. It's a great way to learn Kotlin syntax before diving into Android development.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-rocket"></i> Playground Learning Path</h4>
+                    <p>To get the most from the Kotlin Playground as a beginner:</p>
+                    
+                    <h5>Beginner Exercises</h5>
+                    <p>Try these in the playground:</p>
+                    <ol>
+                        <li>Create variables with different data types</li>
+                        <li>Write functions with different parameters</li>
+                        <li>Create simple if-else statements</li>
+                        <li>Make loops that print numbers 1 through 10</li>
+                        <li>Experiment with string interpolation</li>
+                        <li>Create a simple data class</li>
+                    </ol>
+                    
+                    <h5>Sample Code to Try</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Data class example
+data class Person(val name: String, val age: Int)
+
+fun main() {
+    // List of people
+    val people = listOf(
+        Person("Alice", 25),
+        Person("Bob", 30),
+        Person("Charlie", 22)
+    )
+    
+    // Filter and map
+    val names = people
+        .filter { it.age > 23 }
+        .map { it.name }
+    
+    println("Names of people over 23: $names")
+    
+    // When expression (like switch)
+    val x = 5
+    when(x) {
+        1 -> println("One")
+        2, 3 -> println("Two or Three")
+        in 4..6 -> println("Four to Six")
+        else -> println("Other")
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Syntax Basics Section -->
+    <section class="content-section" id="syntax-basics">
+        <div class="container">
+            <div class="section-title">
+                <h2>Kotlin Syntax Basics</h2>
+                <p>Fundamental concepts every Kotlin developer needs to know</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Variables and Constants</h3>
+                <p>Kotlin uses type inference but is also strongly typed. You can declare variables (mutable) and constants (immutable).</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Variables (can change)
+var score = 0
+score = 10
+
+// Constants (can't change)
+val pi = 3.14159
+
+// Explicit type annotation
+var message: String = "Hello"
+var isEnabled: Boolean = true
+
+// Nullable types
+var nullableString: String? = null
+
+// Late initialization
+lateinit var lateVariable: String
+
+// Lazy initialization
+val lazyValue: String by lazy {
+    println("Computed!")
+    "Hello"
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Naming Conventions:</strong> Kotlin uses camelCase for variables and constants. Prefer constants (val) over variables (var) whenever possible for safety and clarity. Use descriptive names that explain their purpose.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-code"></i> Variables and Constants Explained</h4>
+                    <p>Understanding variables and constants is crucial for beginners:</p>
+                    
+                    <h5>Key Differences</h5>
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>Variables (var)</th>
+                            <th>Constants (val)</th>
+                        </tr>
+                        <tr>
+                            <td>Mutability</td>
+                            <td>Can be changed</td>
+                            <td>Cannot be changed</td>
+                        </tr>
+                        <tr>
+                            <td>Use Case</td>
+                            <td>Values that change</td>
+                            <td>Values that stay the same</td>
+                        </tr>
+                        <tr>
+                            <td>Performance</td>
+                            <td>Slightly slower</td>
+                            <td>Slightly faster</td>
+                        </tr>
+                        <tr>
+                            <td>Safety</td>
+                            <td>Less safe</td>
+                            <td>More safe</td>
+                        </tr>
+                    </table>
+                    
+                    <h5>Best Practices</h5>
+                    <ul>
+                        <li>Start with <code>val</code> and only use <code>var</code> when you need to change the value</li>
+                        <li>Use descriptive names (e.g., <code>userName</code> instead of <code>un</code>)</li>
+                        <li>Initialize variables when you declare them</li>
+                        <li>Use <code>lateinit</code> for variables that will be initialized later</li>
+                        <li>Use <code>lazy</code> for expensive initialization that should happen on first access</li>
+                    </ul>
+                    
+                    <h5>Common Mistakes</h5>
+                    <ul>
+                        <li>Trying to change a constant (will cause a compile error)</li>
+                        <li>Using vague names like <code>a</code> or <code>temp</code></li>
+                        <li>Accessing a <code>lateinit</code> variable before initialization</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Data Types</h3>
+                <p>Kotlin has several built-in data types that form the building blocks of your programs.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Numbers
+val byteValue: Byte = 127
+val shortValue: Short = 32767
+val intValue: Int = 2147483647
+val longValue: Long = 9223372036854775807L
+val floatValue: Float = 3.14f
+val doubleValue: Double = 3.14159265359
+
+// Booleans
+val isKotlinAwesome = true
+
+// Characters
+val grade: Char = 'A'
+
+// Strings
+val greeting = "Hello, Kotlin!"
+val multilineString = """
+    This is a
+    multiline
+    string
+    """
+
+// Arrays
+val numbers = arrayOf(1, 2, 3, 4, 5)
+
+// Type conversion
+val stringNumber = "123"
+val intNumber = stringNumber.toInt()</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Type Safety:</strong> Kotlin is a type-safe language, which means it helps you catch type mismatches at compile time. You can't accidentally pass an Int where a String is expected, for example.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-cubes"></i> Kotlin Data Types Guide</h4>
+                    <p>Kotlin has a rich set of data types. Here's what beginners need to know:</p>
+                    
+                    <h5>Basic Data Types</h5>
+                    <ul>
+                        <li><strong>Numbers</strong>: Byte, Short, Int, Long, Float, Double</li>
+                        <li><strong>Boolean</strong>: True or false values</li>
+                        <li><strong>Char</strong>: Single character</li>
+                        <li><strong>String</strong>: Text data</li>
+                    </ul>
+                    
+                    <h5>Collection Types</h5>
+                    <ul>
+                        <li><strong>List</strong>: Ordered collection of items</li>
+                        <li><strong>Set</strong>: Collection of unique items</li>
+                        <li><strong>Map</strong>: Key-value pairs</li>
+                        <li><strong>Array</strong>: Fixed-size collection</li>
+                    </ul>
+                    
+                    <h5>Special Types</h5>
+                    <ul>
+                        <li><strong>Nullable Types</strong>: Can hold null values (marked with ?)</li>
+                        <li><strong>Any</strong>: Root of Kotlin class hierarchy (like Object in Java)</li>
+                        <li><strong>Unit</strong>: Equivalent to void in Java</li>
+                        <li><strong>Nothing</strong>: Type for expressions that never complete</li>
+                    </ul>
+                    
+                    <h5>Type Conversion</h5>
+                    <p>Kotlin doesn't do implicit type conversion. You must explicitly convert types:</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>val intValue = 42
+val longValue = intValue.toLong()
+val stringValue = intValue.toString()
+
+val doubleValue = 3.14
+val intDouble = doubleValue.toInt() // Truncates to 3</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Control Flow</h3>
+                <p>Control the flow of your program's execution with conditionals and loops.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// If-else expression (can return a value)
+val max = if (a > b) a else b
+
+// When expression (like switch in other languages)
+val description = when (x) {
+    1 -> "One"
+    2 -> "Two"
+    in 3..10 -> "Between 3 and 10"
+    else -> "Other"
+}
+
+// For loop
+for (i in 1..5) {
+    print(i)  // 12345
+}
+
+// While loop
+var count = 0
+while (count < 5) {
+    println(count)
+    count++
+}
+
+// Ranges
+val range = 1..10
+val downRange = 10 downTo 1
+val stepRange = 1..10 step 2
+
+// For loop with range
+for (i in 1..5) { println(i) } // 1 to 5
+for (i in 5 downTo 1) { println(i) } // 5 to 1
+for (i in 1..10 step 2) { println(i) } // 1, 3, 5, 7, 9</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Range Operators:</strong> Kotlin provides several range operators: <code>..</code> (inclusive range), <code>until</code> (exclusive range), <code>downTo</code> (reverse range), and <code>step</code> to skip values. These are useful in loops and for creating ranges of values.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-random"></i> Control Flow Explained</h4>
+                    <p>Control flow is how your program makes decisions and repeats actions:</p>
+                    
+                    <h5>Conditional Statements</h5>
+                    <ul>
+                        <li><strong>if</strong>: Executes code if condition is true</li>
+                        <li><strong>if-else</strong>: Provides alternative path when condition is false</li>
+                        <li><strong>when</strong>: Checks multiple possible conditions (like switch)</li>
+                    </ul>
+                    
+                    <h5>Looping Constructs</h5>
+                    <ul>
+                        <li><strong>for</strong>: Iterates over ranges, arrays, collections</li>
+                        <li><strong>while</strong>: Repeats while condition is true</li>
+                        <li><strong>do-while</strong>: Executes at least once, then checks condition</li>
+                    </ul>
+                    
+                    <h5>Control Transfer</h5>
+                    <ul>
+                        <li><strong>return</strong>: Exits from a function</li>
+                        <li><strong>break</strong>: Terminates the nearest enclosing loop</li>
+                        <li><strong>continue</strong>: Proceeds to next iteration of loop</li>
+                    </ul>
+                    
+                    <h5>Practical Examples</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Checking multiple conditions
+if (age >= 18 && hasID) {
+    println("You can vote")
+} else {
+    println("You cannot vote")
+}
+
+// Looping through a list
+val names = listOf("Anna", "Brian", "Craig")
+for (name in names) {
+    println("Hello, $name")
+}
+
+// While loop with condition
+var counter = 0
+while (counter < 10) {
+    println(counter)
+    counter++
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Null Safety</h3>
+                <p>Kotlin's null safety features help eliminate NullPointerExceptions, a common source of crashes.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Non-nullable by default
+var nonNullable: String = "Hello"
+// nonNullable = null  // Compilation error
+
+// Nullable types
+var nullable: String? = null
+
+// Safe call operator
+val length = nullable?.length  // Returns null if nullable is null
+
+// Elvis operator (provide default)
+val safeLength = nullable?.length ?: 0
+
+// Not-null assertion (use carefully)
+val forcedLength = nullable!!.length  // Throws NPE if null
+
+// Safe casts
+val anyObject: Any = "Hello"
+val number: Int? = anyObject as? Int  // Returns null if cast fails
+
+// let scope function
+nullable?.let { 
+    println("Length is ${it.length}")  // Only executed if not null
+}</code></pre>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Not-null Assertion Danger:</strong> Using the !! operator to force a nullable type to non-null will throw a NullPointerException if the value is null. Only use this when you're absolutely certain the value won't be null.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-question-circle"></i> Understanding Null Safety</h4>
+                    <p>Null safety is a fundamental Kotlin feature that can be confusing for beginners:</p>
+                    
+                    <h5>Why Null Safety Matters</h5>
+                    <p>Null reference errors (NullPointerExceptions) are a common source of crashes in many languages. Kotlin's type system distinguishes between nullable and non-nullable types to prevent these errors at compile time.</p>
+                    
+                    <h5>Working with Nullable Types</h5>
+                    <ul>
+                        <li><strong>Declaration</strong>: Add <code>?</code> after the type (<code>var name: String?</code>)</li>
+                        <li><strong>Safe Calls</strong>: Use <code>?.</code> to safely access properties/methods</li>
+                        <li><strong>Elvis Operator</strong>: Use <code>?:</code> to provide default values</li>
+                    </ul>
+                    
+                    <h5>Handling Nullable Types</h5>
+                    <table>
+                        <tr>
+                            <th>Method</th>
+                            <th>Example</th>
+                            <th>When to Use</th>
+                        </tr>
+                        <tr>
+                            <td>Safe Call</td>
+                            <td><code>value?.method()</code></td>
+                            <td>When value might be null</td>
+                        </tr>
+                        <tr>
+                            <td>Elvis Operator</td>
+                            <td><code>value ?: defaultValue</code></td>
+                            <td>Provide fallback for null</td>
+                        </tr>
+                        <tr>
+                            <td>Not-null Assertion</td>
+                            <td><code>value!!</code></td>
+                            <td>When absolutely certain value exists</td>
+                        </tr>
+                        <tr>
+                            <td>Safe Cast</td>
+                            <td><code>value as? Type</code></td>
+                            <td>When cast might fail</td>
+                        </tr>
+                    </table>
+                    
+                    <h5>Common Null Safety Scenarios</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Map access
+val map = mapOf("key" to "value")
+val value = map["nonexistent"]?.toUpperCase() // Returns null
+
+// Chaining safe calls
+val city = person?.address?.city ?: "Unknown"
+
+// Safe cast
+val any: Any = "Hello"
+val number = any as? Int // Returns null instead of throwing exception</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Android Development Section -->
+    <section class="content-section" id="android-development">
+        <div class="container">
+            <div class="section-title">
+                <h2>Android Development with Kotlin</h2>
+                <p>Building modern Android apps with Kotlin</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Activities and Fragments</h3>
+                <p>Activities and fragments are fundamental components of Android apps.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Basic Activity
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        
+        // Initialize UI
+        val button = findViewById<Button>(R.id.my_button)
+        button.setOnClickListener {
+            Toast.makeText(this, "Button clicked!", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+
+// Basic Fragment
+class MyFragment : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_my, container, false)
+    }
+    
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // Initialize UI components here
+    }
+}</code></pre>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://developer.android.com/static/images/training/basics/fragments.png" alt="Activities and Fragments" style="max-width: 600px;">
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>View Binding:</strong> Modern Android development uses view binding to safely access views in your layout. Enable it in your module's build.gradle file with <code>viewBinding { enabled = true }</code>.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-mobile-alt"></i> Activities and Fragments Explained</h4>
+                    <p>Understanding these components is crucial for Android development:</p>
+                    
+                    <h5>Activities</h5>
+                    <ul>
+                        <li><strong>Entry point</strong>: Represents a single screen with UI</li>
+                        <li><strong>Lifecycle</strong>: onCreate(), onStart(), onResume(), etc.</li>
+                        <li><strong>Responsibilities</strong>: User interactions, navigation</li>
+                    </ul>
+                    
+                    <h5>Fragments</h5>
+                    <ul>
+                        <li><strong>Reusable components</strong>: Represent behavior/UI portion</li>
+                        <li><strong>Lifecycle</strong>: Tied to host activity's lifecycle</li>
+                        <li><strong>Benefits</strong>: Modularity, reuse across activities</li>
+                    </ul>
+                    
+                    <h5>Key Differences</h5>
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>Activities</th>
+                            <th>Fragments</th>
+                        </tr>
+                        <tr>
+                            <td>Purpose</td>
+                            <td>Single screen</td>
+                            <td>Part of screen</td>
+                        </tr>
+                        <tr>
+                            <td>Lifecycle</td>
+                            <td>Independent</td>
+                            <td>Dependent on activity</td>
+                        </tr>
+                        <tr>
+                            <td>Back Stack</td>
+                            <td>Can be independent</td>
+                            <td>Managed by FragmentManager</td>
+                        </tr>
+                        <tr>
+                            <td>Use Case</td>
+                            <td>Main screens</td>
+                            <td>Reusable components</td>
+                        </tr>
+                    </table>
+                    
+                    <h5>Best Practices</h5>
+                    <ul>
+                        <li>Keep activities lean with most UI in fragments</li>
+                        <li>Use view binding to safely access views</li>
+                        <li>Follow single responsibility principle</li>
+                        <li>Handle configuration changes properly</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>View Binding</h3>
+                <p>View binding provides type-safe access to views in your layout, replacing findViewById().</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Enable view binding in build.gradle (Module)
+android {
+    viewBinding {
+        enabled = true
+    }
+}
+
+// Using view binding in Activity
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        
+        // Access views directly
+        binding.myButton.setOnClickListener {
+            binding.myTextView.text = "Button clicked!"
+        }
+    }
+}
+
+// Using view binding in Fragment
+class MyFragment : Fragment() {
+    private var _binding: FragmentMyBinding? = null
+    private val binding get() = _binding!!
+    
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentMyBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+    
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.myButton.setOnClickListener {
+            // Handle click
+        }
+    }
+    
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Benefits of View Binding:</strong> View binding provides null safety (views are always non-null), type safety (correct view types), and faster build times compared to alternatives like data binding. It's the recommended way to access views in modern Android apps.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-link"></i> View Binding Guide</h4>
+                    <p>View binding is a crucial tool for Android development. Here's what beginners should know:</p>
+                    
+                    <h5>Why Use View Binding?</h5>
+                    <ul>
+                        <li><strong>Null Safety</strong>: No more NullPointerExceptions from findViewById()</li>
+                        <li><strong>Type Safety</strong>: Correct view types are enforced</li>
+                        <li><strong>Performance</strong>: Faster than findViewById() or data binding</li>
+                        <li><strong>Simplicity</strong>: Cleaner code with direct view references</li>
+                    </ul>
+                    
+                    <h5>Setup Instructions</h5>
+                    <ol>
+                        <li>Open your module's build.gradle file</li>
+                        <li>Add <code>viewBinding { enabled = true }</code> in the android block</li>
+                        <li>Sync your project with Gradle</li>
+                    </ol>
+                    
+                    <h5>Usage Patterns</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Activity pattern
+private lateinit var binding: ActivityMainBinding
+
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    
+    binding.button.setOnClickListener { /* ... */ }
+}
+
+// Fragment pattern
+private var _binding: FragmentMyBinding? = null
+private val binding get() = _binding!!
+
+override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    _binding = FragmentMyBinding.inflate(inflater, container, false)
+    return binding.root
+}
+
+override fun onDestroyView() {
+    super.onDestroyView()
+    _binding = null
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Coroutines</h3>
+                <p>Coroutines simplify asynchronous programming in Android, replacing callbacks.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Add coroutines dependency to build.gradle
+dependencies {
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+}
+
+// Simple coroutine example
+lifecycleScope.launch {
+    // Main thread
+    showLoading()
+    
+    val result = withContext(Dispatchers.IO) {
+        // Background thread - network request
+        performNetworkRequest()
+    }
+    
+    // Back to main thread
+    updateUI(result)
+    hideLoading()
+}
+
+// ViewModel with coroutines
+class MyViewModel : ViewModel() {
+    private val _data = MutableLiveData<String>()
+    val data: LiveData<String> = _data
+    
+    fun fetchData() {
+        viewModelScope.launch {
+            try {
+                val result = repository.fetchData()
+                _data.value = result
+            } catch (e: Exception) {
+                // Handle error
+            }
+        }
+    }
+}
+
+// Suspend functions
+suspend fun performNetworkRequest(): String {
+    return withContext(Dispatchers.IO) {
+        // Simulate network request
+        delay(1000)
+        "Result from network"
+    }
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Coroutine Scopes:</strong> Android provides several built-in scopes for coroutines: <code>viewModelScope</code> in ViewModels (cancelled when ViewModel clears), <code>lifecycleScope</code> in Activities/Fragments (cancelled when destroyed), and <code>MainScope</code> for custom scopes.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-sync-alt"></i> Coroutines Explained</h4>
+                    <p>Coroutines are Kotlin's solution for asynchronous programming. Here's what beginners need to know:</p>
+                    
+                    <h5>Why Use Coroutines?</h5>
+                    <ul>
+                        <li><strong>Simplified async code</strong>: No more callback hell</li>
+                        <li><strong>Structured concurrency</strong>: Automatic cancellation and cleanup</li>
+                        <li><strong>Main-safety</strong>: Easy thread switching</li>
+                        <li><strong>Lightweight</strong>: Thousands can run simultaneously</li>
+                    </ul>
+                    
+                    <h5>Key Concepts</h5>
+                    <ul>
+                        <li><strong>Suspend functions</strong>: Can be paused and resumed</li>
+                        <li><strong>Dispatchers</strong>: Determine which thread runs the code</li>
+                        <li><strong>Scopes</strong>: Manage coroutine lifetimes</li>
+                        <li><strong>Builders</strong>: launch, async, runBlocking</li>
+                    </ul>
+                    
+                    <h5>Common Dispatchers</h5>
+                    <table>
+                        <tr>
+                            <th>Dispatcher</th>
+                            <th>Purpose</th>
+                        </tr>
+                        <tr>
+                            <td>Dispatchers.Main</td>
+                            <td>UI thread in Android</td>
+                        </tr>
+                        <tr>
+                            <td>Dispatchers.IO</td>
+                            <td>Network/disk operations</td>
+                        </tr>
+                        <tr>
+                            <td>Dispatchers.Default</td>
+                            <td>CPU-intensive work</td>
+                        </tr>
+                    </table>
+                    
+                    <h5>Practical Example</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// In a ViewModel or Activity
+fun loadData() {
+    viewModelScope.launch {
+        // Show loading
+        _isLoading.value = true
+        
+        try {
+            // Network request on IO thread
+            val result = withContext(Dispatchers.IO) {
+                repository.fetchData()
+            }
+            
+            // Update UI on main thread
+            _data.value = result
+        } catch (e: Exception) {
+            _error.value = "Failed to load data"
+        } finally {
+            _isLoading.value = false
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Jetpack Components</h3>
+                <p>Android Jetpack provides libraries to help with common patterns and best practices.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// ViewModel example
+class MyViewModel : ViewModel() {
+    private val _data = MutableLiveData<String>()
+    val data: LiveData<String> = _data
+    
+    fun loadData() {
+        viewModelScope.launch {
+            _data.value = repository.fetchData()
+        }
+    }
+}
+
+// Using ViewModel in Activity
+class MyActivity : AppCompatActivity() {
+    private lateinit var viewModel: MyViewModel
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
+        
+        viewModel.data.observe(this, { data ->
+            // Update UI with new data
+        })
+    }
+}
+
+// Room database example
+@Entity
+data class User(
+    @PrimaryKey val id: Int,
+    val name: String,
+    val age: Int
+)
+
+@Dao
+interface UserDao {
+    @Query("SELECT * FROM user")
+    fun getAll(): LiveData<List<User>>
+    
+    @Insert
+    suspend fun insert(user: User)
+}
+
+@Database(entities = [User::class], version = 1)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun userDao(): UserDao
+}</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Jetpack Benefits:</strong> Android Jetpack components help you follow best practices, reduce boilerplate code, and simplify complex tasks. They work consistently across Android versions and devices, helping you focus on your app's unique features.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-rocket"></i> Essential Jetpack Components</h4>
+                    <p>Jetpack provides libraries for common Android development tasks:</p>
+                    
+                    <h5>Architecture Components</h5>
+                    <ul>
+                        <li><strong>ViewModel</strong>: Manages UI-related data</li>
+                        <li><strong>LiveData</strong>: Observable data holder</li>
+                        <li><strong>Room</strong>: SQLite object mapping</li>
+                        <li><strong>Data Binding</strong>: Bind UI components to data</li>
+                        <li><strong>Navigation</strong>: Handle in-app navigation</li>
+                    </ul>
+                    
+                    <h5>UI Components</h5>
+                    <ul>
+                        <li><strong>Compose</strong>: Modern declarative UI toolkit</li>
+                        <li><strong>Fragment</strong>: Reusable UI components</li>
+                        <li><strong>RecyclerView</strong>: Efficient lists</li>
+                        <li><strong>ViewPager2</strong>: Swipeable views</li>
+                    </ul>
+                    
+                    <h5>Behavior Components</h5>
+                    <ul>
+                        <li><strong>WorkManager</strong>: Background tasks</li>
+                        <li><strong>Permissions</strong>: Handle runtime permissions</li>
+                        <li><strong>CameraX</strong>: Camera functionality</li>
+                    </ul>
+                    
+                    <h5>Sample App Architecture</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Typical MVVM structure with Jetpack
+class MyViewModel(
+    private val repository: MyRepository
+) : ViewModel() {
+    private val _data = MutableLiveData<Result<String>>()
+    val data: LiveData<Result<String>> = _data
+    
+    fun fetchData() {
+        viewModelScope.launch {
+            _data.value = Result.Loading
+            try {
+                val result = repository.getData()
+                _data.value = Result.Success(result)
+            } catch (e: Exception) {
+                _data.value = Result.Error(e)
+            }
+        }
+    }
+}
+
+class MyActivity : AppCompatActivity() {
+    private val viewModel: MyViewModel by viewModels()
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        viewModel.data.observe(this) { result ->
+            when (result) {
+                is Result.Loading -> showLoading()
+                is Result.Success -> showData(result.data)
+                is Result.Error -> showError(result.exception)
+            }
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section - Matching Swift site -->
+    <section class="youtube-links" id="resources">
+        <div class="container">
+            <h2>Recommended Kotlin Learning Resources</h2>
+            <p>Here are some excellent resources to help you learn Kotlin for Android:</p>
+            
+            <div class="youtube-grid">
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=F9UC9DY-vIU" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/F9UC9DY-vIU/maxresdefault.jpg" alt="Kotlin Tutorial for Beginners">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Kotlin Tutorial for Beginners</h3>
+                            <p>Programming with Mosh</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=5flXf8nuq60" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/5flXf8nuq60/maxresdefault.jpg" alt="Kotlin Full Course">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Kotlin Full Course</h3>
+                            <p>freeCodeCamp.org</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=BBWyXo-3JGQ" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/BBWyXo-3JGQ/maxresdefault.jpg" alt="Android Kotlin Course">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Android Kotlin Course</h3>
+                            <p>freeCodeCamp.org</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=H_oGi8uuDpA" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/H_oGi8uuDpA/maxresdefault.jpg" alt="Kotlin for Absolute Beginners">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Kotlin for Absolute Beginners</h3>
+                            <p>Philipp Lackner</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="content-card" style="margin-top: 30px; background-color: rgba(255,255,255,0.1); color: white;">
+                <h3>Additional Learning Resources</h3>
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-book"></i> Official Documentation</h4>
+                    <ul>
+                        <li><a href="https://kotlinlang.org/docs/home.html" target="_blank" style="color: white;">Kotlin Documentation</a></li>
+                        <li><a href="https://developer.android.com/kotlin/learn" target="_blank" style="color: white;">Kotlin for Android</a></li>
+                        <li><a href="https://developer.android.com/jetpack" target="_blank" style="color: white;">Android Jetpack</a></li>
+                    </ul>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-graduation-cap"></i> Courses & Books</h4>
+                    <ul>
+                        <li><a href="https://developer.android.com/courses" target="_blank" style="color: white;">Android Developer Courses</a></li>
+                        <li><a href="https://www.udacity.com/course/developing-android-apps-with-kotlin--ud9012" target="_blank" style="color: white;">Udacity Kotlin for Android</a></li>
+                        <li><a href="https://www.udemy.com/course/android-oreo-kotlin-app-masterclass/" target="_blank" style="color: white;">Udemy Kotlin Android Masterclass</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - Exactly matching Swift site -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Beginner's Guide</span>
+                    </div>
+                    <p>Master the art of programming with our comprehensive resources and tutorials designed for beginners.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Learn Kotlin</h3>
+                    <ul>
+                        <li><a href="#what-is-kotlin">What is Kotlin?</a></li>
+                        <li><a href="#getting-started">Getting Started</a></li>
+                        <li><a href="#syntax-basics">Syntax Basics</a></li>
+                        <li><a href="#android-development">Android Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://kotlinlang.org/" target="_blank">Kotlin Official Site</a></li>
+                        <li><a href="https://developer.android.com/kotlin" target="_blank">Android Kotlin</a></li>
+                        <li><a href="https://developer.android.com/studio" target="_blank">Android Studio</a></li>
+                        <li><a href="https://play.kotlinlang.org/" target="_blank">Kotlin Playground</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="https://discuss.kotlinlang.org/" target="_blank">Kotlin Forums</a></li>
+                        <li><a href="https://www.reddit.com/r/Kotlin/" target="_blank">Kotlin Subreddit</a></li>
+                        <li><a href="https://stackoverflow.com/questions/tagged/kotlin" target="_blank">Stack Overflow</a></li>
+                        <li><a href="https://kotlinlang.org/community/" target="_blank">Kotlin Community</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Beginner's Guide. All rights reserved.</p>
+                <p>Last updated: <span id="currentDate"></span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle - Matching Swift site -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.querySelector('i').classList.toggle('fa-bars');
+                this.querySelector('i').classList.toggle('fa-times');
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Update current date
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+            
+            // Copy code button functionality
+            function copyCode(button) {
+                const codeBlock = button.parentElement;
+                const code = codeBlock.querySelector('pre').textContent;
+                
+                navigator.clipboard.writeText(code).then(() => {
+                    button.textContent = 'Copied!';
+                    setTimeout(() => {
+                        button.textContent = 'Copy';
+                    }, 2000);
+                });
+            }
+            
+            // Assign copy functionality to all copy buttons
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    copyCode(this);
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            menuToggle.querySelector('i').classList.remove('fa-times');
+                            menuToggle.querySelector('i').classList.add('fa-bars');
+                        }
+                    }
+                });
+            });
+            
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.content-card, .section-title, .youtube-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.content-card, .section-title, .youtube-card');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+        });
+    </script>
+</body>
+</html>

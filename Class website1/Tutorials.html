@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorials | Beginner's Guide to Programming</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --gray: #94a3b8;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Tutorials Section */
+        .tutorials {
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .tutorials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .tutorial-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .tutorial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .tutorial-img {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tutorial-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .tutorial-card:hover .tutorial-img img {
+            transform: scale(1.05);
+        }
+
+        .tutorial-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.8), rgba(124, 58, 237, 0.8));
+            z-index: 1;
+        }
+
+        .tutorial-img span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            font-size: 3rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .tutorial-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tutorial-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .tutorial-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .difficulty {
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .beginner {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .tutorial-desc {
+            margin-bottom: 20px;
+            color: var(--text);
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        /* Learning Objectives */
+        .learning-objectives {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: rgba(37, 99, 235, 0.05);
+            border-radius: 8px;
+        }
+
+        .learning-objectives h4 {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .learning-objectives ul {
+            margin-left: 20px;
+            font-size: 0.9rem;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+
+        .learning-objectives i {
+            margin-right: 5px;
+            color: var(--success);
+        }
+
+        /* Prerequisites */
+        .prerequisites {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: rgba(245, 158, 11, 0.05);
+            border-radius: 8px;
+        }
+
+        .prerequisites h4 {
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+            color: var(--warning);
+        }
+
+        .prerequisites p {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .prerequisites i {
+            margin-right: 5px;
+            color: var(--warning);
+        }
+
+        /* Beginner Tips */
+        .beginner-tips {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: rgba(236, 72, 153, 0.05);
+            border-radius: 8px;
+        }
+
+        .beginner-tips h4 {
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+            color: var(--accent);
+        }
+
+        .beginner-tips p {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .beginner-tips i {
+            margin-right: 5px;
+            color: var(--accent);
+        }
+
+        .tutorial-link {
+            color: var(--primary);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .tutorial-link:hover {
+            color: var(--secondary);
+            gap: 10px;
+        }
+
+        /* Language Categories */
+        .language-categories {
+            margin-bottom: 40px;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .category-tab {
+            padding: 8px 20px;
+            border-radius: 50px;
+            background-color: var(--white);
+            color: var(--dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .category-tab.active, .category-tab:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border-color: transparent;
+        }
+
+        /* YouTube Links Section */
+        .youtube-links {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .youtube-links::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .youtube-links h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            padding: 0 20px;
+        }
+
+        .youtube-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .youtube-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .youtube-thumbnail {
+            position: relative;
+            height: 140px;
+            overflow: hidden;
+        }
+
+        .youtube-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .youtube-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            font-size: 3rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+        }
+
+        .youtube-info {
+            padding: 15px;
+            color: var(--dark);
+        }
+
+        .youtube-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .youtube-info p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: var(--white);
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: 0.95rem;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .tutorial-card {
+            background-color: #1e293b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .tutorial-content h3,
+        body.dark-mode .section-title h2 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .tutorial-desc,
+        body.dark-mode .tutorial-meta {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .tutorials {
+            background-color: #0f172a;
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        body.dark-mode .footer-links ul li a:hover {
+            color: var(--primary-light);
+        }
+
+        body.dark-mode .youtube-info {
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .youtube-info p {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .learning-objectives {
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        body.dark-mode .prerequisites {
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        body.dark-mode .beginner-tips {
+            background-color: rgba(236, 72, 153, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            section {
+                padding: 50px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                text-align: left;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .category-tabs {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            body.dark-mode nav ul {
+                background-color: #1e293b;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
+            
+            .tutorials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .footer-links {
+                margin-top: 20px;
+            }
+            
+            .dark-mode-toggle {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            
+            .category-tab {
+                padding: 6px 15px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+            </div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Beginner Programming Tutorials</h1>
+            <p>Start your coding journey with our beginner-friendly tutorials. Learn the fundamentals of programming with easy-to-follow lessons designed for absolute beginners.</p>
+            <a href="#tutorials" class="btn">Start Learning</a>
+        </div>
+    </section>
+
+    <!-- Tutorials Section -->
+    <section class="tutorials" id="tutorials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Beginner-Friendly Tutorials</h2>
+            </div>
+
+            <div class="language-categories">
+                <div class="category-tabs">
+                    <div class="category-tab active" data-category="all">All Languages</div>
+                    <div class="category-tab" data-category="web">Web Development</div>
+                    <div class="category-tab" data-category="general">General Purpose</div>
+                    <div class="category-tab" data-category="mobile">Mobile</div>
+                </div>
+            </div>
+
+            <div class="tutorials-grid">
+                <!-- HTML Tutorial -->
+                <div class="tutorial-card" data-category="web">
+                    <div class="tutorial-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj5K08rKxUEHZsgxTHElnQc6bFEmuVzD6FUg&s" alt="HTML Tutorial">
+                        <span>HTML</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>HTML Fundamentals</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 2 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Learn the building blocks of web development with this comprehensive HTML tutorial covering all essential tags and structure.</p>
+                        
+                        <div class="learning-objectives">
+                            <h4><i class="fas fa-check-circle"></i> What You'll Learn:</h4>
+                            <ul>
+                                <li>HTML document structure</li>
+                                <li>Common tags (headings, paragraphs, lists)</li>
+                                <li>Links, images, and forms</li>
+                                <li>Semantic HTML5 elements</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prerequisites">
+                            <h4><i class="fas fa-info-circle"></i> Prerequisites:</h4>
+                            <p>No prior coding experience needed!</p>
+                        </div>
+                        
+                        <div class="beginner-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Beginner Tip:</h4>
+                            <p>Practice by building a simple webpage as you follow along!</p>
+                        </div>
+                        
+                        <a href="html.html" class="tutorial-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- CSS Tutorial -->
+                <div class="tutorial-card" data-category="web">
+                    <div class="tutorial-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUH-oIAvcVSDEN54K4XFbmUAynW9xva-dQ0g&s" alt="CSS Tutorial">
+                        <span>CSS</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>CSS Styling Basics</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 3 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Make your websites beautiful with colors, layouts, and responsive design techniques in this CSS fundamentals course.</p>
+                        
+                        <div class="learning-objectives">
+                            <h4><i class="fas fa-check-circle"></i> What You'll Learn:</h4>
+                            <ul>
+                                <li>CSS selectors and properties</li>
+                                <li>Box model and layout</li>
+                                <li>Colors, fonts, and backgrounds</li>
+                                <li>Basic animations and transitions</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prerequisites">
+                            <h4><i class="fas fa-info-circle"></i> Prerequisites:</h4>
+                            <p>Basic HTML knowledge helpful but not required</p>
+                        </div>
+                        
+                        <div class="beginner-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Beginner Tip:</h4>
+                            <p>Experiment with different styles in your browser's developer tools!</p>
+                        </div>
+                        
+                        <a href="css.html" class="tutorial-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- JavaScript Tutorial -->
+                <div class="tutorial-card" data-category="web">
+                    <div class="tutorial-img">
+                        <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="JavaScript Tutorial">
+                        <span>JS</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>JavaScript Basics</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 4 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Add interactivity to your websites with JavaScript. Learn variables, functions, and DOM manipulation from scratch.</p>
+                        
+                        <div class="learning-objectives">
+                            <h4><i class="fas fa-check-circle"></i> What You'll Learn:</h4>
+                            <ul>
+                                <li>Variables and data types</li>
+                                <li>Functions and control flow</li>
+                                <li>DOM manipulation</li>
+                                <li>Event handling</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prerequisites">
+                            <h4><i class="fas fa-info-circle"></i> Prerequisites:</h4>
+                            <p>Basic HTML/CSS knowledge recommended</p>
+                        </div>
+                        
+                        <div class="beginner-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Beginner Tip:</h4>
+                            <p>Start with small interactive elements before building full applications!</p>
+                        </div>
+                        
+                        <a href="JavaScript.html" class="tutorial-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Python Tutorial -->
+                <div class="tutorial-card" data-category="general">
+                    <div class="tutorial-img">
+                        <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" alt="Python Tutorial">
+                        <span>PY</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>Python Basics</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 3 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Start with Python, one of the most beginner-friendly programming languages used in web, data science, and automation.</p>
+                        
+                        <div class="learning-objectives">
+                            <h4><i class="fas fa-check-circle"></i> What You'll Learn:</h4>
+                            <ul>
+                                <li>Variables and data types</li>
+                                <li>Conditionals and loops</li>
+                                <li>Functions and modules</li>
+                                <li>Working with files</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prerequisites">
+                            <h4><i class="fas fa-info-circle"></i> Prerequisites:</h4>
+                            <p>No prior experience needed</p>
+                        </div>
+                        
+                        <div class="beginner-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Beginner Tip:</h4>
+                            <p>Use Python's interactive shell to test small code snippets!</p>
+                        </div>
+                        
+                        <a href="Python.html" class="tutorial-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Java Tutorial -->
+                <div class="tutorial-card" data-category="general">
+                    <div class="tutorial-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYxbb6SR81a9Fe_hBTvejMWf7iwJ3YIgqffw&s" alt="Java Tutorial">
+                        <span>Java</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>Java for Beginners</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 5 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Learn Java fundamentals and object-oriented programming concepts with this beginner-friendly tutorial.</p>
+                        
+                        <div class="learning-objectives">
+                            <h4><i class="fas fa-check-circle"></i> What You'll Learn:</h4>
+                            <ul>
+                                <li>Java syntax and structure</li>
+                                <li>Variables and data types</li>
+                                <li>Control flow statements</li>
+                                <li>Basic OOP concepts</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prerequisites">
+                            <h4><i class="fas fa-info-circle"></i> Prerequisites:</h4>
+                            <p>No prior experience needed</p>
+                        </div>
+                        
+                        <div class="beginner-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Beginner Tip:</h4>
+                            <p>Practice writing small programs to understand Java's structure!</p>
+                        </div>
+                        
+                        <a href="Java.html" class="tutorial-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Swift Tutorial -->
+                <div class="tutorial-card" data-category="mobile">
+                    <div class="tutorial-img">
+                        <img src="https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Swift Tutorial">
+                        <span>Swift</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>Swift Basics</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 4 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Begin developing iOS apps with Swift. Learn syntax and build your first mobile application for Apple devices.</p>
+                        
+                        <div class="learning-objectives">
+                            <h4><i class="fas fa-check-circle"></i> What You'll Learn:</h4>
+                            <ul>
+                                <li>Swift syntax basics</li>
+                                <li>Variables and constants</li>
+                                <li>Control flow</li>
+                                <li>Basic iOS app structure</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prerequisites">
+                            <h4><i class="fas fa-info-circle"></i> Prerequisites:</h4>
+                            <p>Mac computer recommended</p>
+                        </div>
+                        
+                        <div class="beginner-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Beginner Tip:</h4>
+                            <p>Use Swift Playgrounds to experiment with code in a fun way!</p>
+                        </div>
+                        
+                        <a href="Swift.html" class="tutorial-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- C Tutorial -->
+                <div class="tutorial-card" data-category="general">
+                    <div class="tutorial-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqJOfx2yBmNNuN710PElRGv-CXaQW_XjCWRw&s" alt="C# Tutorial">
+                        <span>C#</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>C# Fundamentals</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 4 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Learn C# programming basics for building Windows applications, games with Unity, and more.</p>
+                        
+                        <div class="learning-objectives">
+                            <h4><i class="fas fa-check-circle"></i> What You'll Learn:</h4>
+                            <ul>
+                                <li>C# syntax and structure</li>
+                                <li>Variables and data types</li>
+                                <li>Classes and objects</li>
+                                <li>Basic .NET concepts</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prerequisites">
+                            <h4><i class="fas fa-info-circle"></i> Prerequisites:</h4>
+                            <p>No prior experience needed</p>
+                        </div>
+                        
+                        <div class="beginner-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Beginner Tip:</h4>
+                            <p>Try building a simple console application first!</p>
+                        </div>
+                        
+                        <a href="C.html" class="tutorial-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Kotlin Tutorial -->
+                <div class="tutorial-card" data-category="mobile">
+                    <div class="tutorial-img">
+                        <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Kotlin Tutorial">
+                        <span>Kotlin</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>Kotlin for Android</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 4 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Start Android app development with Kotlin, the modern language for building mobile applications.</p>
+                        
+                        <div class="learning-objectives">
+                            <h4><i class="fas fa-check-circle"></i> What You'll Learn:</h4>
+                            <ul>
+                                <li>Kotlin syntax basics</li>
+                                <li>Variables and functions</li>
+                                <li>Null safety features</li>
+                                <li>Basic Android app structure</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prerequisites">
+                            <h4><i class="fas fa-info-circle"></i> Prerequisites:</h4>
+                            <p>Basic programming concepts helpful</p>
+                        </div>
+                        
+                        <div class="beginner-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Beginner Tip:</h4>
+                            <p>Use Android Studio's templates to get started quickly!</p>
+                        </div>
+                        
+                        <a href="Kotlin.html" class="tutorial-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Ruby Tutorial -->
+                <div class="tutorial-card" data-category="general">
+                    <div class="tutorial-img">
+                        <img src="https://images.unsplash.com/photo-1587486913049-53fc88980cfc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Ruby Tutorial">
+                        <span>Ruby</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>Ruby Basics</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 3 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Learn Ruby programming with this beginner-friendly tutorial covering syntax, methods, and more.</p>
+                        
+                        <div class="learning-objectives">
+                            <h4><i class="fas fa-check-circle"></i> What You'll Learn:</h4>
+                            <ul>
+                                <li>Ruby syntax and conventions</li>
+                                <li>Variables and methods</li>
+                                <li>Working with arrays and hashes</li>
+                                <li>Basic Ruby gems</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prerequisites">
+                            <h4><i class="fas fa-info-circle"></i> Prerequisites:</h4>
+                            <p>No prior experience needed</p>
+                        </div>
+                        
+                        <div class="beginner-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Beginner Tip:</h4>
+                            <p>Try Ruby in your browser with repl.it before installing!</p>
+                        </div>
+                        
+                        <a href="Ruby.html" class="tutorial-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- PHP Tutorial -->
+                <div class="tutorial-card" data-category="web">
+                    <div class="tutorial-img">
+                        <img src="https://images.unsplash.com/photo-1592609931095-54a2168ae893?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="PHP Tutorial">
+                        <span>PHP</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>PHP for Beginners</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 4 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Learn server-side programming with PHP to create dynamic websites and interact with databases.</p>
+                        
+                        <div class="learning-objectives">
+                            <h4><i class="fas fa-check-circle"></i> What You'll Learn:</h4>
+                            <ul>
+                                <li>PHP syntax basics</li>
+                                <li>Working with forms</li>
+                                <li>Connecting to databases</li>
+                                <li>Basic security practices</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prerequisites">
+                            <h4><i class="fas fa-info-circle"></i> Prerequisites:</h4>
+                            <p>Basic HTML knowledge helpful</p>
+                        </div>
+                        
+                        <div class="beginner-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Beginner Tip:</h4>
+                            <p>Use XAMPP or MAMP for easy local PHP development!</p>
+                        </div>
+                        
+                        <a href="Php.html" class="tutorial-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Go Tutorial -->
+                <div class="tutorial-card" data-category="general">
+                    <div class="tutorial-img">
+                        <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Go Tutorial">
+                        <span>Go</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>Go Programming</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 3 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Learn Go (Golang) programming basics for building efficient and scalable applications.</p>
+                        
+                        <div class="learning-objectives">
+                            <h4><i class="fas fa-check-circle"></i> What You'll Learn:</h4>
+                            <ul>
+                                <li>Go syntax and structure</li>
+                                <li>Variables and data types</li>
+                                <li>Functions and packages</li>
+                                <li>Basic concurrency</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prerequisites">
+                            <h4><i class="fas fa-info-circle"></i> Prerequisites:</h4>
+                            <p>No prior experience needed</p>
+                        </div>
+                        
+                        <div class="beginner-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Beginner Tip:</h4>
+                            <p>Take advantage of Go's excellent documentation!</p>
+                        </div>
+                        
+                        <a href="Go Programming.html" class="tutorial-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- TypeScript Tutorial -->
+                <div class="tutorial-card" data-category="web">
+                    <div class="tutorial-img">
+                        <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="TypeScript Tutorial">
+                        <span>TS</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>TypeScript Basics</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 3 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Learn TypeScript, a typed superset of JavaScript that compiles to plain JavaScript.</p>
+                        
+                        <div class="learning-objectives">
+                            <h4><i class="fas fa-check-circle"></i> What You'll Learn:</h4>
+                            <ul>
+                                <li>TypeScript syntax</li>
+                                <li>Type annotations</li>
+                                <li>Interfaces and classes</li>
+                                <li>Working with existing JavaScript</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prerequisites">
+                            <h4><i class="fas fa-info-circle"></i> Prerequisites:</h4>
+                            <p>Basic JavaScript knowledge recommended</p>
+                        </div>
+                        
+                        <div class="beginner-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Beginner Tip:</h4>
+                            <p>Start by adding types to small JavaScript projects!</p>
+                        </div>
+                        
+                        <a href="TypeScript.html" class="tutorial-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Links Section -->
+    <section class="youtube-links">
+        <div class="container">
+            <h2>Video Tutorials on YouTube</h2>
+            <div class="youtube-grid">
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=qz0aGYrrlhU" target="_blank" rel="noopener noreferrer">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/qz0aGYrrlhU/maxresdefault.jpg" alt="HTML Crash Course">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>HTML Crash Course For Absolute Beginners</h3>
+                            <p>Traversy Media • 1 hour</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=yfoY53QXEnI" target="_blank" rel="noopener noreferrer">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/yfoY53QXEnI/maxresdefault.jpg" alt="CSS Crash Course">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>CSS Crash Course For Absolute Beginners</h3>
+                            <p>Traversy Media • 1.25 hours</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=hdI2bqOjy3c" target="_blank" rel="noopener noreferrer">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/hdI2bqOjy3c/maxresdefault.jpg" alt="JavaScript Crash Course">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>JavaScript Crash Course For Beginners</h3>
+                            <p>Traversy Media • 1.5 hours</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=JJmcL1N2KQs" target="_blank" rel="noopener noreferrer">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/JJmcL1N2KQs/maxresdefault.jpg" alt="Python Crash Course">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Python for Beginners - Full Course</h3>
+                            <p>freeCodeCamp • 4.5 hours</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Beginner's Guide</span>
+                    </div>
+                    <p>Making programming accessible to everyone. Our mission is to help absolute beginners start their coding journey with confidence.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="cheatsheets.html">Cheat Sheets</a></li>
+                        <li><a href="challenges.html">Code Challenges</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Languages</h3>
+                    <ul>
+                        <li><a href="html-tutorial.html">HTML & CSS</a></li>
+                        <li><a href="javascript-tutorial.html">JavaScript</a></li>
+                        <li><a href="python-tutorial.html">Python</a></li>
+                        <li><a href="java-tutorial.html">Java</a></li>
+                        <li><a href="swift-tutorial.html">Swift</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="community.html">Community</a></li>
+                        <li><a href="feedback.html">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Beginner's Guide to Programming. All rights reserved. <span id="currentDate"></span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+            
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('#navMenu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    menuToggle.querySelector('i').classList.add('fa-bars');
+                    menuToggle.querySelector('i').classList.remove('fa-times');
+                });
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Update current date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+            
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.tutorial-card, .section-title, .youtube-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.tutorial-card, .section-title, .youtube-card');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+
+            // Language category filtering
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const tutorialCards = document.querySelectorAll('.tutorial-card');
+
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const category = this.getAttribute('data-category');
+
+                    // Filter tutorials
+                    tutorialCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

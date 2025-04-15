@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Basics for Beginners</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --gray: #94a3b8;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Content Section */
+        .content-section {
+            background-color: var(--white);
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .concept-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 40px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .concept-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .concept-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .concept-card p {
+            margin-bottom: 20px;
+        }
+
+        .code-example {
+            background-color: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border-left: 4px solid var(--primary);
+        }
+
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--dark);
+        }
+
+        .use-case {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary-light);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .use-case h4 {
+            color: var(--primary-light);
+            margin-bottom: 10px;
+        }
+
+        .image-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .image-caption {
+            margin-top: 10px;
+            font-style: italic;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        /* Resources Section */
+        .resources {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resources::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .resources h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .resource-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .resource-img {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .resource-card:hover .resource-img img {
+            transform: scale(1.05);
+        }
+
+        .resource-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .resource-img span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            font-size: 3rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .resource-content {
+            padding: 25px;
+        }
+
+        .resource-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .resource-desc {
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .resource-link {
+            color: var(--primary);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .resource-link:hover {
+            color: var(--secondary);
+            gap: 10px;
+        }
+
+        /* Learning Objectives */
+        .learning-objectives {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: rgba(37, 99, 235, 0.05);
+            border-radius: 8px;
+        }
+
+        .learning-objectives h4 {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .learning-objectives ul {
+            margin-left: 20px;
+            font-size: 0.9rem;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+
+        .learning-objectives i {
+            margin-right: 5px;
+            color: var(--success);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: var(--white);
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: 0.95rem;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .concept-card,
+        body.dark-mode .resource-card {
+            background-color: #1e293b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .concept-card h3,
+        body.dark-mode .resource-content h3,
+        body.dark-mode .section-title h2 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .code-example {
+            background-color: #1e293b;
+            border-left: 4px solid var(--accent);
+        }
+
+        body.dark-mode .code-example pre {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .use-case {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+
+        body.dark-mode .content-section {
+            background-color: #0f172a;
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        body.dark-mode .footer-links ul li a:hover {
+            color: var(--primary-light);
+        }
+
+        body.dark-mode .resource-content h3,
+        body.dark-mode .resource-desc {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .resource-meta {
+            color: #94a3b8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            section {
+                padding: 50px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                text-align: left;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+            
+            body.dark-mode nav ul {
+                background-color: #1e293b;
+            }
+
+            .concept-card {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .footer-links {
+                margin-top: 20px;
+            }
+            
+            .dark-mode-toggle {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+             </div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>JavaScript Basics for Beginners</h1>
+            <p>Learn the fundamentals of JavaScript, the programming language that powers the web. Start building interactive websites today!</p>
+            <a href="#getting-started" class="btn">Start Learning</a>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section" id="getting-started">
+        <div class="container">
+            <div class="section-title">
+                <h2>JavaScript Fundamentals</h2>
+            </div>
+            
+            <div class="concept-card">
+                <h3>What is JavaScript?</h3>
+                <p>JavaScript is a high-level, interpreted programming language that conforms to the ECMAScript specification. It is a language that is also characterized as dynamic, weakly typed, prototype-based and multi-paradigm.</p>
+                
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="JavaScript Code">
+                    <p class="image-caption">JavaScript is the language of the web</p>
+                </div>
+                
+                <p>JavaScript is one of the core technologies of the World Wide Web, alongside HTML and CSS. Over 97% of websites use JavaScript on the client side for web page behavior, often incorporating third-party libraries.</p>
+                
+                <div class="use-case">
+                    <h4>Where JavaScript is Used:</h4>
+                    <ul>
+                        <li>Web development (front-end and back-end with Node.js)</li>
+                        <li>Mobile app development (React Native, Ionic)</li>
+                        <li>Game development</li>
+                        <li>Desktop applications (Electron)</li>
+                        <li>Server-side applications</li>
+                    </ul>
+                </div>
+
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Key Features of JavaScript:</h4>
+                    <ul>
+                        <li>Client-side execution in web browsers</li>
+                        <li>Event-driven programming model</li>
+                        <li>Asynchronous programming with callbacks and promises</li>
+                        <li>Object-oriented but prototype-based</li>
+                        <li>First-class functions (functions are treated as objects)</li>
+                        <li>Dynamic typing (variables can hold any type of data)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="concept-card">
+                <h3>Variables and Data Types</h3>
+                <p>Variables are containers for storing data values. In JavaScript, you can declare variables using <code>var</code>, <code>let</code>, or <code>const</code>.</p>
+                
+                <div class="code-example">
+                    <pre><code>// Variable declarations
+let message = "Hello";  // string
+const PI = 3.14;        // number (constant)
+var isActive = true;    // boolean
+let age = null;         // null
+let name;               // undefined
+
+// Modern JavaScript prefers let and const over var
+let count = 10;
+const MAX_SIZE = 100;</code></pre>
+                </div>
+                
+                <p>JavaScript has dynamic types. This means the same variable can be used to hold different data types:</p>
+                
+                <div class="code-example">
+                    <pre><code>let x;           // x is undefined
+x = 5;           // x is a number
+x = "John";      // x is a string
+x = true;        // x is a boolean</code></pre>
+                </div>
+                
+                <div class="use-case">
+                    <h4>JavaScript Data Types:</h4>
+                    <ul>
+                        <li><strong>Primitive types:</strong> String, Number, Boolean, Null, Undefined, Symbol (ES6), BigInt (ES2020)</li>
+                        <li><strong>Object types:</strong> Object, Array, Date, Function, etc.</li>
+                    </ul>
+                </div>
+                
+                <p>Variables declared with <code>const</code> cannot be reassigned, while <code>let</code> variables can be. <code>var</code> has function scope, while <code>let</code> and <code>const</code> have block scope.</p>
+
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Variable Best Practices:</h4>
+                    <ul>
+                        <li>Use <code>const</code> by default, <code>let</code> when you need to reassign, and avoid <code>var</code></li>
+                        <li>Use meaningful variable names (e.g., <code>userAge</code> instead of <code>ua</code>)</li>
+                        <li>Initialize variables when you declare them</li>
+                        <li>Use camelCase for variable names (e.g., <code>firstName</code>)</li>
+                        <li>Constants should be in UPPER_CASE (e.g., <code>MAX_USERS</code>)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="concept-card">
+                <h3>Functions and Control Flow</h3>
+                <p>Functions are blocks of code designed to perform a particular task. They are executed when "called" or "invoked".</p>
+                
+                <div class="code-example">
+                    <pre><code>// Function declaration
+function greet(name) {
+    return "Hello, " + name + "!";
+}
+
+// Function expression (assigned to a variable)
+const greet = function(name) {
+    return `Hello, ${name}!`;
+}
+
+// Arrow function (ES6)
+const greet = (name) => `Hello, ${name}!`;
+
+// Calling functions
+console.log(greet("Alice")); // "Hello, Alice!"</code></pre>
+                </div>
+                
+                <p>Control flow refers to the order in which statements are executed in a program. JavaScript includes conditional statements and loops to control the flow of execution.</p>
+                
+                <div class="code-example">
+                    <pre><code>// If-else statement
+let age = 18;
+if (age < 18) {
+    console.log("You're a minor");
+} else if (age >= 18 && age < 65) {
+    console.log("You're an adult");
+} else {
+    console.log("You're a senior");
+}
+
+// Switch statement
+let day = "Monday";
+switch(day) {
+    case "Monday":
+        console.log("Start of work week");
+        break;
+    case "Friday":
+        console.log("Weekend is coming!");
+        break;
+    default:
+        console.log("It's a regular day");
+}
+
+// For loop
+for (let i = 0; i < 5; i++) {
+    console.log(i); // 0, 1, 2, 3, 4
+}
+
+// While loop
+let i = 0;
+while (i < 5) {
+    console.log(i);
+    i++;
+}</code></pre>
+                </div>
+                
+                <div class="use-case">
+                    <h4>Common Uses of Functions:</h4>
+                    <ul>
+                        <li>Code reuse - write once, use many times</li>
+                        <li>Organizing code into logical blocks</li>
+                        <li>Event handling (click handlers, etc.)</li>
+                        <li>Asynchronous operations (callbacks, promises)</li>
+                    </ul>
+                </div>
+
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Function Best Practices:</h4>
+                    <ul>
+                        <li>Functions should do one thing and do it well</li>
+                        <li>Keep functions small and focused</li>
+                        <li>Use descriptive names (verbs for actions, nouns for data retrieval)</li>
+                        <li>Avoid too many parameters (3 or fewer is ideal)</li>
+                        <li>Use arrow functions for callbacks and when you need lexical <code>this</code></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="concept-card">
+                <h3>DOM Manipulation</h3>
+                <p>The Document Object Model (DOM) is a programming interface for web documents. It represents the page so that programs can change the document structure, style, and content.</p>
+                
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="DOM Manipulation">
+                    <p class="image-caption">DOM is the interface between JavaScript and HTML/CSS</p>
+                </div>
+                
+                <p>JavaScript can manipulate the DOM to dynamically change the content and appearance of a web page.</p>
+                
+                <div class="code-example">
+                    <pre><code>// Selecting elements
+const heading = document.getElementById("main-heading");
+const buttons = document.querySelectorAll(".btn");
+
+// Changing content
+heading.textContent = "New Heading";
+heading.innerHTML = "&lt;em&gt;New&lt;/em&gt; Heading";
+
+// Changing styles
+heading.style.color = "blue";
+heading.style.fontSize = "2rem";
+
+// Adding/removing classes
+heading.classList.add("highlight");
+heading.classList.remove("old-class");
+
+// Creating new elements
+const newParagraph = document.createElement("p");
+newParagraph.textContent = "This is a new paragraph";
+document.body.appendChild(newParagraph);
+
+// Event handling
+const button = document.querySelector("#myButton");
+button.addEventListener("click", function() {
+    alert("Button was clicked!");
+});</code></pre>
+                </div>
+                
+                <div class="use-case">
+                    <h4>Common DOM Manipulation Tasks:</h4>
+                    <ul>
+                        <li>Form validation</li>
+                        <li>Creating interactive elements (dropdowns, modals)</li>
+                        <li>Updating content without page reload</li>
+                        <li>Animating elements</li>
+                        <li>Fetching and displaying data from APIs</li>
+                    </ul>
+                </div>
+
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> DOM Best Practices:</h4>
+                    <ul>
+                        <li>Cache DOM references in variables if used multiple times</li>
+                        <li>Use <code>textContent</code> instead of <code>innerHTML</code> when possible for security</li>
+                        <li>Batch DOM updates to minimize reflows and repaints</li>
+                        <li>Use event delegation for dynamic elements</li>
+                        <li>Consider using modern frameworks (React, Vue, Angular) for complex UIs</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="concept-card">
+                <h3>Event Handling</h3>
+                <p>Events are actions or occurrences that happen in the system you are programming, which the system tells you about so you can respond to them in some way if desired.</p>
+                
+                <div class="code-example">
+                    <pre><code>// Common events to handle:
+// click, mouseover, mouseout, keydown, keyup, submit, change, load
+
+// Adding event listeners
+const button = document.querySelector("#myButton");
+
+// Method 1: Using anonymous function
+button.addEventListener("click", function() {
+    console.log("Button was clicked!");
+});
+
+// Method 2: Using named function
+function handleClick() {
+    console.log("Button was clicked!");
+}
+button.addEventListener("click", handleClick);
+
+// Method 3: Inline HTML event handler (not recommended)
+&lt;button onclick="handleClick()"&gt;Click me&lt;/button&gt;
+
+// Event object
+button.addEventListener("click", function(event) {
+    console.log(event); // Information about the event
+    console.log(event.target); // The element that triggered the event
+});
+
+// Preventing default behavior
+const form = document.querySelector("#myForm");
+form.addEventListener("submit", function(event) {
+    event.preventDefault(); // Stop form from submitting
+    // Handle form data manually
+});</code></pre>
+                </div>
+                
+                <div class="use-case">
+                    <h4>Common Event Handling Scenarios:</h4>
+                    <ul>
+                        <li>Button clicks</li>
+                        <li>Form submissions</li>
+                        <li>Keyboard interactions</li>
+                        <li>Mouse movements</li>
+                        <li>Window events (resize, scroll)</li>
+                        <li>Touch events for mobile devices</li>
+                    </ul>
+                </div>
+                
+                <p>Event delegation is a technique where you delegate events to parent elements rather than setting them on each child element. This is useful for dynamically added elements or when you have many similar elements.</p>
+                
+                <div class="code-example">
+                    <pre><code>// Instead of adding listeners to each button
+document.querySelector("#buttonContainer").addEventListener("click", function(event) {
+    if (event.target.classList.contains("btn")) {
+        console.log("Button clicked:", event.target.textContent);
+    }
+});</code></pre>
+                </div>
+
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Event Handling Best Practices:</h4>
+                    <ul>
+                        <li>Use event delegation for dynamic content</li>
+                        <li>Remove event listeners when no longer needed to prevent memory leaks</li>
+                        <li>Be mindful of event propagation (bubbling and capturing)</li>
+                        <li>Use passive event listeners for scroll events to improve performance</li>
+                        <li>Consider throttling or debouncing frequent events like scroll or resize</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="concept-card">
+                <h3>Arrays and Objects</h3>
+                <p>Arrays are used to store multiple values in a single variable. Objects are collections of key-value pairs.</p>
+                
+                <div class="code-example">
+                    <pre><code>// Arrays
+let fruits = ["Apple", "Banana", "Orange"];
+console.log(fruits[0]); // "Apple"
+
+// Array methods
+fruits.push("Mango"); // Add to end
+fruits.pop(); // Remove from end
+fruits.unshift("Strawberry"); // Add to beginning
+fruits.shift(); // Remove from beginning
+
+// Iterating over arrays
+fruits.forEach(function(fruit) {
+    console.log(fruit);
+});
+
+// Objects
+let person = {
+    firstName: "John",
+    lastName: "Doe",
+    age: 30,
+    hobbies: ["reading", "coding"],
+    address: {
+        street: "123 Main St",
+        city: "Boston"
+    }
+};
+
+// Accessing object properties
+console.log(person.firstName); // "John"
+console.log(person["lastName"]); // "Doe"
+console.log(person.hobbies[0]); // "reading"
+
+// Adding/modifying properties
+person.email = "john@example.com";
+person.age = 31;
+
+// Object methods
+person.fullName = function() {
+    return this.firstName + " " + this.lastName;
+};</code></pre>
+                </div>
+                
+                <div class="use-case">
+                    <h4>Common Array and Object Operations:</h4>
+                    <ul>
+                        <li>Storing and organizing data</li>
+                        <li>Processing lists of items (map, filter, reduce)</li>
+                        <li>Working with JSON data from APIs</li>
+                        <li>Creating complex data structures</li>
+                    </ul>
+                </div>
+
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Modern JavaScript Features:</h4>
+                    <ul>
+                        <li><strong>Destructuring:</strong> Extract values from arrays/objects into variables</li>
+                        <li><strong>Spread/Rest:</strong> Expand or collect elements with <code>...</code> syntax</li>
+                        <li><strong>Template literals:</strong> Use backticks for string interpolation</li>
+                        <li><strong>Arrow functions:</strong> Concise syntax with lexical <code>this</code></li>
+                        <li><strong>Modules:</strong> Organize code into reusable modules with <code>import/export</code></li>
+                        <li><strong>Promises/Async-Await:</strong> Handle asynchronous operations cleanly</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="resources">
+        <div class="container">
+            <h2>JavaScript Learning Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-img">
+                        <img src="https://i.ytimg.com/vi/PkZNo7MFNFg/maxresdefault.jpg" alt="JavaScript Tutorial">
+                    </div>
+                    <div class="resource-content">
+                        <h3>JavaScript Full Course for Beginners</h3>
+                        <div class="resource-meta">
+                            <span>FreeCodeCamp</span>
+                            <span>4 hours</span>
+                        </div>
+                        <p class="resource-desc">Complete JavaScript course covering all the basics in one video.</p>
+                        <a href="https://www.youtube.com/watch?v=PkZNo7MFNFg" class="resource-link" target="_blank">Watch Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-img">
+                        <img src="https://i.ytimg.com/vi/hdI2bqOjy3c/maxresdefault.jpg" alt="JavaScript Crash Course">
+                    </div>
+                    <div class="resource-content">
+                        <h3>JavaScript Crash Course</h3>
+                        <div class="resource-meta">
+                            <span>Traversy Media</span>
+                            <span>1.5 hours</span>
+                        </div>
+                        <p class="resource-desc">Quick introduction to JavaScript covering all the fundamental concepts.</p>
+                        <a href="https://www.youtube.com/watch?v=hdI2bqOjy3c" class="resource-link" target="_blank">Watch Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-img">
+                        <img src="https://i.ytimg.com/vi/jS4aFq5-91M/maxresdefault.jpg" alt="JavaScript DOM">
+                    </div>
+                    <div class="resource-content">
+                        <h3>JavaScript DOM Tutorial</h3>
+                        <div class="resource-meta">
+                            <span>Web Dev Simplified</span>
+                            <span>45 mins</span>
+                        </div>
+                        <p class="resource-desc">Learn how to manipulate the DOM with JavaScript in this focused tutorial.</p>
+                        <a href="https://www.youtube.com/watch?v=jS4aFq5-91M" class="resource-link" target="_blank">Watch Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Beginner's Guide</span>
+                    </div>
+                    <p>Making programming accessible to everyone. Our mission is to help absolute beginners start their coding journey with confidence.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="cheatsheets.html">Cheat Sheets</a></li>
+                        <li><a href="challenges.html">Code Challenges</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Languages</h3>
+                    <ul>
+                        <li><a href="html-tutorial.html">HTML & CSS</a></li>
+                        <li><a href="javascript-tutorial.html">JavaScript</a></li>
+                        <li><a href="python-tutorial.html">Python</a></li>
+                        <li><a href="java-tutorial.html">Java</a></li>
+                        <li><a href="swift-tutorial.html">Swift</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="community.html">Community</a></li>
+                        <li><a href="feedback.html">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Beginner's Guide to Programming. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+            
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('#navMenu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    menuToggle.querySelector('i').classList.add('fa-bars');
+                    menuToggle.querySelector('i').classList.remove('fa-times');
+                });
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.concept-card, .section-title, .resource-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.concept-card, .section-title, .resource-card');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+        });
+    </script>
+</body>
+</html>

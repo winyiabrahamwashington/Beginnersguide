@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java for Beginners | Complete Beginner's Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --gray: #94a3b8;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav {
+            width: 100%;
+            order: 1;
+            margin-top: 15px;
+            display: none;
+        }
+
+        nav.active {
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: block;
+            cursor: pointer;
+            font-size: 1.5rem;
+            order: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Content Section */
+        .content-section {
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .content-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .content-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .content-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .code-example {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .example-image {
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .tip-box {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .note-box {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary-light);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .learning-objectives {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(37, 99, 235, 0.05);
+            border-radius: 8px;
+        }
+
+        .learning-objectives h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .learning-objectives ul {
+            margin-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .learning-objectives li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .prerequisites {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(245, 158, 11, 0.05);
+            border-radius: 8px;
+        }
+
+        .prerequisites h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--warning);
+        }
+
+        .prerequisites p {
+            margin-bottom: 5px;
+        }
+
+        .beginner-tips {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(236, 72, 153, 0.05);
+            border-radius: 8px;
+        }
+
+        .beginner-tips h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .beginner-tips p {
+            margin-bottom: 5px;
+        }
+
+        .tutorial-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-link:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .tutorial-link i {
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-link:hover i {
+            margin-left: 10px;
+        }
+
+        /* YouTube Links Section */
+        .youtube-links {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .youtube-links::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .youtube-links h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .youtube-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .youtube-thumbnail {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .youtube-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .youtube-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            font-size: 3rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+        }
+
+        .youtube-info {
+            padding: 15px;
+            color: var(--dark);
+        }
+
+        .youtube-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .youtube-info p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 50px 0 25px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .content-card {
+            background-color: #1e293b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .content-card h3,
+        body.dark-mode .section-title h2 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .code-example {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border-left: 4px solid var(--accent);
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        body.dark-mode .footer-links ul li a:hover {
+            color: var(--primary-light);
+        }
+
+        body.dark-mode .learning-objectives {
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        body.dark-mode .prerequisites {
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        body.dark-mode .beginner-tips {
+            background-color: rgba(236, 72, 153, 0.1);
+        }
+
+        body.dark-mode .youtube-info {
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .youtube-info p {
+            color: #94a3b8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (min-width: 576px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .content-card {
+                padding: 30px;
+            }
+            
+            .youtube-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            nav {
+                width: auto;
+                order: 0;
+                margin-top: 0;
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: row;
+                gap: 25px;
+            }
+            
+            nav ul li a {
+                padding: 5px 0;
+                display: inline-block;
+            }
+            
+            .menu-toggle {
+                display: none;
+            }
+            
+            .hero {
+                padding: 100px 0;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+            
+            .content-card {
+                padding: 40px;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) {
+            section {
+                padding: 80px 0;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .youtube-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+            </div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Master Java Programming</h1>
+            <p>Learn one of the most popular and versatile programming languages from the ground up - perfect for beginners and aspiring developers</p>
+            <a href="#what-is-java" class="btn">Begin Learning</a>
+        </div>
+    </section>
+
+    <!-- What is Java Section -->
+    <section class="content-section" id="what-is-java">
+        <div class="container">
+            <div class="section-title">
+                <h2>What is Java?</h2>
+                <p>The powerful, platform-independent programming language</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>The Java Programming Language</h3>
+                <p><strong>Java</strong> is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible. It is a general-purpose programming language intended to let programmers write once, run anywhere (WORA), meaning that compiled Java code can run on all platforms that support Java without the need for recompilation.</p>
+                
+                <div class="example-image">
+                    <img src="https://www.oracle.com/a/ocom/img/cb71-java-logo.png" alt="Java Programming">
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Key Features of Java</h4>
+                    <ul>
+                        <li><strong>Platform Independent:</strong> Java code is compiled into bytecode that runs on any Java Virtual Machine (JVM)</li>
+                        <li><strong>Object-Oriented:</strong> Follows OOP paradigm for better code organization</li>
+                        <li><strong>Robust:</strong> Strong memory management, exception handling, and type checking</li>
+                        <li><strong>Secure:</strong> Provides a secure execution environment</li>
+                        <li><strong>Multithreaded:</strong> Supports concurrent execution of program parts</li>
+                        <li><strong>High Performance:</strong> Just-In-Time (JIT) compilers enable high performance</li>
+                        <li><strong>Distributed:</strong> Designed for distributed computing environments</li>
+                        <li><strong>Dynamic:</strong> Supports dynamic loading of classes and reflection</li>
+                    </ul>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Understanding the Java Ecosystem</h3>
+                    <p>Java consists of several key components that work together:</p>
+                    
+                    <div class="learning-objectives">
+                        <h4><i class="fas fa-cogs"></i> Java Platform Components</h4>
+                        <ul>
+                            <li><strong>Java Development Kit (JDK):</strong> Contains tools for developing Java programs (compiler, debugger, etc.)</li>
+                            <li><strong>Java Runtime Environment (JRE):</strong> Needed to run Java programs (includes JVM and core libraries)</li>
+                            <li><strong>Java Virtual Machine (JVM):</strong> Executes Java bytecode, enables "Write Once, Run Anywhere"</li>
+                            <li><strong>Java API:</strong> Extensive collection of ready-made classes for common programming tasks</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-image">
+                        <img src="https://www.oracle.com/a/tech/img/jdk-jre-jvm.png" alt="JDK, JRE, JVM relationship">
+                    </div>
+                    
+                    <div class="note-box">
+                        <p><strong>How Java Works:</strong> Java source code (.java files) is compiled by the javac compiler into bytecode (.class files). The JVM then interprets this bytecode, converting it into native machine code at runtime using the JIT compiler.</p>
+                    </div>
+                </div>
+                
+                <div class="code-example">
+                    <pre><code>// Simple Java program
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Did you know?</strong> Java was originally developed by James Gosling at Sun Microsystems (now owned by Oracle) and released in 1995. The name "Java" was inspired by Java coffee, marking the language's ability to "wake up" the web.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Absolute Beginner's Guide</h4>
+                    <p>If you're completely new to Java, here's what you need to know to get started:</p>
+                    <ol>
+                        <li><strong>Java is everywhere</strong>: Used in web apps, mobile apps (Android), enterprise software, and more</li>
+                        <li><strong>You'll need the JDK</strong>: Java Development Kit to compile and run programs</li>
+                        <li><strong>It's strongly typed</strong>: You must declare variable types</li>
+                        <li><strong>Object-oriented</strong>: Everything in Java is associated with classes and objects</li>
+                        <li><strong>Memory management</strong>: Java handles memory automatically with garbage collection</li>
+                        <li><strong>Case sensitive</strong>: 'MyVariable' and 'myvariable' are different</li>
+                        <li><strong>Main method</strong>: Execution starts from the main() method</li>
+                    </ol>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>First Steps Exercise:</strong> Try installing the JDK and writing the HelloWorld program above. Then modify it to print your name. This simple exercise will help you understand the basic structure of a Java program.</p>
+                </div>
+                
+                <a href="#getting-started" class="tutorial-link">Continue to Getting Started <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section class="content-section" id="getting-started">
+        <div class="container">
+            <div class="section-title">
+                <h2>Getting Started with Java</h2>
+                <p>Set up your development environment and write your first program</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Installing Java Development Kit (JDK)</h3>
+                <p>To start programming in Java, you'll need to install the Java Development Kit (JDK) which includes the Java Runtime Environment (JRE) and developer tools.</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Installation Steps</h4>
+                    <ol>
+                        <li>Download the latest JDK from <a href="https://www.oracle.com/java/technologies/javase-downloads.html" target="_blank">Oracle's website</a> or use OpenJDK</li>
+                        <li>Run the installer for your operating system</li>
+                        <li>Set the JAVA_HOME environment variable to your JDK installation path</li>
+                        <li>Add the JDK's bin directory to your system PATH</li>
+                        <li>Verify installation by running <code>java -version</code> in your terminal</li>
+                    </ol>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://www.oracle.com/a/ocom/img/jdk-installation.jpg" alt="JDK Installation">
+                </div>
+                
+                <div class="prerequisites">
+                    <h4><i class="fas fa-info-circle"></i> JDK vs JRE</h4>
+                    <p>The <strong>JDK</strong> is for developers (contains compiler and tools) while the <strong>JRE</strong> is for running Java programs. When installing Java for development, always choose the JDK.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Beginner Tip</h4>
+                    <p>If you're having trouble with environment variables, many modern IDEs (like IntelliJ IDEA) can automatically detect your JDK installation without manual PATH configuration.</p>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Choosing an IDE</h3>
+                <p>While you can write Java in any text editor, an Integrated Development Environment (IDE) provides powerful tools to make development easier.</p>
+                
+                <div class="code-example">
+                    <pre><code>// Popular Java IDEs
+1. IntelliJ IDEA (Recommended for beginners)
+2. Eclipse
+3. NetBeans
+4. VS Code (with Java extensions)</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Recommendation:</strong> For beginners, we recommend starting with IntelliJ IDEA Community Edition. It's free, user-friendly, and provides excellent code completion and error detection.</p>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://www.jetbrains.com/idea/img/screenshots/idea_overview@2x.jpg" alt="IntelliJ IDEA">
+                </div>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-laptop-code"></i> IDE Features to Look For</h4>
+                    <p>When choosing an IDE, consider these helpful features:</p>
+                    <ul>
+                        <li>Code completion and suggestions</li>
+                        <li>Debugging tools</li>
+                        <li>Built-in terminal</li>
+                        <li>Version control integration</li>
+                        <li>Plugin ecosystem</li>
+                        <li>Refactoring tools</li>
+                        <li>Built-in documentation</li>
+                        <li>Project management tools</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Your First Java Program</h3>
+                <p>Let's create the traditional "Hello World" program to understand Java's basic structure.</p>
+                
+                <div class="code-example">
+                    <pre><code>public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Program Breakdown</h4>
+                    <ul>
+                        <li><code>public class HelloWorld</code>: Defines a class named HelloWorld (filename must match)</li>
+                        <li><code>public static void main(String[] args)</code>: The main method - program entry point</li>
+                        <li><code>System.out.println()</code>: Prints output to the console</li>
+                        <li><code>//</code>: Single-line comment</li>
+                        <li><code>/* */</code>: Multi-line comment</li>
+                        <li><code>/** */</code>: Documentation comment (for Javadoc)</li>
+                    </ul>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Important:</strong> The filename must match the class name (HelloWorld.java) and is case-sensitive. Java is a case-sensitive language.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-terminal"></i> Compiling and Running</h4>
+                    <p>To compile and run your program:</p>
+                    <ol>
+                        <li>Save the file as HelloWorld.java</li>
+                        <li>Open terminal in the file's directory</li>
+                        <li>Compile with: <code>javac HelloWorld.java</code></li>
+                        <li>Run with: <code>java HelloWorld</code></li>
+                    </ol>
+                    <p>You should see "Hello, World!" printed in your terminal.</p>
+                </div>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-book"></i> Common Beginner Mistakes</h4>
+                    <ul>
+                        <li>Forgetting that Java is case-sensitive</li>
+                        <li>Mismatching class name and filename</li>
+                        <li>Missing semicolons at line endings</li>
+                        <li>Forgetting to declare variable types</li>
+                        <li>Not properly closing blocks with }</li>
+                        <li>Using the wrong type of quotes (should be double quotes for Strings)</li>
+                    </ul>
+                </div>
+                
+                <a href="#syntax-basics" class="tutorial-link">Continue to Java Syntax Basics <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Syntax Basics Section -->
+    <section class="content-section" id="syntax-basics">
+        <div class="container">
+            <div class="section-title">
+                <h2>Java Syntax Basics</h2>
+                <p>Learn the fundamental building blocks of Java programming</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Variables and Data Types</h3>
+                <p>Java is a statically-typed language, meaning variables must be declared with a specific type.</p>
+                
+                <div class="code-example">
+                    <pre><code>// Primitive data types
+byte age = 30;                  // 8-bit integer (-128 to 127)
+short year = 2023;              // 16-bit integer (-32,768 to 32,767)
+int population = 8000000;       // 32-bit integer (-2^31 to 2^31-1)
+long globalPopulation = 7800000000L; // 64-bit integer (add L suffix)
+float price = 19.99f;           // 32-bit floating point (add f suffix)
+double pi = 3.1415926535;       // 64-bit floating point (default for decimals)
+char grade = 'A';               // Single 16-bit Unicode character
+boolean isJavaFun = true;       // true or false
+
+// Non-primitive data types
+String name = "Java Beginner";  // Sequence of characters (note capital S)
+int[] numbers = {1, 2, 3};      // Array of integers
+Object obj = new Object();      // Any Java object
+
+// Constants (final variables)
+final double PI = 3.14159;</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Naming Conventions:</strong> Use camelCase for variables (myVariableName), PascalCase for classes (MyClassName), and UPPER_CASE for constants (MAX_VALUE). Choose descriptive names that indicate the variable's purpose.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Beginner Tip</h4>
+                    <p>Start with <code>int</code> for whole numbers and <code>double</code> for decimal numbers unless you have a specific reason to use other types. These are the most commonly used numeric types in Java.</p>
+                </div>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-code"></i> Type Casting</h4>
+                    <p>Java supports both widening (automatic) and narrowing (manual) type conversions:</p>
+                    <div class="code-example">
+                        <pre><code>// Widening conversion (automatic)
+int myInt = 9;
+double myDouble = myInt;  // Automatic casting: int to double
+
+// Narrowing conversion (manual)
+double myDouble = 9.78;
+int myInt = (int) myDouble; // Manual casting: double to int</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Operators</h3>
+                <p>Java provides various operators for performing operations on variables and values.</p>
+                
+                <div class="code-example">
+                    <pre><code>// Arithmetic operators
+int sum = 10 + 20;      // Addition
+int difference = 20 - 10; // Subtraction
+int product = 10 * 20;  // Multiplication
+int quotient = 20 / 10; // Division
+int remainder = 11 % 3; // Modulus (remainder)
+
+// Assignment operators
+int x = 10;
+x += 5;  // Equivalent to x = x + 5
+x -= 3;  // Equivalent to x = x - 3
+x *= 2;  // Equivalent to x = x * 2
+x /= 4;  // Equivalent to x = x / 4
+
+// Comparison operators
+boolean isEqual = (10 == 20);    // Equal to
+boolean isNotEqual = (10 != 20); // Not equal to
+boolean isGreater = (10 > 20);   // Greater than
+boolean isLess = (10 < 20);      // Less than
+boolean isGreaterOrEqual = (10 >= 20);
+
+// Logical operators
+boolean andResult = (true && false); // Logical AND
+boolean orResult = (true || false);  // Logical OR
+boolean notResult = !true;           // Logical NOT
+
+// Ternary operator
+int time = 20;
+String result = (time < 18) ? "Good day." : "Good evening.";</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-calculator"></i> Operator Precedence</h4>
+                    <p>Java evaluates expressions according to operator precedence (order of operations):</p>
+                    <ol>
+                        <li>Parentheses <code>()</code></li>
+                        <li>Unary operators <code>++ -- !</code></li>
+                        <li>Multiplicative <code>* / %</code></li>
+                        <li>Additive <code>+ -</code></li>
+                        <li>Relational <code>< > <= >=</code></li>
+                        <li>Equality <code>== !=</code></li>
+                        <li>Logical AND <code>&&</code></li>
+                        <li>Logical OR <code>||</code></li>
+                        <li>Assignment <code>= += -= etc.</code></li>
+                    </ol>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Common Operator Mistakes</h4>
+                    <ul>
+                        <li>Using <code>=</code> (assignment) instead of <code>==</code> (equality)</li>
+                        <li>Forgetting that integer division truncates decimals</li>
+                        <li>Not understanding operator precedence</li>
+                        <li>Using <code>&</code> (bitwise AND) instead of <code>&&</code> (logical AND)</li>
+                        <li>Confusing prefix (<code>++x</code>) and postfix (<code>x++</code>) increment</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Control Flow Statements</h3>
+                <p>Control flow statements allow you to control the execution flow of your program.</p>
+                
+                <div class="code-example">
+                    <pre><code>// If-else statement
+int age = 18;
+if (age < 13) {
+    System.out.println("Child");
+} else if (age < 20) {
+    System.out.println("Teenager");
+} else {
+    System.out.println("Adult");
+}
+
+// Switch statement (Java 14+ enhanced)
+String day = "Monday";
+switch (day) {
+    case "Monday" -> System.out.println("Start of work week");
+    case "Friday" -> System.out.println("End of work week");
+    default -> System.out.println("Midweek day");
+}
+
+// Traditional for loop
+for (int i = 0; i < 5; i++) {
+    System.out.println("Iteration: " + i);
+}
+
+// Enhanced for loop (for-each)
+int[] numbers = {1, 2, 3, 4, 5};
+for (int num : numbers) {
+    System.out.println(num);
+}
+
+// While loop
+int count = 0;
+while (count < 5) {
+    System.out.println("Count: " + count);
+    count++;
+}
+
+// Do-while loop
+int num = 1;
+do {
+    System.out.println("Number: " + num);
+    num++;
+} while (num <= 5);
+
+// Break and continue
+for (int i = 0; i < 10; i++) {
+    if (i == 4) {
+        continue; // Skip iteration
+    }
+    if (i == 8) {
+        break; // Exit loop
+    }
+    System.out.println(i);
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Enhanced For Loop:</strong> Java provides a simplified for loop for iterating through arrays and collections: <code>for (String item : items) { ... }</code></p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-code-branch"></i> Control Flow Tips</h4>
+                    <p>When working with control flow:</p>
+                    <ul>
+                        <li>Always use braces <code>{}</code> even for single statements</li>
+                        <li>Indent code properly for readability</li>
+                        <li>Use <code>break</code> in switch statements to prevent fall-through</li>
+                        <li>Consider using enhanced for loops when possible</li>
+                        <li>Avoid deep nesting of control structures</li>
+                        <li>Use meaningful conditions in loops and if statements</li>
+                    </ul>
+                </div>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-project-diagram"></i> Control Flow Exercises</h4>
+                    <p>Try these exercises to practice control flow:</p>
+                    <ol>
+                        <li>Write a program that prints numbers 1-100, but for multiples of 3 print "Fizz", for multiples of 5 print "Buzz", and for multiples of both print "FizzBuzz"</li>
+                        <li>Create a calculator program that takes two numbers and an operator (+, -, *, /) as input and outputs the result</li>
+                        <li>Write a program that prints a pyramid pattern using nested loops</li>
+                    </ol>
+                </div>
+                
+                <a href="#oop" class="tutorial-link">Continue to OOP Concepts <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- OOP Concepts Section -->
+    <section class="content-section" id="oop">
+        <div class="container">
+            <div class="section-title">
+                <h2>Object-Oriented Programming in Java</h2>
+                <p>Learn the core concepts of OOP with Java</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Classes and Objects</h3>
+                <p>Java is fundamentally object-oriented. A class is a blueprint for objects, and an object is an instance of a class.</p>
+                
+                <div class="code-example">
+                    <pre><code>// Class definition
+public class Car {
+    // Fields (attributes)
+    private String brand;
+    private String model;
+    private int year;
+    
+    // Constructor
+    public Car(String brand, String model, int year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+    }
+    
+    // Getter methods
+    public String getBrand() { return brand; }
+    public String getModel() { return model; }
+    public int getYear() { return year; }
+    
+    // Setter methods
+    public void setBrand(String brand) { this.brand = brand; }
+    public void setModel(String model) { this.model = model; }
+    public void setYear(int year) { this.year = year; }
+    
+    // Method
+    public void startEngine() {
+        System.out.println("Starting the " + brand + " " + model);
+    }
+    
+    // Method with return value
+    public int calculateAge(int currentYear) {
+        return currentYear - year;
+    }
+}
+
+// Creating and using objects
+public class Main {
+    public static void main(String[] args) {
+        // Create Car object
+        Car myCar = new Car("Toyota", "Camry", 2020);
+        
+        // Call methods
+        myCar.startEngine();  // Output: Starting the Toyota Camry
+        
+        // Access fields through getters
+        System.out.println("Brand: " + myCar.getBrand());
+        
+        // Calculate car age
+        int carAge = myCar.calculateAge(2023);
+        System.out.println("Car age: " + carAge + " years");
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Class Components</h4>
+                    <ul>
+                        <li><strong>Fields:</strong> Variables that hold the object's state (should usually be private)</li>
+                        <li><strong>Constructor:</strong> Special method for object initialization (same name as class)</li>
+                        <li><strong>Methods:</strong> Functions that define object behavior</li>
+                        <li><strong>Getters/Setters:</strong> Public methods to access private fields</li>
+                        <li><strong>this keyword:</strong> Refers to the current object</li>
+                        <li><strong>new keyword:</strong> Creates a new object instance</li>
+                    </ul>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Best Practice:</strong> Follow the principle of encapsulation by making fields private and providing public getter/setter methods to access them. This protects the object's internal state.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Object-Oriented Thinking</h4>
+                    <p>When designing classes:</p>
+                    <ol>
+                        <li>Identify real-world objects your program needs</li>
+                        <li>Determine each object's attributes (fields) and behaviors (methods)</li>
+                        <li>Define relationships between objects</li>
+                        <li>Keep classes focused on a single responsibility</li>
+                        <li>Use meaningful names that reflect the object's purpose</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Four Pillars of OOP</h3>
+                <p>Object-Oriented Programming in Java is built on four main principles:</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> 1. Encapsulation</h4>
+                    <p>Bundling data and methods that operate on that data within one unit (class) and restricting access to some of the object's components.</p>
+                    <div class="code-example">
+                        <pre><code>public class BankAccount {
+    private double balance;  // Private field
+    
+    // Public methods to interact with balance
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+        }
+    }
+    
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+        }
+    }
+    
+    public double getBalance() {
+        return balance;
+    }
+}</code></pre>
+                    </div>
+                    <p><strong>Benefits:</strong> Prevents unauthorized access, allows validation, makes code more maintainable</p>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> 2. Inheritance</h4>
+                    <p>Creating new classes (subclasses) from existing ones (superclasses) to reuse code and establish relationships.</p>
+                    <div class="code-example">
+                        <pre><code>// Superclass
+class Vehicle {
+    protected String brand;  // Protected allows access by subclasses
+    
+    public Vehicle(String brand) {
+        this.brand = brand;
+    }
+    
+    public void honk() {
+        System.out.println("Honk honk!");
+    }
+}
+
+// Subclass
+class Car extends Vehicle {
+    private String model;
+    
+    public Car(String brand, String model) {
+        super(brand);  // Call superclass constructor
+        this.model = model;
+    }
+    
+    public void displayInfo() {
+        System.out.println("Brand: " + brand + ", Model: " + model);
+    }
+}
+
+// Using inheritance
+public class Main {
+    public static void main(String[] args) {
+        Car myCar = new Car("Toyota", "Camry");
+        myCar.honk();       // Inherited method
+        myCar.displayInfo(); // Subclass method
+    }
+}</code></pre>
+                    </div>
+                    <p><strong>Benefits:</strong> Code reuse, logical hierarchy, polymorphism</p>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> 3. Polymorphism</h4>
+                    <p>The ability of an object to take on many forms, typically through method overriding and interfaces.</p>
+                    <div class="code-example">
+                        <pre><code>class Animal {
+    public void makeSound() {
+        System.out.println("Some sound");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Bark");
+    }
+}
+
+class Cat extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Meow");
+    }
+}
+
+// Using polymorphism
+public class Main {
+    public static void main(String[] args) {
+        Animal myAnimal = new Animal();  // Animal object
+        Animal myDog = new Dog();        // Dog object
+        Animal myCat = new Cat();        // Cat object
+        
+        myAnimal.makeSound();  // Output: Some sound
+        myDog.makeSound();     // Output: Bark
+        myCat.makeSound();     // Output: Meow
+    }
+}</code></pre>
+                    </div>
+                    <p><strong>Benefits:</strong> Flexible code, easier to extend, cleaner interfaces</p>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> 4. Abstraction</h4>
+                    <p>Hiding complex implementation details and showing only the necessary features of an object.</p>
+                    <div class="code-example">
+                        <pre><code>// Abstract class
+abstract class Shape {
+    // Abstract method (no implementation)
+    abstract double area();
+    
+    // Concrete method
+    void display() {
+        System.out.println("Area: " + area());
+    }
+}
+
+// Concrete subclass
+class Circle extends Shape {
+    private double radius;
+    
+    Circle(double r) { radius = r; }
+    
+    @Override
+    double area() {
+        return Math.PI * radius * radius;
+    }
+}
+
+// Using abstraction
+public class Main {
+    public static void main(String[] args) {
+        Shape myCircle = new Circle(5.0);
+        myCircle.display();  // Output: Area: 78.53981633974483
+    }
+}</code></pre>
+                    </div>
+                    <p><strong>Benefits:</strong> Simplifies complex systems, reduces complexity, focuses on what rather than how</p>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>SOLID Principles:</strong> Beyond the four pillars, good OOP design follows SOLID principles:</p>
+                    <ol>
+                        <li><strong>Single Responsibility:</strong> A class should have one reason to change</li>
+                        <li><strong>Open-Closed:</strong> Open for extension, closed for modification</li>
+                        <li><strong>Liskov Substitution:</strong> Subclasses should be substitutable for their base classes</li>
+                        <li><strong>Interface Segregation:</strong> Many specific interfaces are better than one general one</li>
+                        <li><strong>Dependency Inversion:</strong> Depend on abstractions, not concretions</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Interfaces and Abstract Classes</h3>
+                <p>Interfaces and abstract classes are key tools for implementing abstraction in Java.</p>
+                
+                <div class="code-example">
+                    <pre><code>// Interface definition
+interface Drawable {
+    void draw();  // Abstract method
+    
+    default void resize() {  // Default method (Java 8+)
+        System.out.println("Resizing");
+    }
+    
+    static void printInfo() {  // Static method (Java 8+)
+        System.out.println("This is a Drawable interface");
+    }
+}
+
+// Abstract class
+abstract class Shape {
+    protected String color;
+    
+    public Shape(String color) {
+        this.color = color;
+    }
+    
+    // Abstract method
+    abstract double area();
+    
+    // Concrete method
+    public String getColor() {
+        return color;
+    }
+}
+
+// Concrete class implementing interface and extending abstract class
+class Circle extends Shape implements Drawable {
+    private double radius;
+    
+    public Circle(String color, double radius) {
+        super(color);
+        this.radius = radius;
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing a " + color + " circle");
+    }
+    
+    @Override
+    double area() {
+        return Math.PI * radius * radius;
+    }
+}
+
+// Using interface and abstract class
+public class Main {
+    public static void main(String[] args) {
+        Circle myCircle = new Circle("red", 5.0);
+        myCircle.draw();          // Output: Drawing a red circle
+        myCircle.resize();        // Output: Resizing
+        System.out.println("Area: " + myCircle.area());
+        Drawable.printInfo();     // Output: This is a Drawable interface
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Interfaces vs Abstract Classes</h4>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Interface</th>
+                            <th>Abstract Class</th>
+                        </tr>
+                        <tr>
+                            <td>Methods</td>
+                            <td>Abstract (default/static in Java 8+)</td>
+                            <td>Can have both abstract and concrete</td>
+                        </tr>
+                        <tr>
+                            <td>Fields</td>
+                            <td>Only constants (public static final)</td>
+                            <td>Can have any fields</td>
+                        </tr>
+                        <tr>
+                            <td>Constructors</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Multiple Inheritance</td>
+                            <td>Class can implement multiple</td>
+                            <td>Class can extend only one</td>
+                        </tr>
+                        <tr>
+                            <td>Access Modifiers</td>
+                            <td>Public by default</td>
+                            <td>Can have any access modifier</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Interface Tips</h4>
+                    <p>When working with interfaces:</p>
+                    <ul>
+                        <li>Use interfaces to define behavior contracts</li>
+                        <li>A class can implement multiple interfaces</li>
+                        <li>Java 8+ allows default and static methods in interfaces</li>
+                        <li>Prefer interfaces to abstract classes when possible</li>
+                        <li>Use the <code>@Override</code> annotation when implementing interface methods</li>
+                    </ul>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Functional Interfaces:</strong> Java 8 introduced functional interfaces (interfaces with a single abstract method) that enable lambda expressions, making Java more functional.</p>
+                    <div class="code-example">
+                        <pre><code>// Functional interface
+@FunctionalInterface
+interface Greeting {
+    void sayHello(String name);
+}
+
+// Using lambda expression
+public class Main {
+    public static void main(String[] args) {
+        Greeting greet = name -> System.out.println("Hello, " + name);
+        greet.sayHello("Alice");  // Output: Hello, Alice
+    }
+}</code></pre>
+                    </div>
+                </div>
+                
+                <a href="#advanced-topics" class="tutorial-link">Continue to Advanced Topics <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Topics Section -->
+    <section class="content-section" id="advanced-topics">
+        <div class="container">
+            <div class="section-title">
+                <h2>Advanced Java Topics</h2>
+                <p>Exploring more complex Java concepts</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Collections Framework</h3>
+                <p>The Java Collections Framework provides a set of interfaces and classes for storing and manipulating groups of data.</p>
+                
+                <div class="code-example">
+                    <pre><code>import java.util.*;
+
+public class CollectionsDemo {
+    public static void main(String[] args) {
+        // List - ordered collection (allows duplicates)
+        List<String> arrayList = new ArrayList<>();
+        arrayList.add("Apple");
+        arrayList.add("Banana");
+        arrayList.add(1, "Orange"); // Insert at index 1
+        
+        // Set - unordered collection (no duplicates)
+        Set<Integer> hashSet = new HashSet<>();
+        hashSet.add(10);
+        hashSet.add(20);
+        hashSet.add(10); // Duplicate, won't be added
+        
+        // Map - key-value pairs
+        Map<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("John", 25);
+        hashMap.put("Alice", 30);
+        hashMap.put("Bob", 28);
+        
+        // Queue - FIFO order
+        Queue<String> queue = new LinkedList<>();
+        queue.add("First");
+        queue.add("Second");
+        queue.add("Third");
+        
+        // Iterating through collections
+        System.out.println("ArrayList:");
+        for (String fruit : arrayList) {
+            System.out.println(fruit);
+        }
+        
+        System.out.println("\nHashMap:");
+        for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Common Collection Interfaces</h4>
+                    <ul>
+                        <li><strong>List:</strong> Ordered collection (ArrayList, LinkedList)</li>
+                        <li><strong>Set:</strong> Collection with no duplicates (HashSet, TreeSet)</li>
+                        <li><strong>Map:</strong> Key-value pairs (HashMap, TreeMap)</li>
+                        <li><strong>Queue:</strong> FIFO ordering (LinkedList, PriorityQueue)</li>
+                        <li><strong>Deque:</strong> Double-ended queue (ArrayDeque)</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Generics:</strong> Java collections use generics to provide type safety. Always specify the type when declaring collections: <code>List&lt;String&gt;</code> rather than raw <code>List</code>.</p>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Exception Handling</h3>
+                <p>Java provides a robust exception handling mechanism to deal with runtime errors.</p>
+                
+                <div class="code-example">
+                    <pre><code>import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class ExceptionHandling {
+    public static void main(String[] args) {
+        // Try-catch block
+        try {
+            int[] numbers = {1, 2, 3};
+            System.out.println(numbers[5]); // ArrayIndexOutOfBoundsException
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Array index out of bounds!");
+        }
+        
+        // Multiple catch blocks
+        try {
+            File file = new File("nonexistent.txt");
+            Scanner scanner = new Scanner(file); // FileNotFoundException
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+        }
+        
+        // Finally block
+        Scanner fileScanner = null;
+        try {
+            File file = new File("example.txt");
+            fileScanner = new Scanner(file);
+            while (fileScanner.hasNextLine()) {
+                System.out.println(fileScanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } finally {
+            if (fileScanner != null) {
+                fileScanner.close(); // Always executed
+            }
+        }
+        
+        // Try-with-resources (Java 7+)
+        try (Scanner autoCloseScanner = new Scanner(new File("example.txt"))) {
+            while (autoCloseScanner.hasNextLine()) {
+                System.out.println(autoCloseScanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } // Scanner automatically closed
+        
+        // Throwing exceptions
+        try {
+            validateAge(15);
+        } catch (InvalidAgeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    // Custom exception
+    static class InvalidAgeException extends Exception {
+        public InvalidAgeException(String message) {
+            super(message);
+        }
+    }
+    
+    // Method throwing exception
+    static void validateAge(int age) throws InvalidAgeException {
+        if (age < 18) {
+            throw new InvalidAgeException("Age must be 18 or older");
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Exception Hierarchy</h4>
+                    <ul>
+                        <li><strong>Throwable:</strong> Superclass of all errors and exceptions</li>
+                        <li><strong>Error:</strong> Serious problems that shouldn't be caught (OutOfMemoryError)</li>
+                        <li><strong>Exception:</strong> Problems that can be handled</li>
+                        <li><strong>RuntimeException:</strong> Unchecked exceptions (NullPointerException)</li>
+                        <li><strong>Checked Exceptions:</strong> Must be declared or caught (IOException)</li>
+                    </ul>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Best Practices:</strong></p>
+                    <ul>
+                        <li>Use specific exception types rather than generic Exception</li>
+                        <li>Don't catch exceptions you can't handle</li>
+                        <li>Clean up resources in finally blocks or use try-with-resources</li>
+                        <li>Document exceptions your methods throw with @throws</li>
+                        <li>Create meaningful custom exceptions when appropriate</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>File I/O and Streams</h3>
+                <p>Java provides comprehensive APIs for working with files and streams.</p>
+                
+                <div class="code-example">
+                    <pre><code>import java.io.*;
+import java.nio.file.*;
+import java.util.stream.*;
+
+public class FileIO {
+    public static void main(String[] args) {
+        // Writing to a file (traditional way)
+        try (FileWriter writer = new FileWriter("output.txt")) {
+            writer.write("Hello, File I/O!\n");
+            writer.write("This is a second line.\n");
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
+        
+        // Reading from a file (traditional way)
+        try (BufferedReader reader = new BufferedReader(new FileReader("output.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+        
+        // New Java NIO API (Java 7+)
+        try {
+            // Write file
+            Path path = Paths.get("nio_output.txt");
+            Files.write(path, "Hello NIO!\n".getBytes(), StandardOpenOption.CREATE);
+            Files.write(path, "Second line\n".getBytes(), StandardOpenOption.APPEND);
+            
+            // Read file
+            List<String> lines = Files.readAllLines(path);
+            for (String line : lines) {
+                System.out.println(line);
+            }
+            
+            // Stream API with files
+            try (Stream<String> stream = Files.lines(path)) {
+                stream.forEach(System.out::println);
+            }
+        } catch (IOException e) {
+            System.out.println("NIO error: " + e.getMessage());
+        }
+        
+        // Object serialization
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream("person.ser"))) {
+            Person person = new Person("Alice", 30);
+            oos.writeObject(person);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        // Object deserialization
+        try (ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream("person.ser"))) {
+            Person person = (Person) ois.readObject();
+            System.out.println("Deserialized: " + person);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+// Serializable class
+class Person implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String name;
+    private int age;
+    
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    @Override
+    public String toString() {
+        return "Person{name='" + name + "', age=" + age + "}";
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Key I/O Concepts</h4>
+                    <ul>
+                        <li><strong>Byte Streams:</strong> InputStream, OutputStream (for binary data)</li>
+                        <li><strong>Character Streams:</strong> Reader, Writer (for text data)</li>
+                        <li><strong>Buffered I/O:</strong> BufferedInputStream, BufferedReader (more efficient)</li>
+                        <li><strong>NIO (New I/O):</strong> Path, Files, Channels (non-blocking I/O)</li>
+                        <li><strong>Serialization:</strong> Converting objects to byte streams</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Try-with-resources:</strong> Always use try-with-resources for I/O operations to ensure proper resource cleanup. This works with any class implementing AutoCloseable.</p>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Multithreading</h3>
+                <p>Java supports multithreading to perform multiple tasks simultaneously.</p>
+                
+                <div class="code-example">
+                    <pre><code>public class ThreadDemo {
+    public static void main(String[] args) {
+        // Extending Thread class
+        Thread thread1 = new MyThread();
+        thread1.start();
+        
+        // Implementing Runnable interface
+        Thread thread2 = new Thread(new MyRunnable());
+        thread2.start();
+        
+        // Lambda expression for Runnable
+        Thread thread3 = new Thread(() -> {
+            for (int i = 0; i < 5; i++) {
+                System.out.println("Lambda thread: " + i);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread3.start();
+        
+        // Thread synchronization
+        Counter counter = new Counter();
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                counter.increment();
+            }
+        });
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                counter.increment();
+            }
+        });
+        t1.start();
+        t2.start();
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Final count: " + counter.getCount());
+    }
+}
+
+class MyThread extends Thread {
+    @Override
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Thread class: " + i);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+class MyRunnable implements Runnable {
+    @Override
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Runnable: " + i);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+class Counter {
+    private int count = 0;
+    
+    public synchronized void increment() {
+        count++;
+    }
+    
+    public int getCount() {
+        return count;
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Thread Concepts</h4>
+                    <ul>
+                        <li><strong>Thread:</strong> Lightweight process that executes code</li>
+                        <li><strong>Runnable:</strong> Interface representing a task to execute</li>
+                        <li><strong>Synchronization:</strong> Controlling access to shared resources</li>
+                        <li><strong>Thread States:</strong> New, Runnable, Blocked, Waiting, Timed Waiting, Terminated</li>
+                        <li><strong>Thread Pool:</strong> Managing multiple threads efficiently</li>
+                    </ul>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Concurrency Issues:</strong> Be aware of race conditions, deadlocks, and thread interference when working with multiple threads. Always synchronize access to shared resources.</p>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Java Concurrency API:</strong> For more advanced threading, explore:</p>
+                    <ul>
+                        <li>ExecutorService and ThreadPools</li>
+                        <li>Callable and Future</li>
+                        <li>Concurrent collections (ConcurrentHashMap)</li>
+                        <li>Atomic variables</li>
+                        <li>Locks and Conditions</li>
+                    </ul>
+                </div>
+                
+                <a href="#resources" class="tutorial-link">Continue to Learning Resources <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Links Section -->
+    <section class="youtube-links" id="resources">
+        <div class="container">
+            <h2>Recommended Java Learning Videos</h2>
+            <div class="youtube-grid">
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=eIrMbAQSU34" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/eIrMbAQSU34/maxresdefault.jpg" alt="Java Tutorial for Beginners">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Java Tutorial for Beginners</h3>
+                            <p>Programming with Mosh</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=grEKMHGYyns" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/grEKMHGYyns/maxresdefault.jpg" alt="Java Full Course">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Java Full Course for Beginners</h3>
+                            <p>freeCodeCamp.org</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=GoXwIVyNvX0" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/GoXwIVyNvX0/maxresdefault.jpg" alt="Java OOP Concepts">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Java OOP Concepts</h3>
+                            <p>Bro Code</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=UmnCZ7-9yDY" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/UmnCZ7-9yDY/maxresdefault.jpg" alt="Java for Absolute Beginners">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Java for Absolute Beginners</h3>
+                            <p>Telusko</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Beginner's Guide</span>
+                    </div>
+                    <p>Master the art of programming with our comprehensive resources and tutorials designed for beginners.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Learn Java</h3>
+                    <ul>
+                        <li><a href="#what-is-java">What is Java?</a></li>
+                        <li><a href="#getting-started">Getting Started</a></li>
+                        <li><a href="#syntax-basics">Syntax Basics</a></li>
+                        <li><a href="#oop">OOP Concepts</a></li>
+                        <li><a href="#advanced-topics">Advanced Topics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://docs.oracle.com/javase/tutorial/" target="_blank">Official Java Tutorials</a></li>
+                        <li><a href="https://www.javatpoint.com/" target="_blank">JavaTpoint</a></li>
+                        <li><a href="https://www.codecademy.com/learn/learn-java" target="_blank">Codecademy</a></li>
+                        <li><a href="https://www.w3schools.com/java/" target="_blank">W3Schools</a></li>
+                        <li><a href="https://www.udemy.com/topic/java/" target="_blank">Udemy Courses</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="https://www.reddit.com/r/java/" target="_blank">Java Subreddit</a></li>
+                        <li><a href="https://stackoverflow.com/questions/tagged/java" target="_blank">Stack Overflow</a></li>
+                        <li><a href="https://dev.java/community/" target="_blank">Java Community</a></li>
+                        <li><a href="https://coderanch.com/" target="_blank">CodeRanch</a></li>
+                        <li><a href="https://community.oracle.com/community/developer/english/java" target="_blank">Oracle Java Community</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Beginner's Guide. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.querySelector('i').classList.toggle('fa-bars');
+                this.querySelector('i').classList.toggle('fa-times');
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            menuToggle.querySelector('i').classList.remove('fa-times');
+                            menuToggle.querySelector('i').classList.add('fa-bars');
+                        }
+                    }
+                });
+            });
+            
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.content-card, .section-title, .youtube-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.content-card, .section-title, .youtube-card');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+        });
+    </script>
+</body>
+</html>

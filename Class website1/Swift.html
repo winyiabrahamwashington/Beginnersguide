@@ -1,0 +1,2382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swift Basics | Beginner's Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --gray: #94a3b8;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation - Updated to match the CSS tutorial site */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav {
+            width: 100%;
+            order: 1;
+            margin-top: 15px;
+            display: none;
+        }
+
+        nav.active {
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: block;
+            cursor: pointer;
+            font-size: 1.5rem;
+            order: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://developer.apple.com/swift/images/swift-og.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Content Section */
+        .content-section {
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .content-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .content-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .content-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .code-example {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'SF Mono', Menlo, monospace;
+            border-left: 4px solid var(--primary);
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            border: none;
+            color: var(--dark);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 0.8rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .example-image {
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        .tip-box {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .note-box {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary-light);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .learning-objectives {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(37, 99, 235, 0.05);
+            border-radius: 8px;
+        }
+
+        .learning-objectives h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .learning-objectives ul {
+            margin-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .learning-objectives li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .prerequisites {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(245, 158, 11, 0.05);
+            border-radius: 8px;
+        }
+
+        .prerequisites h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--warning);
+        }
+
+        .prerequisites p {
+            margin-bottom: 5px;
+        }
+
+        .beginner-tips {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(236, 72, 153, 0.05);
+            border-radius: 8px;
+        }
+
+        .beginner-tips h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .beginner-tips p {
+            margin-bottom: 5px;
+        }
+
+        .tutorial-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-link:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .tutorial-link i {
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-link:hover i {
+            margin-left: 10px;
+        }
+
+        /* YouTube Links Section */
+        .youtube-links {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .youtube-links::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .youtube-links h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .youtube-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .youtube-thumbnail {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .youtube-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .youtube-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            font-size: 3rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+        }
+
+        .youtube-info {
+            padding: 15px;
+            color: var(--dark);
+        }
+
+        .youtube-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .youtube-info p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 50px 0 25px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Current Date - Removed as per request */
+        
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .content-card {
+            background-color: #1e293b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .content-card h3,
+        body.dark-mode .section-title h2 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .code-example {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border-left: 4px solid var(--accent);
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        body.dark-mode .footer-links ul li a:hover {
+            color: var(--primary-light);
+        }
+
+        body.dark-mode .learning-objectives {
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        body.dark-mode .prerequisites {
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        body.dark-mode .beginner-tips {
+            background-color: rgba(236, 72, 153, 0.1);
+        }
+
+        body.dark-mode .youtube-info {
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .youtube-info p {
+            color: #94a3b8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (min-width: 576px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .content-card {
+                padding: 30px;
+            }
+            
+            .youtube-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            nav {
+                width: auto;
+                order: 0;
+                margin-top: 0;
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: row;
+                gap: 25px;
+            }
+            
+            nav ul li a {
+                padding: 5px 0;
+                display: inline-block;
+            }
+            
+            .menu-toggle {
+                display: none;
+            }
+            
+            .hero {
+                padding: 100px 0;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+            
+            .content-card {
+                padding: 40px;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) {
+            section {
+                padding: 80px 0;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .youtube-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation - Updated to match the CSS tutorial site -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+            </div>
+            <nav id="navMenu">
+                <ul>
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Learn Swift Programming</h1>
+            <p>Master Apple's powerful and intuitive language for building iOS, macOS, watchOS, and tvOS apps</p>
+            <a href="#what-is-swift" class="btn">Start Learning</a>
+        </div>
+    </section>
+
+    <!-- What is Swift Section -->
+    <section class="content-section" id="what-is-swift">
+        <div class="container">
+            <div class="section-title">
+                <h2>What is Swift?</h2>
+                <p>Apple's modern programming language for all Apple platforms</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>The Future of Apple Development</h3>
+                <p><strong>Swift</strong> is a powerful and intuitive programming language created by Apple for building apps across all Apple platforms. Introduced in 2014, Swift was designed to be more approachable and safer than Objective-C while maintaining high performance.</p>
+                
+                <div class="example-image">
+                    <img src="https://developer.apple.com/swift/images/swift-og.png" alt="Swift Programming" style="max-width: 800px;">
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Key Features of Swift</h4>
+                    <ul>
+                        <li><strong>Fast and powerful</strong>: Optimized for performance using LLVM compiler</li>
+                        <li><strong>Modern syntax</strong>: Clean, expressive and easy to read</li>
+                        <li><strong>Memory safety</strong>: Automatic memory management with ARC</li>
+                        <li><strong>Type safe</strong>: Catches errors during compilation</li>
+                        <li><strong>Open source</strong>: Developed openly at Swift.org</li>
+                        <li><strong>Interactive</strong>: Playgrounds allow instant feedback</li>
+                    </ul>
+                </div>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Simple Swift example
+let greeting = "Hello, Swift!"
+print(greeting)
+
+// Variables and constants
+var name = "Alice"  // Mutable
+let age = 30        // Immutable
+
+// String interpolation
+print("My name is \(name) and I'm \(age) years old.")</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Did you know?</strong> Swift was designed to be the first industrial-quality systems programming language that is as expressive and enjoyable as a scripting language. It combines the best of C and Objective-C without the constraints of C compatibility.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Absolute Beginner's Guide to Swift</h4>
+                    <p>If you're completely new to programming or Swift, here's what you need to know to get started:</p>
+                    
+                    <h5>1. Understanding Programming Basics</h5>
+                    <p>Before diving into Swift, it's helpful to understand some fundamental programming concepts:</p>
+                    <ul>
+                        <li><strong>Variables</strong>: Containers for storing data values</li>
+                        <li><strong>Constants</strong>: Values that don't change after being set</li>
+                        <li><strong>Data Types</strong>: Different kinds of data (numbers, text, true/false)</li>
+                        <li><strong>Control Flow</strong>: How your program makes decisions (if/else statements)</li>
+                        <li><strong>Loops</strong>: Repeating actions multiple times</li>
+                        <li><strong>Functions</strong>: Reusable blocks of code</li>
+                    </ul>
+                    
+                    <h5>2. Swift's Unique Features</h5>
+                    <p>Swift has several features that make it beginner-friendly:</p>
+                    <ul>
+                        <li><strong>Readable Syntax</strong>: Swift code is designed to read like natural language</li>
+                        <li><strong>Type Inference</strong>: Swift can often figure out the type of your variables automatically</li>
+                        <li><strong>Memory Management</strong>: Automatic Reference Counting (ARC) handles memory for you</li>
+                        <li><strong>Playgrounds</strong>: Interactive environment to experiment with code</li>
+                        <li><strong>Safety Features</strong>: Prevents many common programming errors</li>
+                    </ul>
+                    
+                    <h5>3. Your First Steps in Swift</h5>
+                    <p>To write your first Swift program:</p>
+                    <ol>
+                        <li>Install Xcode from the Mac App Store</li>
+                        <li>Open Xcode and create a new Playground</li>
+                        <li>Type the "Hello, World!" example above</li>
+                        <li>Press the play button to see the output</li>
+                        <li>Experiment by changing the text and running it again</li>
+                    </ol>
+                    
+                    <h5>4. Learning Resources</h5>
+                    <p>Here are some great places to start learning Swift:</p>
+                    <ul>
+                        <li>Apple's free <a href="https://docs.swift.org/swift-book/" target="_blank">Swift documentation</a></li>
+                        <li>Swift Playgrounds app for iPad (great for visual learners)</li>
+                        <li>Online courses like <a href="https://www.hackingwithswift.com/learn" target="_blank">Hacking with Swift</a></li>
+                        <li>YouTube tutorials for visual demonstrations</li>
+                    </ul>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>First Steps Exercise:</strong> Try creating a Swift playground in Xcode and experiment with printing messages, creating variables, and simple math operations. Playgrounds let you see results immediately as you type.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section class="content-section" id="getting-started">
+        <div class="container">
+            <div class="section-title">
+                <h2>Getting Started</h2>
+                <p>Setting up your Swift development environment</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>1. Install Xcode</h3>
+                <p>Xcode is Apple's integrated development environment (IDE) that includes everything you need to develop apps for Apple platforms.</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Steps to Install Xcode</h4>
+                    <ol>
+                        <li>Open the Mac App Store on your Mac</li>
+                        <li>Search for "Xcode"</li>
+                        <li>Click "Get" and then "Install"</li>
+                        <li>Once installed, open Xcode from your Applications folder</li>
+                        <li>Agree to the license agreement and let it install additional components</li>
+                    </ol>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://developer.apple.com/xcode/images/xcode-hero-large_2x.png" alt="Xcode IDE" style="max-width: 600px;">
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>System Requirements:</strong> Xcode requires macOS and a relatively recent version. Check Apple's documentation for current requirements. Xcode is large (10GB+) so ensure you have enough disk space.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-download"></i> Xcode Explained for Beginners</h4>
+                    <p>Xcode might seem overwhelming at first, but here's what you need to know as a beginner:</p>
+                    
+                    <h5>Key Components of Xcode</h5>
+                    <ul>
+                        <li><strong>Editor Area</strong>: Where you write your code</li>
+                        <li><strong>Navigator</strong>: Shows your project files</li>
+                        <li><strong>Utilities</strong>: Displays additional information and settings</li>
+                        <li><strong>Debug Area</strong>: Shows output and debug information</li>
+                        <li><strong>Toolbar</strong>: Contains buttons to run and stop your code</li>
+                    </ul>
+                    
+                    <h5>First-Time Setup Tips</h5>
+                    <ul>
+                        <li>Install Command Line Tools when prompted</li>
+                        <li>Familiarize yourself with the interface before starting</li>
+                        <li>Start with Playgrounds to learn without project complexity</li>
+                        <li>Check for updates regularly (Xcode updates frequently)</li>
+                    </ul>
+                    
+                    <h5>Alternative Options</h5>
+                    <p>If you don't have a Mac or want to try Swift first:</p>
+                    <ul>
+                        <li><strong>Swift Playgrounds</strong>: iPad app for learning Swift</li>
+                        <li><strong>Online compilers</strong>: Replit, IBM Swift Sandbox</li>
+                        <li><strong>Linux</strong>: Swift is open source and runs on Linux</li>
+                        <li><strong>Windows</strong>: Can run Swift via Docker or WSL</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>2. Create a New Playground</h3>
+                <p>Playgrounds are a great way to experiment with Swift code and see results immediately without compiling and running a full app.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Playground example
+import UIKit
+
+// Simple calculations
+let a = 5
+let b = 10
+let sum = a + b
+print("The sum is \(sum)")
+
+// Color example
+let color = UIColor.red
+let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+view.backgroundColor = color
+
+// Animation
+UIView.animate(withDuration: 1.0) {
+    view.backgroundColor = .blue
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Playground Features:</strong> Playgrounds support rich documentation, live views, and even SpriteKit and SceneKit for game development. You can see results as you type in the sidebar.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-play-circle"></i> Playground Learning Path</h4>
+                    <p>To get the most from playgrounds as a beginner:</p>
+                    
+                    <h5>Getting Started with Playgrounds</h5>
+                    <ol>
+                        <li>Open Xcode and select "Get started with a playground"</li>
+                        <li>Choose the "Blank" template</li>
+                        <li>Name your playground and save it</li>
+                        <li>Start typing code in the editor</li>
+                        <li>View results in the sidebar</li>
+                    </ol>
+                    
+                    <h5>Playground Features to Explore</h5>
+                    <ul>
+                        <li><strong>Quick Look</strong>: Click the eye icon to preview values</li>
+                        <li><strong>Live View</strong>: Show UI elements in real-time</li>
+                        <li><strong>Markup</strong>: Add documentation and headings</li>
+                        <li><strong>Resources</strong>: Add images and other files</li>
+                    </ul>
+                    
+                    <h5>Beginner Exercises</h5>
+                    <p>Try these in your playground:</p>
+                    <ol>
+                        <li>Create variables with different data types</li>
+                        <li>Write a function that takes parameters</li>
+                        <li>Create a simple if-else statement</li>
+                        <li>Make a loop that prints numbers 1 through 10</li>
+                        <li>Experiment with string interpolation</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>3. Your First Swift Project</h3>
+                <p>When you're ready to move beyond playgrounds, create your first iOS or macOS app:</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Steps to Create a Project</h4>
+                    <ol>
+                        <li>Open Xcode and select "Create a new Xcode project"</li>
+                        <li>Choose a template (iOS App, macOS App, etc.)</li>
+                        <li>Enter your product name and organization identifier</li>
+                        <li>Select "Swift" as the language and "SwiftUI" or "UIKit" as the interface</li>
+                        <li>Choose a location to save your project</li>
+                        <li>Click "Create"</li>
+                    </ol>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://developer.apple.com/library/archive/documentation/ToolsLanguages/Conceptual/Xcode_Overview/Art/new_project_dialog_2x.png" alt="Xcode New Project" style="max-width: 600px;">
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Template Options:</strong> Xcode provides templates for common app types like Tabbed Apps, Games, Augmented Reality, and Document-Based apps. Start with the simplest "App" template when learning.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-rocket"></i> First Project Guide</h4>
+                    <p>For your first project, here's a detailed walkthrough:</p>
+                    
+                    <h5>Understanding the Project Structure</h5>
+                    <ul>
+                        <li><strong>AppDelegate.swift</strong>: Manages app lifecycle events</li>
+                        <li><strong>SceneDelegate.swift</strong>: Handles window and scene management</li>
+                        <li><strong>ContentView.swift</strong>: Your main view (in SwiftUI projects)</li>
+                        <li><strong>Assets.xcassets</strong>: Where you store images and colors</li>
+                        <li><strong>Info.plist</strong>: Contains configuration settings</li>
+                    </ul>
+                    
+                    <h5>Running Your App</h5>
+                    <ol>
+                        <li>Select a simulator or device from the toolbar</li>
+                        <li>Click the play button (or press Command-R)</li>
+                        <li>Wait for the app to build and launch</li>
+                        <li>Interact with your app in the simulator</li>
+                        <li>Press the stop button when done</li>
+                    </ol>
+                    
+                    <h5>Beginner Project Ideas</h5>
+                    <p>Start with these simple projects:</p>
+                    <ul>
+                        <li><strong>Greeting App</strong>: Displays a welcome message</li>
+                        <li><strong>Counter App</strong>: Taps increment a number</li>
+                        <li><strong>To-Do List</strong>: Basic list with add/delete functionality</li>
+                        <li><strong>Weather App</strong>: Displays mock weather data</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Syntax Basics Section -->
+    <section class="content-section" id="syntax-basics">
+        <div class="container">
+            <div class="section-title">
+                <h2>Swift Syntax Basics</h2>
+                <p>Fundamental concepts every Swift developer needs to know</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Variables and Constants</h3>
+                <p>Swift uses type inference but is also strongly typed. You can declare variables (mutable) and constants (immutable).</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Variables (can change)
+var score = 0
+score = 10
+
+// Constants (can't change)
+let pi = 3.14159
+
+// Explicit type annotation
+var message: String = "Hello"
+var isEnabled: Bool = true
+
+// Multiple variables
+var x = 1, y = 2, z = 3
+
+// Type aliases
+typealias AudioSample = UInt16
+var maxAmplitude = AudioSample.min</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Naming Conventions:</strong> Swift uses camelCase for variables and constants. Prefer constants (let) over variables (var) whenever possible for safety and clarity. Use descriptive names that explain their purpose.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-code"></i> Variables and Constants Explained</h4>
+                    <p>Understanding variables and constants is crucial for beginners:</p>
+                    
+                    <h5>Key Differences</h5>
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>Variables (var)</th>
+                            <th>Constants (let)</th>
+                        </tr>
+                        <tr>
+                            <td>Mutability</td>
+                            <td>Can be changed</td>
+                            <td>Cannot be changed</td>
+                        </tr>
+                        <tr>
+                            <td>Use Case</td>
+                            <td>Values that change</td>
+                            <td>Values that stay the same</td>
+                        </tr>
+                        <tr>
+                            <td>Performance</td>
+                            <td>Slightly slower</td>
+                            <td>Slightly faster</td>
+                        </tr>
+                        <tr>
+                            <td>Safety</td>
+                            <td>Less safe</td>
+                            <td>More safe</td>
+                        </tr>
+                    </table>
+                    
+                    <h5>Best Practices</h5>
+                    <ul>
+                        <li>Start with <code>let</code> and only use <code>var</code> when you need to change the value</li>
+                        <li>Use descriptive names (e.g., <code>userName</code> instead of <code>un</code>)</li>
+                        <li>Group related variables together</li>
+                        <li>Initialize variables when you declare them</li>
+                    </ul>
+                    
+                    <h5>Common Mistakes</h5>
+                    <ul>
+                        <li>Trying to change a constant (will cause a compile error)</li>
+                        <li>Using vague names like <code>a</code> or <code>temp</code></li>
+                        <li>Declaring variables without initializing them</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Data Types</h3>
+                <p>Swift has several built-in data types that form the building blocks of your programs.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Integers
+let minValue = UInt8.min  // 0
+let maxValue = UInt8.max  // 255
+
+// Floating-point numbers
+let floatValue: Float = 3.14
+let doubleValue: Double = 3.14159265359
+
+// Booleans
+let isSwiftAwesome = true
+
+// Strings
+let greeting = "Hello, Swift!"
+let multilineString = """
+    This is a
+    multiline
+    string
+    """
+
+// Tuples
+let http404Error = (404, "Not Found")
+let (statusCode, statusMessage) = http404Error</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Type Safety:</strong> Swift is a type-safe language, which means it helps you catch type mismatches at compile time. You can't accidentally pass an Int where a String is expected, for example.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-cubes"></i> Swift Data Types Guide</h4>
+                    <p>Swift has a rich set of data types. Here's what beginners need to know:</p>
+                    
+                    <h5>Basic Data Types</h5>
+                    <ul>
+                        <li><strong>Int</strong>: Whole numbers (positive and negative)</li>
+                        <li><strong>Double/Float</strong>: Decimal numbers</li>
+                        <li><strong>Bool</strong>: True or false values</li>
+                        <li><strong>String</strong>: Text data</li>
+                        <li><strong>Character</strong>: Single character</li>
+                    </ul>
+                    
+                    <h5>Collection Types</h5>
+                    <ul>
+                        <li><strong>Array</strong>: Ordered list of items</li>
+                        <li><strong>Set</strong>: Unordered unique items</li>
+                        <li><strong>Dictionary</strong>: Key-value pairs</li>
+                    </ul>
+                    
+                    <h5>Special Types</h5>
+                    <ul>
+                        <li><strong>Tuples</strong>: Group multiple values together</li>
+                        <li><strong>Optionals</strong>: Handle absence of a value</li>
+                        <li><strong>Any</strong>: Can represent any type</li>
+                    </ul>
+                    
+                    <h5>Type Conversion</h5>
+                    <p>Swift doesn't do implicit type conversion. You must explicitly convert types:</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>let three = 3
+let pointOneFour = 0.14
+let pi = Double(three) + pointOneFour  // Explicit conversion
+
+let integerPi = Int(pi)  // Truncates to 3</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Control Flow</h3>
+                <p>Control the flow of your program's execution with conditionals and loops.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// If-else statement
+let temperature = 30
+if temperature > 25 {
+    print("It's hot outside")
+} else if temperature > 15 {
+    print("It's pleasant outside")
+} else {
+    print("It's cold outside")
+}
+
+// Switch statement (more powerful than in many languages)
+let someCharacter: Character = "z"
+switch someCharacter {
+case "a", "e", "i", "o", "u":
+    print("Vowel")
+case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+     "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+    print("Consonant")
+default:
+    print("Not a letter")
+}
+
+// For-in loop
+for index in 1...5 {
+    print("Index is \(index)")
+}
+
+// While loop
+var count = 0
+while count < 5 {
+    print("Count is \(count)")
+    count += 1
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Range Operators:</strong> Swift provides two range operators: closed range (a...b) and half-open range (a..<b). These are useful in loops and for creating ranges of values.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-random"></i> Control Flow Explained</h4>
+                    <p>Control flow is how your program makes decisions and repeats actions:</p>
+                    
+                    <h5>Conditional Statements</h5>
+                    <ul>
+                        <li><strong>if</strong>: Executes code if condition is true</li>
+                        <li><strong>if-else</strong>: Provides alternative path when condition is false</li>
+                        <li><strong>switch</strong>: Checks multiple possible conditions</li>
+                    </ul>
+                    
+                    <h5>Looping Constructs</h5>
+                    <ul>
+                        <li><strong>for-in</strong>: Iterates over sequences (arrays, ranges)</li>
+                        <li><strong>while</strong>: Repeats while condition is true</li>
+                        <li><strong>repeat-while</strong>: Executes at least once, then checks condition</li>
+                    </ul>
+                    
+                    <h5>Control Transfer</h5>
+                    <ul>
+                        <li><strong>continue</strong>: Skip to next iteration</li>
+                        <li><strong>break</strong>: Exit loop immediately</li>
+                        <li><strong>fallthrough</strong>: Continue to next case in switch</li>
+                        <li><strong>return</strong>: Exit function</li>
+                    </ul>
+                    
+                    <h5>Practical Examples</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Checking multiple conditions
+if age >= 18 && hasID {
+    print("You can vote")
+} else {
+    print("You cannot vote")
+}
+
+// Looping through an array
+let names = ["Anna", "Brian", "Craig"]
+for name in names {
+    print("Hello, \(name)")
+}
+
+// While loop with condition
+var counter = 0
+while counter < 10 {
+    print(counter)
+    counter += 1
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Optionals</h3>
+                <p>Swift's optionals handle the absence of a value, a key feature for writing safe code.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>var possibleNumber: Int? = 42  // Optional Int
+possibleNumber = nil  // Now it has no value
+
+// Forced unwrapping (use carefully)
+if possibleNumber != nil {
+    print("The number is \(possibleNumber!)")
+}
+
+// Optional binding (safer)
+if let number = possibleNumber {
+    print("The number is \(number)")
+} else {
+    print("No number")
+}
+
+// Nil coalescing operator
+let number = possibleNumber ?? 0  // Use 0 if nil
+
+// Optional chaining
+class Person {
+    var residence: Residence?
+}
+class Residence {
+    var numberOfRooms = 1
+}
+
+let john = Person()
+let roomCount = john.residence?.numberOfRooms  // nil</code></pre>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Force Unwrapping Danger:</strong> Using the ! operator to force-unwrap an optional that is nil will crash your program. Always use optional binding (if let) or nil coalescing (??) when possible.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-question-circle"></i> Understanding Optionals</h4>
+                    <p>Optionals are a fundamental Swift concept that can be confusing for beginners:</p>
+                    
+                    <h5>Why Optionals Exist</h5>
+                    <p>Optionals represent the absence of a value. In many languages, you might use <code>null</code> or <code>nil</code>, but these can lead to crashes. Swift's optionals make this explicit and safe.</p>
+                    
+                    <h5>Working with Optionals</h5>
+                    <ul>
+                        <li><strong>Declaration</strong>: Add <code>?</code> after the type (<code>var name: String?</code>)</li>
+                        <li><strong>Unwrapping</strong>: Safely access the value inside</li>
+                        <li><strong>Default Values</strong>: Provide fallbacks with <code>??</code></li>
+                    </ul>
+                    
+                    <h5>Unwrapping Techniques</h5>
+                    <table>
+                        <tr>
+                            <th>Method</th>
+                            <th>Example</th>
+                            <th>When to Use</th>
+                        </tr>
+                        <tr>
+                            <td>Force Unwrap</td>
+                            <td><code>value!</code></td>
+                            <td>When absolutely certain value exists</td>
+                        </tr>
+                        <tr>
+                            <td>Optional Binding</td>
+                            <td><code>if let x = value { }</code></td>
+                            <td>Most common safe unwrapping</td>
+                        </tr>
+                        <tr>
+                            <td>Guard Statement</td>
+                            <td><code>guard let x = value else { }</code></td>
+                            <td>Early exit if nil</td>
+                        </tr>
+                        <tr>
+                            <td>Nil Coalescing</td>
+                            <td><code>value ?? defaultValue</code></td>
+                            <td>Provide fallback value</td>
+                        </tr>
+                    </table>
+                    
+                    <h5>Common Optional Scenarios</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Converting strings to numbers
+let input = "123"
+let number = Int(input)  // Int?
+
+// Dictionary access
+let ages = ["Anna": 25, "Brian": 30]
+let annaAge = ages["Anna"]  // Int?
+
+// Optional chaining
+let roomCount = john.residence?.numberOfRooms  // Int?</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Features Section -->
+    <section class="content-section" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Advanced Swift Features</h2>
+                <p>Powerful features that make Swift expressive and safe</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Functions</h3>
+                <p>Functions are self-contained chunks of code that perform a specific task.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Simple function
+func greet(person: String) -> String {
+    return "Hello, \(person)!"
+}
+print(greet(person: "Anna"))
+
+// Function with multiple parameters
+func addNumbers(a: Int, b: Int) -> Int {
+    return a + b
+}
+
+// Function with no return value
+func sayHello() {
+    print("Hello!")
+}
+
+// Function with multiple return values
+func minMax(array: [Int]) -> (min: Int, max: Int)? {
+    if array.isEmpty { return nil }
+    var currentMin = array[0]
+    var currentMax = array[0]
+    for value in array[1..<array.count] {
+        if value < currentMin {
+            currentMin = value
+        } else if value > currentMax {
+            currentMax = value
+        }
+    }
+    return (currentMin, currentMax)
+}
+
+if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
+    print("min is \(bounds.min) and max is \(bounds.max)")
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Parameter Names:</strong> Swift uses both external parameter names (used when calling the function) and internal parameter names (used within the function). The first parameter omits its external name by default.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-cogs"></i> Functions Explained</h4>
+                    <p>Functions are building blocks of Swift programs. Here's what beginners should know:</p>
+                    
+                    <h5>Function Components</h5>
+                    <ul>
+                        <li><strong>func keyword</strong>: Starts function declaration</li>
+                        <li><strong>Name</strong>: Describes what the function does</li>
+                        <li><strong>Parameters</strong>: Input values</li>
+                        <li><strong>Return Type</strong>: Output value type</li>
+                        <li><strong>Body</strong>: Code that executes</li>
+                    </ul>
+                    
+                    <h5>Parameter Variations</h5>
+                    <ul>
+                        <li><strong>Default Values</strong>: <code>func greet(name: String = "Guest")</code></li>
+                        <li><strong>Variadic Parameters</strong>: Accept zero or more values (<code>numbers: Double...)</code></li>
+                        <li><strong>In-Out Parameters</strong>: Modify passed variables (<code>inout x: Int)</code></li>
+                    </ul>
+                    
+                    <h5>Function Types</h5>
+                    <p>Functions have types based on their parameters and return type:</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Function type: (Int, Int) -> Int
+func add(a: Int, b: Int) -> Int {
+    return a + b
+}
+
+// Assign function to variable
+let mathFunction: (Int, Int) -> Int = add
+mathFunction(2, 3)  // Returns 5</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Closures</h3>
+                <p>Closures are self-contained blocks of functionality that can be passed around and used in your code.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+
+// Closure expression
+var reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
+    return s1 > s2
+})
+
+// Inferring type from context
+reversedNames = names.sorted(by: { s1, s2 in return s1 > s2 } )
+
+// Implicit returns from single-expression closures
+reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
+
+// Shorthand argument names
+reversedNames = names.sorted(by: { $0 > $1 } )
+
+// Operator methods
+reversedNames = names.sorted(by: >)
+
+// Trailing closure syntax
+reversedNames = names.sorted { $0 > $1 }
+
+// Capturing values
+func makeIncrementer(forIncrement amount: Int) -> () -> Int {
+    var runningTotal = 0
+    func incrementer() -> Int {
+        runningTotal += amount
+        return runningTotal
+    }
+    return incrementer
+}
+
+let incrementByTen = makeIncrementer(forIncrement: 10)
+incrementByTen()  // returns 10
+incrementByTen()  // returns 20</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Closure Expressions:</strong> Closures in Swift are similar to blocks in C and Objective-C and to lambdas in other languages. They can capture and store references to any constants and variables from the context in which they're defined.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-project-diagram"></i> Understanding Closures</h4>
+                    <p>Closures can be challenging for beginners. Here's a simplified explanation:</p>
+                    
+                    <h5>What Are Closures?</h5>
+                    <p>Closures are self-contained blocks of functionality that can be passed around in your code. They are similar to functions but with some additional capabilities.</p>
+                    
+                    <h5>Closure Syntax</h5>
+                    <p>The general form of a closure is:</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>{ (parameters) -> return type in
+    statements
+}</code></pre>
+                    </div>
+                    
+                    <h5>When to Use Closures</h5>
+                    <ul>
+                        <li>As completion handlers for asynchronous operations</li>
+                        <li>For sorting and filtering collections</li>
+                        <li>When you need to capture values from the surrounding context</li>
+                        <li>To create small, reusable pieces of functionality</li>
+                    </ul>
+                    
+                    <h5>Common Closure Patterns</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Network request completion
+func fetchData(completion: (Data?, Error?) -> Void) {
+    // Perform network request
+    completion(data, nil)
+}
+
+// Array filtering
+let numbers = [1, 2, 3, 4, 5]
+let evenNumbers = numbers.filter { $0 % 2 == 0 }
+
+// Animation completion
+UIView.animate(withDuration: 0.3, animations: {
+    view.alpha = 0
+}, completion: { _ in
+    view.removeFromSuperview()
+})</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Structures and Classes</h3>
+                <p>Swift provides structures and classes for defining custom data types.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Structure (value type)
+struct Resolution {
+    var width = 0
+    var height = 0
+}
+
+// Class (reference type)
+class VideoMode {
+    var resolution = Resolution()
+    var interlaced = false
+    var frameRate = 0.0
+    var name: String?
+}
+
+// Creating instances
+let someResolution = Resolution(width: 1920, height: 1080)
+let someVideoMode = VideoMode()
+
+// Accessing properties
+print("The width is \(someResolution.width)")
+
+// Value vs reference
+let hd = Resolution(width: 1920, height: 1080)
+var cinema = hd  // Copy of hd
+cinema.width = 2048
+
+let tenEighty = VideoMode()
+tenEighty.resolution = hd
+tenEighty.interlaced = true
+let alsoTenEighty = tenEighty  // Reference to same instance
+alsoTenEighty.interlaced = false
+
+// Property observers
+class StepCounter {
+    var totalSteps: Int = 0 {
+        willSet(newTotalSteps) {
+            print("About to set totalSteps to \(newTotalSteps)")
+        }
+        didSet {
+            if totalSteps > oldValue  {
+                print("Added \(totalSteps - oldValue) steps")
+            }
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Choosing Between Structures and Classes:</strong> As a general guideline, prefer structures because they're easier to reason about. Use classes when you need inheritance or when you need the identity of an instance to be maintained across assignments.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-cube"></i> Structs vs Classes</h4>
+                    <p>Understanding the difference between structs and classes is crucial:</p>
+                    
+                    <h5>Key Differences</h5>
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>Structures</th>
+                            <th>Classes</th>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td>Value type</td>
+                            <td>Reference type</td>
+                        </tr>
+                        <tr>
+                            <td>Inheritance</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Initializers</td>
+                            <td>Automatic memberwise</td>
+                            <td>Must implement</td>
+                        </tr>
+                        <tr>
+                            <td>Memory</td>
+                            <td>Stack (usually)</td>
+                            <td>Heap</td>
+                        </tr>
+                        <tr>
+                            <td>Copy Behavior</td>
+                            <td>Copied when assigned</td>
+                            <td>Reference is copied</td>
+                        </tr>
+                    </table>
+                    
+                    <h5>When to Use Each</h5>
+                    <ul>
+                        <li><strong>Use Structs For</strong>: Simple data types, values that should be copied, when you don't need inheritance</li>
+                        <li><strong>Use Classes For</strong>: Complex objects, when you need reference semantics, when you need inheritance</li>
+                    </ul>
+                    
+                    <h5>Example Use Cases</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Good for structs
+struct Point {
+    var x: Double
+    var y: Double
+}
+
+struct Size {
+    var width: Double
+    var height: Double
+}
+
+// Good for classes
+class Person {
+    var name: String
+    var age: Int
+    
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+}
+
+class Vehicle {
+    var numberOfWheels: Int
+    init(numberOfWheels: Int) {
+        self.numberOfWheels = numberOfWheels
+    }
+}
+
+class Car: Vehicle {
+    var brand: String
+    init(brand: String) {
+        self.brand = brand
+        super.init(numberOfWheels: 4)
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Protocols</h3>
+                <p>Protocols define a blueprint of methods, properties, and other requirements.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>protocol FullyNamed {
+    var fullName: String { get }
+}
+
+struct Person: FullyNamed {
+    var fullName: String
+}
+
+let john = Person(fullName: "John Appleseed")
+print(john.fullName)
+
+// Protocol with method requirements
+protocol RandomNumberGenerator {
+    func random() -> Double
+}
+
+class LinearCongruentialGenerator: RandomNumberGenerator {
+    var lastRandom = 42.0
+    let m = 139968.0
+    let a = 3877.0
+    let c = 29573.0
+    func random() -> Double {
+        lastRandom = ((lastRandom * a + c)
+            .truncatingRemainder(dividingBy: m))
+        return lastRandom / m
+    }
+}
+
+// Protocol inheritance
+protocol PrettyTextRepresentable: FullyNamed {
+    var prettyTextualDescription: String { get }
+}
+
+// Protocol extensions
+extension RandomNumberGenerator {
+    func randomBool() -> Bool {
+        return random() > 0.5
+    }
+}</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Protocol-Oriented Programming:</strong> Swift emphasizes protocol-oriented programming, where you define protocols and extend them with default implementations. This provides many benefits of multiple inheritance without the complexity.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-file-contract"></i> Understanding Protocols</h4>
+                    <p>Protocols are a powerful feature in Swift. Here's what beginners should know:</p>
+                    
+                    <h5>What Are Protocols?</h5>
+                    <p>Protocols define a blueprint of methods, properties, and other requirements that suit a particular task or piece of functionality.</p>
+                    
+                    <h5>Protocol Syntax</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>protocol SomeProtocol {
+    // Protocol definition goes here
+}
+
+struct SomeStructure: SomeProtocol {
+    // Structure implementation goes here
+}</code></pre>
+                    </div>
+                    
+                    <h5>Protocol Requirements</h5>
+                    <ul>
+                        <li><strong>Property Requirements</strong>: Define if properties are gettable or settable</li>
+                        <li><strong>Method Requirements</strong>: Define methods that must be implemented</li>
+                        <li><strong>Initializer Requirements</strong>: Define required initializers</li>
+                    </ul>
+                    
+                    <h5>Protocol Inheritance</h5>
+                    <p>Protocols can inherit from other protocols:</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
+    // Protocol definition goes here
+}</code></pre>
+                    </div>
+                    
+                    <h5>Protocol Extensions</h5>
+                    <p>You can extend protocols to provide default implementations:</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>extension RandomNumberGenerator {
+    func randomBool() -> Bool {
+        return random() > 0.5
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SwiftUI Section -->
+    <section class="content-section" id="swiftui">
+        <div class="container">
+            <div class="section-title">
+                <h2>SwiftUI Basics</h2>
+                <p>Apple's modern framework for building user interfaces</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Introduction to SwiftUI</h3>
+                <p>SwiftUI is a declarative framework for building user interfaces across all Apple platforms.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Text("Hello, SwiftUI!")
+                .font(.largeTitle)
+                .foregroundColor(.blue)
+            
+            Image(systemName: "star.fill")
+                .resizable()
+                .frame(width: 100, height: 100)
+                .foregroundColor(.yellow)
+            
+            Button(action: {
+                print("Button tapped!")
+            }) {
+                Text("Tap Me")
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://developer.apple.com/tutorials/swiftui/images/swiftui-hero_large_2x.png" alt="SwiftUI Example" style="max-width: 400px;">
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Declarative Syntax:</strong> With SwiftUI, you declare what your UI should do rather than how it should do it. The framework handles all the implementation details, and your code becomes more concise and easier to understand.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-mobile"></i> SwiftUI for Beginners</h4>
+                    <p>SwiftUI is a great way to start building apps. Here's what you need to know:</p>
+                    
+                    <h5>Key Concepts</h5>
+                    <ul>
+                        <li><strong>Views</strong>: The building blocks of your UI</li>
+                        <li><strong>Modifiers</strong>: Customize the appearance and behavior of views</li>
+                        <li><strong>State</strong>: Data that can change and update the UI</li>
+                        <li><strong>Bindings</strong>: Create two-way connections between data and UI</li>
+                    </ul>
+                    
+                    <h5>Basic View Types</h5>
+                    <ul>
+                        <li><strong>Text</strong>: Displays static text</li>
+                        <li><strong>Image</strong>: Shows an image</li>
+                        <li><strong>Button</strong>: Interactive button</li>
+                        <li><strong>TextField</strong>: User text input</li>
+                        <li><strong>List</strong>: Scrollable list of items</li>
+                    </ul>
+                    
+                    <h5>Layout Containers</h5>
+                    <ul>
+                        <li><strong>VStack</strong>: Vertical stack of views</li>
+                        <li><strong>HStack</strong>: Horizontal stack of views</li>
+                        <li><strong>ZStack</strong>: Views stacked in depth</li>
+                        <li><strong>Group</strong>: Groups views without affecting layout</li>
+                    </ul>
+                    
+                    <h5>Getting Started</h5>
+                    <ol>
+                        <li>Create a new project with SwiftUI interface</li>
+                        <li>Open ContentView.swift</li>
+                        <li>Start adding views to the body property</li>
+                        <li>Use modifiers to customize appearance</li>
+                        <li>Preview changes in real-time</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>State and Data Flow</h3>
+                <p>SwiftUI provides several property wrappers to manage state and data flow in your app.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>struct CounterView: View {
+    @State private var count = 0
+    
+    var body: some View {
+        VStack {
+            Text("Count: \(count)")
+                .font(.title)
+            
+            HStack {
+                Button(action: {
+                    count -= 1
+                }) {
+                    Image(systemName: "minus.circle")
+                }
+                
+                Button(action: {
+                    count += 1
+                }) {
+                    Image(systemName: "plus.circle")
+                }
+            }
+        }
+    }
+}
+
+// Sharing state with @ObservedObject
+class UserSettings: ObservableObject {
+    @Published var username = "Anonymous"
+}
+
+struct ProfileView: View {
+    @ObservedObject var settings: UserSettings
+    
+    var body: some View {
+        Text("Welcome, \(settings.username)!")
+    }
+}</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Property Wrappers:</strong> SwiftUI uses property wrappers (prefixed with @) to manage how data flows through your app. The main ones are @State for local view state, @ObservedObject for external reference types, and @EnvironmentObject for shared data.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-database"></i> Managing State in SwiftUI</h4>
+                    <p>Understanding state management is crucial for building SwiftUI apps:</p>
+                    
+                    <h5>Property Wrappers</h5>
+                    <ul>
+                        <li><strong>@State</strong>: For simple view-specific state</li>
+                        <li><strong>@Binding</strong>: Creates two-way connection to state</li>
+                        <li><strong>@ObservedObject</strong>: For complex state that's shared</li>
+                        <li><strong>@EnvironmentObject</strong>: For app-wide shared data</li>
+                        <li><strong>@Environment</strong>: Accesses system-wide settings</li>
+                    </ul>
+                    
+                    <h5>Data Flow Principles</h5>
+                    <ul>
+                        <li><strong>Single Source of Truth</strong>: Each piece of data should have one authoritative source</li>
+                        <li><strong>Unidirectional Flow</strong>: Data flows down the view hierarchy</li>
+                        <li><strong>View Updates</strong>: Views automatically update when state changes</li>
+                    </ul>
+                    
+                    <h5>Practical Examples</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Simple toggle with @State
+struct ToggleView: View {
+    @State private var isOn = false
+    
+    var body: some View {
+        Toggle("Switch", isOn: $isOn)
+    }
+}
+
+// Sharing data with @Binding
+struct ParentView: View {
+    @State private var text = ""
+    
+    var body: some View {
+        VStack {
+            Text("Parent: \(text)")
+            ChildView(text: $text)
+        }
+    }
+}
+
+struct ChildView: View {
+    @Binding var text: String
+    
+    var body: some View {
+        TextField("Enter text", text: $text)
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="youtube-links" id="resources">
+        <div class="container">
+            <h2>Recommended Swift Learning Resources</h2>
+            <p>Here are some excellent resources to help you learn Swift and SwiftUI:</p>
+            
+            <div class="youtube-grid">
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=comQ1-x2a1Q" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/comQ1-x2a1Q/maxresdefault.jpg" alt="Swift Tutorial for Beginners">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Swift Tutorial for Beginners</h3>
+                            <p>Programming with Mosh</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=Ulp1Kimblg0" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/Ulp1Kimblg0/maxresdefault.jpg" alt="Swift Full Course">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Swift Full Course</h3>
+                            <p>freeCodeCamp.org</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=FcsY1YPBwzQ" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/FcsY1YPBwzQ/maxresdefault.jpg" alt="SwiftUI Basics">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>SwiftUI Basics</h3>
+                            <p>Sean Allen</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=CwA1VWP0Ldw" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/CwA1VWP0Ldw/maxresdefault.jpg" alt="Swift for Beginners">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Swift for Beginners</h3>
+                            <p>CodeWithChris</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="content-card" style="margin-top: 30px; background-color: rgba(255,255,255,0.1); color: white;">
+                <h3>Additional Learning Resources</h3>
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-book"></i> Official Documentation</h4>
+                    <ul>
+                        <li><a href="https://docs.swift.org/swift-book/" target="_blank" style="color: white;">Swift Programming Language Guide</a></li>
+                        <li><a href="https://developer.apple.com/tutorials/swiftui" target="_blank" style="color: white;">SwiftUI Tutorials</a></li>
+                        <li><a href="https://developer.apple.com/swift/resources/" target="_blank" style="color: white;">Swift Resources</a></li>
+                    </ul>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-graduation-cap"></i> Courses & Books</h4>
+                    <ul>
+                        <li><a href="https://www.hackingwithswift.com/learn" target="_blank" style="color: white;">Hacking with Swift</a></li>
+                        <li><a href="https://www.raywenderlich.com/swift/paths/learn" target="_blank" style="color: white;">Ray Wenderlich Swift Path</a></li>
+                        <li><a href="https://www.udemy.com/course/ios-13-app-development-bootcamp/" target="_blank" style="color: white;">iOS Development Bootcamp</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Beginner's Guide</span>
+                    </div>
+                    <p>Master the art of programming with our comprehensive resources and tutorials designed for beginners.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Learn Swift</h3>
+                    <ul>
+                        <li><a href="#what-is-swift">What is Swift?</a></li>
+                        <li><a href="#getting-started">Getting Started</a></li>
+                        <li><a href="#syntax-basics">Syntax Basics</a></li>
+                        <li><a href="#features">Advanced Features</a></li>
+                        <li><a href="#swiftui">SwiftUI</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://developer.apple.com/swift/" target="_blank">Apple Developer</a></li>
+                        <li><a href="https://swift.org/" target="_blank">Swift.org</a></li>
+                        <li><a href="https://docs.swift.org/swift-book/" target="_blank">Swift Docs</a></li>
+                        <li><a href="https://developer.apple.com/xcode/" target="_blank">Xcode</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="https://forums.swift.org/" target="_blank">Swift Forums</a></li>
+                        <li><a href="https://www.reddit.com/r/swift/" target="_blank">Swift Subreddit</a></li>
+                        <li><a href="https://stackoverflow.com/questions/tagged/swift" target="_blank">Stack Overflow</a></li>
+                        <li><a href="https://developer.apple.com/forums/" target="_blank">Apple Developer Forums</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Beginner's Guide. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.querySelector('i').classList.toggle('fa-bars');
+                this.querySelector('i').classList.toggle('fa-times');
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Copy code button functionality
+            function copyCode(button) {
+                const codeBlock = button.parentElement;
+                const code = codeBlock.querySelector('pre').textContent;
+                
+                navigator.clipboard.writeText(code).then(() => {
+                    button.textContent = 'Copied!';
+                    setTimeout(() => {
+                        button.textContent = 'Copy';
+                    }, 2000);
+                });
+            }
+            
+            // Assign copy functionality to all copy buttons
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    copyCode(this);
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            menuToggle.querySelector('i').classList.remove('fa-times');
+                            menuToggle.querySelector('i').classList.add('fa-bars');
+                        }
+                    }
+                });
+            });
+            
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.content-card, .section-title, .youtube-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.content-card, .section-title, .youtube-card');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+        });
+    </script>
+</body>
+</html>

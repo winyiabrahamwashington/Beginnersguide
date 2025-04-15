@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beginner's Guide to IDEs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --gray: #94a3b8;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Features Section */
+        .features {
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        /* IDE Content Styles */
+        .ide-content {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .ide-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .ide-content h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .feature-list {
+            list-style-type: none;
+            margin: 20px 0;
+        }
+
+        .feature-list li {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%2310b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>') no-repeat left 3px;
+            padding-left: 28px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        /* IDE Showcase */
+        .ide-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .ide-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .ide-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .ide-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .ide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .ide-card:hover .ide-image img {
+            transform: scale(1.05);
+        }
+
+        .ide-details {
+            padding: 25px;
+        }
+
+        .ide-details h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .ide-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .ide-type {
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background-color: rgba(59, 130, 246, 0.2);
+            color: var(--primary);
+        }
+
+        .ide-desc {
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .ide-link {
+            color: var(--primary);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .ide-link:hover {
+            color: var(--secondary);
+            gap: 10px;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th {
+            background-color: var(--primary);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(248, 250, 252, 0.5);
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Motivational Quote Section */
+        .motivational-quote {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .motivational-quote::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .quote-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quote-content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .quote-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .quote-author {
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .ide-content,
+        body.dark-mode .ide-card,
+        body.dark-mode .comparison-table tr {
+            background-color: #1e293b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .ide-details h3,
+        body.dark-mode .section-title h2 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .ide-desc,
+        body.dark-mode .ide-meta {
+            color: #94a3b8;
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        body.dark-mode .footer-links ul li a:hover {
+            color: var(--primary-light);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 30px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .ide-content {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                text-align: left;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .quote-text {
+                font-size: 1.3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .ide-content {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .quote-text {
+                font-size: 1.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 10px 25px;
+            }
+            
+            .ide-content {
+                padding: 20px;
+            }
+            
+            .ide-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+            </div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Beginner's Guide to IDEs</h1>
+            <p>Discover the best Integrated Development Environments to supercharge your coding journey</p>
+            <a href="#introduction" class="btn">Learn About IDEs</a>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="introduction" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Introduction to IDEs</h2>
+            </div>
+            <div class="ide-content">
+                <h3>What is an IDE?</h3>
+                <p>An <strong>Integrated Development Environment (IDE)</strong> is a software application that provides comprehensive facilities to computer programmers for software development. An IDE typically consists of:</p>
+                
+                <ul class="feature-list">
+                    <li><strong>Source code editor:</strong> For writing and editing code with syntax highlighting and autocompletion</li>
+                    <li><strong>Build automation tools:</strong> To compile and run your code with a single click</li>
+                    <li><strong>Debugger:</strong> For testing and fixing errors in your programs</li>
+                    <li><strong>Version control integration:</strong> To manage changes to your code</li>
+                    <li><strong>Project management tools:</strong> To organize your files and resources</li>
+                </ul>
+                
+                <div class="ide-image" style="margin: 30px 0; border-radius: 10px; overflow: hidden;">
+                    <img src="https://i.pinimg.com/736x/ac/8a/3a/ac8a3af7e163b43806c4bca7ef3a9e01.jpg" alt="Developer using IDE">
+                </div>
+                
+                <h3>Why Use an IDE?</h3>
+                <p>While you can write code in a simple text editor, IDEs provide significant advantages that make them essential for modern programming:</p>
+                
+                <div class="ide-showcase">
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Productivity">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Increased Productivity</h3>
+                            <div class="ide-meta">
+                                <span><i class="far fa-clock"></i> All tools in one place</span>
+                            </div>
+                            <p class="ide-desc">IDEs combine all the tools you need into a single application, saving you time switching between different programs.</p>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Debugging">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Powerful Debugging</h3>
+                            <div class="ide-meta">
+                                <span><i class="fas fa-bug"></i> Find errors quickly</span>
+                            </div>
+                            <p class="ide-desc">Built-in debuggers let you step through your code, inspect variables, and find problems faster.</p>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" alt="Code Completion">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Smart Code Assistance</h3>
+                            <div class="ide-meta">
+                                <span><i class="fas fa-lightbulb"></i> Intelligent suggestions</span>
+                            </div>
+                            <p class="ide-desc">Code completion, documentation lookup, and refactoring tools help you write better code faster.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Common Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Common IDE Features</h2>
+            </div>
+            <div class="ide-content">
+                <h3>Essential Features for Beginners</h3>
+                <p>Modern IDEs come packed with features designed to make coding easier. Here are the most important ones for beginners:</p>
+                
+                <div class="ide-showcase">
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Syntax Highlighting">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Syntax Highlighting</h3>
+                            <div class="ide-meta">
+                                <span class="ide-type">Basic Feature</span>
+                            </div>
+                            <p class="ide-desc">Colors different parts of your code to make it easier to read and understand.</p>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1617791160536-598cf32026fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80" alt="Code Completion">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Code Completion</h3>
+                            <div class="ide-meta">
+                                <span class="ide-type">Productivity Boost</span>
+                            </div>
+                            <p class="ide-desc">Suggests code as you type, saving time and reducing typos.</p>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Debugging">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Integrated Debugger</h3>
+                            <div class="ide-meta">
+                                <span class="ide-type">Error Finding</span>
+                            </div>
+                            <p class="ide-desc">Lets you pause execution and inspect variables to find bugs.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Advanced Features to Grow Into</h3>
+                <p>As you become more experienced, these features will become invaluable:</p>
+                
+                <ul class="feature-list">
+                    <li><strong>Refactoring Tools:</strong> Safely rename variables, extract methods, and reorganize code</li>
+                    <li><strong>Version Control Integration:</strong> Built-in Git support for tracking changes</li>
+                    <li><strong>Database Tools:</strong> Connect to and manage databases directly</li>
+                    <li><strong>Testing Frameworks:</strong> Run and debug unit tests within the IDE</li>
+                    <li><strong>Plugin Ecosystem:</strong> Extend functionality with community plugins</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Types of IDEs Section -->
+    <section id="types" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Types of IDEs</h2>
+            </div>
+            <div class="ide-content">
+                <h3>General Purpose IDEs</h3>
+                <p>These IDEs support multiple programming languages and are great for beginners who haven't specialized yet:</p>
+                
+                <div class="ide-showcase">
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://i.pinimg.com/736x/5c/14/d3/5c14d369733e03bffbf8c4e7fcef8e0f.jpg" alt="VS Code">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Visual Studio Code</h3>
+                            <div class="ide-meta">
+                                <span><i class="fab fa-windows"></i> <i class="fab fa-apple"></i> <i class="fab fa-linux"></i></span>
+                                <span class="ide-type">Free</span>
+                            </div>
+                            <p class="ide-desc">Lightweight but powerful editor with excellent extension ecosystem.</p>
+                            <a href="https://code.visualstudio.com/download" class="ide-link" target="_blank">Download <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://i.pinimg.com/736x/e0/ea/8e/e0ea8e4bb65b7551bc60815f2e79a5e8.jpg" alt="Eclipse">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Eclipse</h3>
+                            <div class="ide-meta">
+                                <span><i class="fab fa-windows"></i> <i class="fab fa-apple"></i> <i class="fab fa-linux"></i></span>
+                                <span class="ide-type">Free</span>
+                            </div>
+                            <p class="ide-desc">Mature IDE popular for Java but supports many languages.</p>
+                            <a href="https://www.eclipse.org/downloads/" class="ide-link" target="_blank">Download <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Language-Specific IDEs</h3>
+                <p>These IDEs are optimized for particular programming languages:</p>
+                
+                <div class="ide-showcase">
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaYsIZCFf_EOouW_4FWbQBuotbPBigEZyZFw&s" alt="PyCharm">
+                        </div>
+                        <div class="ide-details">
+                            <h3>PyCharm</h3>
+                            <div class="ide-meta">
+                                <span><i class="fab fa-windows"></i> <i class="fab fa-apple"></i> <i class="fab fa-linux"></i></span>
+                                <span class="ide-type">Free/Paid</span>
+                            </div>
+                            <p class="ide-desc">Professional Python IDE with scientific tools and web support.</p>
+                            <a href="https://www.jetbrains.com/pycharm/download/" class="ide-link" target="_blank">Download <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV0xo3foSz4kmpPUdSwRf5qambJFc112uxRhDSgfQdQI5lrDcz-bLZtZ2ESz_T1pLfiq8&usqp=CAU" alt="IntelliJ">
+                        </div>
+                        <div class="ide-details">
+                            <h3>IntelliJ IDEA</h3>
+                            <div class="ide-meta">
+                                <span><i class="fab fa-windows"></i> <i class="fab fa-apple"></i> <i class="fab fa-linux"></i></span>
+                                <span class="ide-type">Free/Paid</span>
+                            </div>
+                            <p class="ide-desc">Smart Java IDE with excellent framework support.</p>
+                            <a href="https://www.jetbrains.com/idea/download/" class="ide-link" target="_blank">Download <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Beginner-Friendly IDEs</h3>
+                <p>These IDEs are designed specifically for new programmers:</p>
+                
+                <div class="ide-showcase">
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://pbs.twimg.com/media/F-fFzTRXoAAX2wM?format=jpg&name=small" alt="Thonny">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Thonny</h3>
+                            <div class="ide-meta">
+                                <span><i class="fab fa-windows"></i> <i class="fab fa-apple"></i> <i class="fab fa-linux"></i></span>
+                                <span class="ide-type">Free</span>
+                            </div>
+                            <p class="ide-desc">Simple Python IDE perfect for absolute beginners.</p>
+                            <a href="https://thonny.org/" class="ide-link" target="_blank">Download <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://blueroom.bluej.org/system/pictures/39/normal/gen-bluej-splash.png" alt="BlueJ">
+                        </div>
+                        <div class="ide-details">
+                            <h3>BlueJ</h3>
+                            <div class="ide-meta">
+                                <span><i class="fab fa-windows"></i> <i class="fab fa-apple"></i> <i class="fab fa-linux"></i></span>
+                                <span class="ide-type">Free</span>
+                            </div>
+                            <p class="ide-desc">Java IDE designed for introductory teaching.</p>
+                            <a href="https://www.bluej.org/" class="ide-link" target="_blank">Download <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Choosing an IDE Section -->
+    <section id="choosing" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Choosing the Right IDE</h2>
+            </div>
+            <div class="ide-content">
+                <h3>Factors to Consider</h3>
+                <p>With so many options available, here's what to consider when choosing your first IDE:</p>
+                
+                <div class="ide-showcase">
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Language Support">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Language Support</h3>
+                            <p class="ide-desc">Does it support the programming language you're learning? Some IDEs specialize in certain languages.</p>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Performance">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Performance</h3>
+                            <p class="ide-desc">Will it run well on your computer? Some IDEs are lightweight while others require more resources.</p>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Community">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Community & Support</h3>
+                            <p class="ide-desc">Is there good documentation and community help available when you get stuck?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>IDE Comparison</h3>
+                <p>Here's how popular IDEs compare for beginners:</p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>IDE</th>
+                            <th>Best For</th>
+                            <th>Platform</th>
+                            <th>Price</th>
+                            <th>Beginner Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>VS Code</td>
+                            <td>Web, general purpose</td>
+                            <td>Windows, Mac, Linux</td>
+                            <td>Free</td>
+                            <td>★★★★☆</td>
+                        </tr>
+                        <tr>
+                            <td>PyCharm</td>
+                            <td>Python</td>
+                            <td>Windows, Mac, Linux</td>
+                            <td>Free/Paid</td>
+                            <td>★★★★☆</td>
+                        </tr>
+                        <tr>
+                            <td>IntelliJ</td>
+                            <td>Java/Kotlin</td>
+                            <td>Windows, Mac, Linux</td>
+                            <td>Free/Paid</td>
+                            <td>★★★☆☆</td>
+                        </tr>
+                        <tr>
+                            <td>Thonny</td>
+                            <td>Python beginners</td>
+                            <td>Windows, Mac, Linux</td>
+                            <td>Free</td>
+                            <td>★★★★★</td>
+                        </tr>
+                        <tr>
+                            <td>BlueJ</td>
+                            <td>Java beginners</td>
+                            <td>Windows, Mac, Linux</td>
+                            <td>Free</td>
+                            <td>★★★★★</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Setup Section -->
+    <section id="setup" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>IDE Setup & Installation</h2>
+            </div>
+            <div class="ide-content">
+                <h3>Getting Started with VS Code</h3>
+                <p>Visual Studio Code is one of the best choices for beginners. Here's how to set it up:</p>
+                
+                <div class="ide-showcase">
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://i.pinimg.com/736x/91/ae/b1/91aeb1699fa0da4e5202c487bda6b497.jpg" alt="Download">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Step 1: Download</h3>
+                            <p class="ide-desc">Visit <a href="https://code.visualstudio.com/download" target="_blank">code.visualstudio.com</a> and download the version for your operating system.</p>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://i.pinimg.com/736x/1b/89/f0/1b89f0b9f9feeb0c263bca39f2fced1b.jpg" alt="Install">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Step 2: Install</h3>
+                            <p class="ide-desc">Run the installer and accept the default options. Check "Add to PATH" for easier terminal access.</p>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://i.pinimg.com/736x/63/e5/2f/63e52fdadb13be3ac60dc477fd3fb15e.jpg" alt="Extensions">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Step 3: Add Extensions</h3>
+                            <p class="ide-desc">Install essential extensions like Python, ESLint, and Live Server from the Extensions view.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Recommended Extensions for Beginners</h3>
+                <p>These extensions will enhance your coding experience:</p>
+                
+                <ul class="feature-list">
+                    <li><strong>Language Support:</strong> Install the extension for your programming language (Python, Java, etc.)</li>
+                    <li><strong>Prettier:</strong> Automatic code formatting to keep your code clean</li>
+                    <li><strong>Live Server:</strong> Instantly see web page changes as you code</li>
+                    <li><strong>GitLens:</strong> Supercharge your Git capabilities</li>
+                    <li><strong>Bracket Pair Colorizer:</strong> Makes matching brackets easier to see</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Additional Resources</h2>
+            </div>
+            <div class="ide-content">
+                <h3>Learning Resources</h3>
+                <p>Take your IDE skills to the next level with these resources:</p>
+                
+                <div class="ide-showcase">
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Documentation">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Official Documentation</h3>
+                            <p class="ide-desc">The best place to learn your IDE's features is its official documentation.</p>
+                            <a href="https://code.visualstudio.com/docs" class="ide-link" target="_blank">VS Code Docs <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="YouTube">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Video Tutorials</h3>
+                            <p class="ide-desc">YouTube has excellent beginner tutorials for all major IDEs.</p>
+                            <a href="https://www.youtube.com/results?search_query=vs+code+beginner+tutorial" class="ide-link" target="_blank">Search YouTube <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" alt="Courses">
+                        </div>
+                        <div class="ide-details">
+                            <h3>Online Courses</h3>
+                            <p class="ide-desc">Structured courses can help you master your IDE faster.</p>
+                            <a href="https://www.udemy.com/courses/search/?q=vs+code" class="ide-link" target="_blank">Find Courses <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Troubleshooting Common Issues</h3>
+                <p>When you run into problems, try these solutions:</p>
+                
+                <ul class="feature-list">
+                    <li><strong>IDE running slow?</strong> Disable unnecessary plugins and extensions</li>
+                    <li><strong>Code completion not working?</strong> Make sure you have the language support installed</li>
+                    <li><strong>Extensions not loading?</strong> Restart the IDE and check for updates</li>
+                    <li><strong>Can't run your code?</strong> Verify you have the necessary compilers/interpreters installed</li>
+                    <li><strong>Weird formatting issues?</strong> Check your settings for conflicting formatters</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Conclusion and Next Steps</h2>
+            </div>
+            <div class="ide-content">
+                <h3>Start Your Coding Journey</h3>
+                <p>Choosing the right IDE is an important first step in your programming journey. Here's what to do next:</p>
+                
+                <div class="ide-showcase">
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" alt="Download IDE">
+                        </div>
+                        <div class="ide-details">
+                            <h3>1. Download an IDE</h3>
+                            <p class="ide-desc">Pick one from our recommendations and install it on your computer.</p>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Learn Basics">
+                        </div>
+                        <div class="ide-details">
+                            <h3>2. Learn the Basics</h3>
+                            <p class="ide-desc">Follow a beginner tutorial for your chosen IDE to learn its core features.</p>
+                        </div>
+                    </div>
+                    <div class="ide-card">
+                        <div class="ide-image">
+                            <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Practice">
+                        </div>
+                        <div class="ide-details">
+                            <h3>3. Practice Regularly</h3>
+                            <p class="ide-desc">The more you use your IDE, the more comfortable you'll become.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="Tutorials.html" class="btn">Explore Our Tutorials</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Motivational Quote Section -->
+    <section class="motivational-quote">
+        <div class="container quote-content">
+            <h2>Words of Inspiration</h2>
+            <p class="quote-text">"The beautiful thing about learning to code is that anyone can do it. Every programmer was once where you are now - staring at their first IDE, wondering how it all works. The difference between those who succeed and those who don't is persistence. Keep coding, keep learning, and most importantly, keep building."</p>
+            <p class="quote-author">— Beginner's Guide Team</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Beginner's Guide</span>
+                    </div>
+                    <p>Making programming accessible to everyone. Our mission is to help absolute beginners start their coding journey with confidence.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Cheat Sheets</a></li>
+                        <li><a href="#">Code Challenges</a></li>
+                        <li><a href="#">Projects</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Languages</h3>
+                    <ul>
+                        <li><a href="#">HTML & CSS</a></li>
+                        <li><a href="#">JavaScript</a></li>
+                        <li><a href="#">Python</a></li>
+                        <li><a href="#">Java</a></li>
+                        <li><a href="#">C++</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Beginner's Guide to Programming. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.querySelector('i').classList.toggle('fa-bars');
+                this.querySelector('i').classList.toggle('fa-times');
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.ide-card, .section-title');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.ide-card, .section-title');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+        });
+    </script>
+</body>
+</html>

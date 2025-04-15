@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Beginner Tutorial | Beginner's Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --gray: #94a3b8;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Tutorial Content Section */
+        .tutorial-content {
+            background-color: var(--white);
+            padding: 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-top: -50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .content-section {
+            margin-bottom: 60px;
+        }
+
+        .content-section h3 {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            color: var(--dark);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .content-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .content-section p {
+            margin-bottom: 20px;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            line-height: 1.8;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            border-left: 4px solid var(--primary);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        /* Notes and Warnings */
+        .note-box {
+            background-color: #e0f2fe;
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .note-box:before {
+            content: '📝 Note';
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .warning-box {
+            background-color: #fef3c7;
+            border-left: 4px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .warning-box:before {
+            content: '⚠️ Important';
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--warning);
+        }
+
+        /* Image Styles */
+        .tutorial-image {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .tutorial-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .image-caption {
+            margin-top: 10px;
+            font-style: italic;
+            color: var(--gray);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        /* Example Blocks */
+        .example-block {
+            background-color: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Video Resources */
+        .video-resources {
+            background-color: #f8fafc;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 60px 0 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .video-resources h2 {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            color: var(--dark);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .video-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-info h3 {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .video-info p {
+            color: var(--gray);
+            font-size: clamp(0.8rem, 2vw, 0.85rem);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .tutorial-content,
+        body.dark-mode .video-resources,
+        body.dark-mode .video-card {
+            background-color: #1e293b;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .code-block,
+        body.dark-mode .example-block {
+            background-color: #0f172a;
+            border-color: #334155;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .note-box {
+            background-color: #1e3a8a;
+            border-color: #3b82f6;
+        }
+
+        body.dark-mode .warning-box {
+            background-color: #78350f;
+            border-color: #f59e0b;
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            section {
+                padding: 50px 0;
+            }
+            
+            .tutorial-content {
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                text-align: left;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                display: none;
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .tutorial-content {
+                padding: 30px;
+                margin-top: -30px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            section {
+                padding: 40px 0;
+            }
+            
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tutorial-content {
+                padding: 20px;
+            }
+
+            .code-block {
+                padding: 15px;
+            }
+
+            .note-box, .warning-box {
+                padding: 15px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        body.dark-mode table {
+            border-color: #334155;
+        }
+
+        body.dark-mode th, 
+        body.dark-mode td {
+            border-color: #334155;
+        }
+
+        body.dark-mode th {
+            background-color: #1e293b;
+        }
+
+        body.dark-mode tr:hover {
+            background-color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>HTML Beginner Tutorial</h1>
+            <p>Master the foundation of web development with this comprehensive HTML guide. Perfect for absolute beginners who want to start building websites.</p>
+            <a href="#getting-started" class="btn">Start Learning</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section>
+        <div class="container">
+            <div class="tutorial-content">
+                <div class="section-title">
+                    <h2>Complete HTML Guide</h2>
+                </div>
+
+                <!-- Getting Started Section -->
+                <div class="content-section" id="getting-started">
+                    <h3>Getting Started with HTML</h3>
+                    <p>HTML (HyperText Markup Language) is the standard markup language for creating web pages. It describes the structure of a web page and consists of a series of elements that tell browsers how to display content.</p>
+                    
+                    <div class="tutorial-image">
+                        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="HTML code on a screen">
+                        <p class="image-caption">HTML is used to structure content on web pages</p>
+                    </div>
+
+                    <div class="note-box">
+                        HTML is not a programming language—it's a markup language that defines the structure of your content.
+                    </div>
+
+                    <h4>What You'll Need</h4>
+                    <ul>
+                        <li>A text editor (VS Code, Sublime Text, or even Notepad)</li>
+                        <li>A web browser (Chrome, Firefox, Edge)</li>
+                        <li>Basic computer skills</li>
+                    </ul>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>What is HTML Used For?</h4>
+                    <p>HTML is used to create the structure and content of web pages. It's the skeleton that holds everything together:</p>
+                    <ul>
+                        <li>Defining headings, paragraphs, and text</li>
+                        <li>Creating links between pages</li>
+                        <li>Embedding images and videos</li>
+                        <li>Building forms for user input</li>
+                        <li>Organizing content with lists and tables</li>
+                    </ul>
+
+                    <h4>How HTML Works</h4>
+                    <p>When you visit a website, your browser:</p>
+                    <ol>
+                        <li>Requests the HTML file from the server</li>
+                        <li>Reads the HTML code</li>
+                        <li>Renders (displays) the page based on the HTML instructions</li>
+                    </ol>
+
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h4>HTML Example</h4>
+                        </div>
+                        <p>Here's a very simple HTML document that displays "Hello, World!":</p>
+                        <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My First Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello, World!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basic Structure Section -->
+                <div class="content-section" id="basic-structure">
+                    <h3>Basic Structure of an HTML Document</h3>
+                    <p>Every HTML document has a basic structure that must be followed. Here's the minimal code needed for a valid HTML page:</p>
+                    
+                    <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Document Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Your content goes here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                    </div>
+
+                    <h4>Key Components Explained</h4>
+                    <ul>
+                        <li><strong>&lt;!DOCTYPE html&gt;</strong> - Declares this is an HTML5 document (must be first line)</li>
+                        <li><strong>&lt;html&gt;</strong> - The root element wrapping all content</li>
+                        <li><strong>&lt;head&gt;</strong> - Contains meta information not displayed on page</li>
+                        <li><strong>&lt;meta charset="UTF-8"&gt;</strong> - Defines character encoding</li>
+                        <li><strong>&lt;meta name="viewport"&gt;</strong> - Ensures proper mobile rendering</li>
+                        <li><strong>&lt;title&gt;</strong> - Sets the browser tab title</li>
+                        <li><strong>&lt;body&gt;</strong> - Contains all visible page content</li>
+                    </ul>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>Understanding HTML Syntax</h4>
+                    <p>HTML uses a simple syntax made up of elements:</p>
+                    <ul>
+                        <li><strong>Tags:</strong> Keywords surrounded by angle brackets (&lt; &gt;)</li>
+                        <li><strong>Elements:</strong> Opening tag + content + closing tag</li>
+                        <li><strong>Attributes:</strong> Additional information about elements (inside opening tag)</li>
+                    </ul>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Description</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Opening Tag</td>
+                                <td>Starts an HTML element</td>
+                                <td>&lt;p&gt;</td>
+                            </tr>
+                            <tr>
+                                <td>Content</td>
+                                <td>The actual content to display</td>
+                                <td>This is a paragraph</td>
+                            </tr>
+                            <tr>
+                                <td>Closing Tag</td>
+                                <td>Ends an HTML element</td>
+                                <td>&lt;/p&gt;</td>
+                            </tr>
+                            <tr>
+                                <td>Element</td>
+                                <td>The complete tag set</td>
+                                <td>&lt;p&gt;This is a paragraph&lt;/p&gt;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Tags and Elements Section -->
+                <div class="content-section" id="tags-elements">
+                    <h3>HTML Tags and Elements</h3>
+                    <p>HTML uses "tags" to create elements that structure content. Most elements have an opening tag, content, and closing tag:</p>
+                    
+                    <div class="code-block">
+&lt;tagname&gt;Content goes here...&lt;/tagname&gt;
+                    </div>
+
+                    <div class="tutorial-image">
+                        <img src="https://www.w3schools.com/html/img_element.png" alt="HTML element structure">
+                        <p class="image-caption">Anatomy of an HTML element</p>
+                    </div>
+
+                    <h4>Common HTML Tags</h4>
+                    
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-heading"></i>
+                            <h4>Headings</h4>
+                        </div>
+                        <p>HTML provides six levels of headings from &lt;h1&gt; (most important) to &lt;h6&gt; (least important):</p>
+                        <div class="code-block">
+&lt;h1&gt;Main Heading&lt;/h1&gt;
+&lt;h2&gt;Subheading&lt;/h2&gt;
+&lt;h3&gt;Sub-subheading&lt;/h3&gt;
+                        </div>
+                    </div>
+
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-paragraph"></i>
+                            <h4>Paragraphs</h4>
+                        </div>
+                        <p>The &lt;p&gt; tag defines a paragraph. Browsers automatically add spacing before and after:</p>
+                        <div class="code-block">
+&lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;p&gt;This is another paragraph.&lt;/p&gt;
+                        </div>
+                    </div>
+
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-list"></i>
+                            <h4>Lists</h4>
+                        </div>
+                        <p>Create ordered (numbered) and unordered (bulleted) lists:</p>
+                        <div class="code-block">
+&lt;!-- Unordered list --&gt;
+&lt;ul&gt;
+    &lt;li&gt;First item&lt;/li&gt;
+    &lt;li&gt;Second item&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- Ordered list --&gt;
+&lt;ol&gt;
+    &lt;li&gt;First step&lt;/li&gt;
+    &lt;li&gt;Second step&lt;/li&gt;
+&lt;/ol&gt;
+                        </div>
+                    </div>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>Self-Closing Tags</h4>
+                    <p>Some HTML elements don't have closing tags because they don't contain content. These are called void elements:</p>
+                    <div class="code-block">
+&lt;!-- Line break --&gt;
+&lt;br&gt;
+
+&lt;!-- Image --&gt;
+&lt;img src="image.jpg" alt="Description"&gt;
+
+&lt;!-- Input field --&gt;
+&lt;input type="text"&gt;
+                    </div>
+
+                    <div class="note-box">
+                        In HTML5, you don't need to include the slash in self-closing tags (like &lt;br/&gt;), though it's still valid if you prefer that style.
+                    </div>
+                </div>
+
+                <!-- Attributes Section -->
+                <div class="content-section" id="attributes">
+                    <h3>HTML Attributes</h3>
+                    <p>Attributes provide additional information about HTML elements. They are always specified in the start tag and usually come in name/value pairs like name="value".</p>
+                    
+                    <div class="code-block">
+&lt;a href="https://example.com" target="_blank"&gt;Visit Example&lt;/a&gt;
+&lt;img src="image.jpg" alt="Description" width="500"&gt;
+&lt;input type="text" id="username" name="username"&gt;
+                    </div>
+
+                    <h4>Common Attributes</h4>
+                    <ul>
+                        <li><strong>class</strong> - Specifies one or more class names for an element (used for CSS and JavaScript)</li>
+                        <li><strong>id</strong> - Specifies a unique id for an element</li>
+                        <li><strong>style</strong> - Specifies an inline CSS style for an element</li>
+                        <li><strong>title</strong> - Specifies extra information about an element (shown as tooltip)</li>
+                        <li><strong>data-*</strong> - Used to store custom data private to the page or application</li>
+                    </ul>
+
+                    <div class="warning-box">
+                        Always include descriptive <code>alt</code> text for images for accessibility. Use empty alt (<code>alt=""</code>) for decorative images.
+                    </div>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>Boolean Attributes</h4>
+                    <p>Some attributes don't need a value - their presence alone makes them true:</p>
+                    <div class="code-block">
+&lt;input type="checkbox" checked&gt;
+&lt;button disabled&gt;Can't Click Me&lt;/button&gt;
+                    </div>
+                    <p>These are called boolean attributes. You can also write them with values (e.g., <code>checked="checked"</code>), but it's not necessary in HTML5.</p>
+                </div>
+
+                <!-- Basic Formatting Section -->
+                <div class="content-section" id="formatting">
+                    <h3>Basic Formatting Tags</h3>
+                    <p>HTML provides various tags for text formatting and styling:</p>
+                    
+                    <div class="code-block">
+&lt;b&gt; - Bold text
+&lt;strong&gt; - Important text (semantic)
+&lt;i&gt; - Italic text
+&lt;em&gt; - Emphasized text (semantic)
+&lt;mark&gt; - Marked/highlighted text
+&lt;small&gt; - Smaller text
+&lt;del&gt; - Deleted text
+&lt;ins&gt; - Inserted text
+&lt;sub&gt; - Subscript text
+&lt;sup&gt; - Superscript text
+                    </div>
+
+                    <div class="note-box">
+                        While &lt;b&gt; and &lt;i&gt; work, it's better to use &lt;strong&gt; and &lt;em&gt; for semantic meaning and accessibility.
+                    </div>
+
+                    <h4>Example of Formatting</h4>
+                    <div class="code-block">
+&lt;p&gt;This is &lt;b&gt;bold&lt;/b&gt; and this is &lt;strong&gt;strong&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;This is &lt;i&gt;italic&lt;/i&gt; and this is &lt;em&gt;emphasized&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Don't forget to &lt;mark&gt;highlight&lt;/mark&gt; important text.&lt;/p&gt;
+&lt;p&gt;This is &lt;small&gt;smaller text&lt;/small&gt;.&lt;/p&gt;
+&lt;p&gt;My favorite color is &lt;del&gt;blue&lt;/del&gt; &lt;ins&gt;red&lt;/ins&gt;.&lt;/p&gt;
+&lt;p&gt;H&lt;sub&gt;2&lt;/sub&gt;O is water.&lt;/p&gt;
+&lt;p&gt;E = mc&lt;sup&gt;2&lt;/sup&gt; is Einstein's equation.&lt;/p&gt;
+                    </div>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>HTML Comments</h4>
+                    <p>You can add comments to your HTML that won't be displayed in the browser:</p>
+                    <div class="code-block">
+&lt;!-- This is a comment --&gt;
+&lt;!-- 
+    This is a multi-line
+    comment in HTML
+--&gt;
+                    </div>
+                    <p>Comments are useful for:</p>
+                    <ul>
+                        <li>Explaining your code</li>
+                        <li>Temporarily disabling code</li>
+                        <li>Leaving notes for other developers</li>
+                    </ul>
+                </div>
+
+                <!-- Links and Navigation Section -->
+                <div class="content-section" id="links-navigation">
+                    <h3>Links and Navigation</h3>
+                    <p>Hyperlinks are what makes the web "web-like". The &lt;a&gt; tag defines a hyperlink, which is used to link from one page to another.</p>
+                    
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-link"></i>
+                            <h4>Creating Links</h4>
+                        </div>
+                        <p>The &lt;a&gt; tag creates hyperlinks. The <code>href</code> attribute specifies the destination:</p>
+                        <div class="code-block">
+&lt;!-- External link --&gt;
+&lt;a href="https://www.example.com"&gt;Visit Example&lt;/a&gt;
+
+&lt;!-- Internal link --&gt;
+&lt;a href="about.html"&gt;About Us&lt;/a&gt;
+
+&lt;!-- Link that opens in new tab --&gt;
+&lt;a href="https://www.example.com" target="_blank" rel="noopener"&gt;Open in new tab&lt;/a&gt;
+
+&lt;!-- Email link --&gt;
+&lt;a href="mailto:someone@example.com"&gt;Send Email&lt;/a&gt;
+
+&lt;!-- Phone link --&gt;
+&lt;a href="tel:+1234567890"&gt;Call Us&lt;/a&gt;
+                        </div>
+                    </div>
+
+                    <h4>Navigation Menu Example</h4>
+                    <div class="code-block">
+&lt;nav&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="about.html"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="services.html"&gt;Services&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="contact.html"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+                    </div>
+
+                    <div class="tutorial-image">
+                        <img src="https://www.w3schools.com/html/img_girl.jpg" alt="Example of HTML image">
+                        <p class="image-caption">An image displayed using the HTML &lt;img&gt; tag</p>
+                    </div>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>Linking to Page Sections</h4>
+                    <p>You can link to specific sections within a page using IDs:</p>
+                    <div class="code-block">
+&lt;!-- First, add an id to an element --&gt;
+&lt;h2 id="section1"&gt;Section 1&lt;/h2&gt;
+
+&lt;!-- Then link to it --&gt;
+&lt;a href="#section1"&gt;Jump to Section 1&lt;/a&gt;
+                    </div>
+                </div>
+
+                <!-- Images and Media Section -->
+                <div class="content-section" id="images-media">
+                    <h3>Images and Media</h3>
+                    <p>Images and media make websites more engaging and interactive. HTML provides tags to embed these elements.</p>
+                    
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-image"></i>
+                            <h4>Adding Images</h4>
+                        </div>
+                        <p>The &lt;img&gt; tag embeds images. It's self-closing and requires <code>src</code> and <code>alt</code> attributes:</p>
+                        <div class="code-block">
+&lt;img src="image.jpg" alt="Description of image"&gt;
+&lt;img src="logo.png" alt="Company logo" width="200" height="100"&gt;
+                        </div>
+                    </div>
+
+                    <h4>Adding Video and Audio</h4>
+                    <div class="code-block">
+&lt;!-- HTML5 Video --&gt;
+&lt;video width="320" height="240" controls&gt;
+    &lt;source src="movie.mp4" type="video/mp4"&gt;
+    Your browser does not support the video tag.
+&lt;/video&gt;
+
+&lt;!-- HTML5 Audio --&gt;
+&lt;audio controls&gt;
+    &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+    Your browser does not support the audio element.
+&lt;/audio&gt;
+                    </div>
+
+                    <div class="note-box">
+                        Always include fallback content between the opening and closing tags for &lt;video&gt; and &lt;audio&gt; for browsers that don't support these elements.
+                    </div>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>Image Formats</h4>
+                    <p>Common image formats for the web:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Format</th>
+                                <th>Best For</th>
+                                <th>Extension</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>JPEG</td>
+                                <td>Photographs</td>
+                                <td>.jpg, .jpeg</td>
+                            </tr>
+                            <tr>
+                                <td>PNG</td>
+                                <td>Graphics with transparency</td>
+                                <td>.png</td>
+                            </tr>
+                            <tr>
+                                <td>GIF</td>
+                                <td>Simple animations</td>
+                                <td>.gif</td>
+                            </tr>
+                            <tr>
+                                <td>SVG</td>
+                                <td>Vector graphics</td>
+                                <td>.svg</td>
+                            </tr>
+                            <tr>
+                                <td>WebP</td>
+                                <td>Modern format (smaller files)</td>
+                                <td>.webp</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Forms Section -->
+                <div class="content-section" id="forms">
+                    <h3>Forms and User Input</h3>
+                    <p>Forms allow users to enter data that can be sent to a server for processing. They are essential for user interaction.</p>
+                    
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-keyboard"></i>
+                            <h4>Basic Form Structure</h4>
+                        </div>
+                        <div class="code-block">
+&lt;form action="/submit" method="post"&gt;
+    &lt;label for="name"&gt;Name:&lt;/label&gt;
+    &lt;input type="text" id="name" name="name" required&gt;
+    
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" id="email" name="email" required&gt;
+    
+    &lt;label for="message"&gt;Message:&lt;/label&gt;
+    &lt;textarea id="message" name="message" rows="4"&gt;&lt;/textarea&gt;
+    
+    &lt;button type="submit"&gt;Send&lt;/button&gt;
+&lt;/form&gt;
+                        </div>
+                    </div>
+
+                    <h4>Common Form Elements</h4>
+                    <ul>
+                        <li><strong>&lt;input&gt;</strong> - For text, email, password, radio buttons, checkboxes, etc.</li>
+                        <li><strong>&lt;textarea&gt;</strong> - For multi-line text input</li>
+                        <li><strong>&lt;select&gt;</strong> - For dropdown menus</li>
+                        <li><strong>&lt;button&gt;</strong> - For submit/reset buttons</li>
+                        <li><strong>&lt;label&gt;</strong> - To properly label form controls</li>
+                        <li><strong>&lt;fieldset&gt;</strong> - Groups related elements in a form</li>
+                        <li><strong>&lt;legend&gt;</strong> - Defines a caption for a &lt;fieldset&gt;</li>
+                    </ul>
+
+                    <div class="tutorial-image">
+                        <img src="https://www.w3schools.com/html/html_form.jpg" alt="HTML form example">
+                        <p class="image-caption">A simple HTML form with various input types</p>
+                    </div>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>Common Input Types</h4>
+                    <p>HTML5 introduced many new input types that provide better controls and validation:</p>
+                    <div class="code-block">
+&lt;input type="text"&gt;       &lt;!-- Basic text input --&gt;
+&lt;input type="password"&gt;  &lt;!-- Password field (hidden) --&gt;
+&lt;input type="email"&gt;     &lt;!-- Email with validation --&gt;
+&lt;input type="number"&gt;    &lt;!-- Number input --&gt;
+&lt;input type="date"&gt;      &lt;!-- Date picker --&gt;
+&lt;input type="color"&gt;     &lt;!-- Color picker --&gt;
+&lt;input type="range"&gt;     &lt;!-- Slider control --&gt;
+&lt;input type="checkbox"&gt;  &lt;!-- Checkbox --&gt;
+&lt;input type="radio"&gt;     &lt;!-- Radio button --&gt;
+&lt;input type="file"&gt;      &lt;!-- File upload --&gt;
+&lt;input type="submit"&gt;    &lt;!-- Submit button --&gt;
+                    </div>
+                </div>
+
+                <!-- Semantic HTML Section -->
+                <div class="content-section" id="semantic-html">
+                    <h3>Semantic HTML5</h3>
+                    <p>Semantic HTML introduces elements that clearly describe their meaning to both browsers and developers. This improves accessibility, SEO, and maintainability.</p>
+                    
+                    <div class="code-block">
+&lt;header&gt;
+    &lt;h1&gt;Website Title&lt;/h1&gt;
+    &lt;nav&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+    &lt;article&gt;
+        &lt;h2&gt;Article Title&lt;/h2&gt;
+        &lt;p&gt;Article content...&lt;/p&gt;
+    &lt;/article&gt;
+    
+    &lt;aside&gt;
+        &lt;h3&gt;Related Links&lt;/h3&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Link 1&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/aside&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+    &lt;p&gt;Copyright &copy; 2023&lt;/p&gt;
+&lt;/footer&gt;
+                    </div>
+
+                    <div class="tutorial-image">
+                        <img src="https://www.w3schools.com/html/img_sem_elements.gif" alt="HTML5 semantic elements">
+                        <p class="image-caption">How semantic elements structure a web page</p>
+                    </div>
+
+                    <h4>Key Semantic Elements</h4>
+                    <ul>
+                        <li><strong>&lt;header&gt;</strong> - Introductory content</li>
+                        <li><strong>&lt;nav&gt;</strong> - Navigation links</li>
+                        <li><strong>&lt;main&gt;</strong> - Primary content</li>
+                        <li><strong>&lt;article&gt;</strong> - Self-contained composition</li>
+                        <li><strong>&lt;section&gt;</strong> - Thematic grouping</li>
+                        <li><strong>&lt;aside&gt;</strong> - Indirectly related content</li>
+                        <li><strong>&lt;footer&gt;</strong> - Footer content</li>
+                        <li><strong>&lt;figure&gt;</strong> - Self-contained content like illustrations</li>
+                        <li><strong>&lt;figcaption&gt;</strong> - Caption for a &lt;figure&gt;</li>
+                        <li><strong>&lt;time&gt;</strong> - Machine-readable date/time</li>
+                    </ul>
+
+                    <div class="note-box">
+                        Using semantic HTML improves accessibility, SEO, and makes your code easier to understand and maintain.
+                    </div>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>Why Semantic HTML Matters</h4>
+                    <p>Semantic HTML provides important benefits:</p>
+                    <ol>
+                        <li><strong>Accessibility:</strong> Screen readers can better interpret page structure</li>
+                        <li><strong>SEO:</strong> Search engines understand content better</li>
+                        <li><strong>Maintainability:</strong> Code is easier to read and update</li>
+                        <li><strong>Future Compatibility:</strong> New devices and browsers will handle semantic elements properly</li>
+                    </ol>
+                </div>
+
+                <!-- Debugging and Testing Section -->
+                <div class="content-section" id="debugging">
+                    <h3>Debugging and Testing</h3>
+                    <p>Validating and testing your HTML ensures it works correctly across different browsers and devices.</p>
+                    
+                    <h4>HTML Validation</h4>
+                    <p>Use the W3C Validator to check your HTML for errors:</p>
+                    <div class="code-block">
+https://validator.w3.org/
+                    </div>
+
+                    <h4>Browser Developer Tools</h4>
+                    <p>All modern browsers include developer tools (F12 or right-click → Inspect) that allow you to:</p>
+                    <ul>
+                        <li>Inspect HTML elements</li>
+                        <li>Debug JavaScript</li>
+                        <li>Test responsive designs</li>
+                        <li>Analyze performance</li>
+                    </ul>
+
+                    <h4>Cross-Browser Testing</h4>
+                    <p>Test your website in different browsers (Chrome, Firefox, Safari, Edge) to ensure compatibility.</p>
+
+                    <div class="warning-box">
+                        Always test your website on actual mobile devices, not just browser emulators, for accurate results.
+                    </div>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>Common HTML Mistakes to Avoid</h4>
+                    <ul>
+                        <li><strong>Missing closing tags:</strong> Always close your HTML elements properly</li>
+                        <li><strong>Nesting errors:</strong> Don't overlap elements incorrectly (e.g., &lt;p&gt;&lt;div&gt;&lt;/p&gt;&lt;/div&gt;)</li>
+                        <li><strong>Missing alt text:</strong> Always include alt attributes for images</li>
+                        <li><strong>Using deprecated tags:</strong> Avoid old tags like &lt;font&gt; or &lt;center&gt;</li>
+                        <li><strong>Improper document structure:</strong> Include DOCTYPE, html, head, and body tags</li>
+                    </ul>
+                </div>
+
+                <!-- Responsive Design Section -->
+                <div class="content-section" id="responsive">
+                    <h3>Responsive Web Design</h3>
+                    <p>Responsive design ensures your website looks good on all devices. While this primarily involves CSS, HTML provides the foundation.</p>
+                    
+                    <h4>Viewport Meta Tag</h4>
+                    <p>Essential for responsive design:</p>
+                    <div class="code-block">
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+                    </div>
+
+                    <h4>Responsive Images</h4>
+                    <p>Use the &lt;picture&gt; element and srcset attribute for responsive images:</p>
+                    <div class="code-block">
+&lt;img src="image-small.jpg" 
+     srcset="image-small.jpg 500w, image-medium.jpg 1000w, image-large.jpg 1500w"
+     sizes="(max-width: 600px) 480px, (max-width: 1200px) 800px, 1200px"
+     alt="Responsive image"&gt;
+
+&lt;picture&gt;
+    &lt;source media="(max-width: 600px)" srcset="image-small.jpg"&gt;
+    &lt;source media="(max-width: 1200px)" srcset="image-medium.jpg"&gt;
+    &lt;img src="image-large.jpg" alt="Responsive image"&gt;
+&lt;/picture&gt;
+                    </div>
+
+                    <div class="note-box">
+                        While responsive design mainly uses CSS, proper HTML structure is crucial for it to work effectively.
+                    </div>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>Mobile-First Approach</h4>
+                    <p>When building responsive websites:</p>
+                    <ol>
+                        <li>Start with mobile layout (simplest version)</li>
+                        <li>Use semantic HTML for content structure</li>
+                        <li>Add media queries for larger screens</li>
+                        <li>Test on various devices</li>
+                    </ol>
+                </div>
+
+                <!-- How to Practice Section -->
+                <div class="content-section" id="practice">
+                    <h3>How to Practice HTML</h3>
+                    <p>Consistent practice is key to mastering HTML. Here are some effective ways to practice:</p>
+                    
+                    <h4>1. Build Small Projects</h4>
+                    <ul>
+                        <li>Personal portfolio page</li>
+                        <li>Recipe page</li>
+                        <li>Event invitation</li>
+                        <li>Blog post</li>
+                    </ul>
+
+                    <h4>2. Code Along With Tutorials</h4>
+                    <p>Follow along with video tutorials and online courses, typing the code yourself rather than copying.</p>
+
+                    <h4>3. Recreate Existing Websites</h4>
+                    <p>Try to recreate simple websites you like to understand their structure.</p>
+
+                    <h4>4. Use Online Code Editors</h4>
+                    <p>Platforms like CodePen, JSFiddle, and CodeSandbox let you practice without setting up a local environment.</p>
+
+                    <h4>5. Contribute to Open Source</h4>
+                    <p>Look for beginner-friendly open source projects to contribute HTML improvements.</p>
+
+                    <div class="warning-box">
+                        Don't just copy code—make sure you understand what each element and attribute does.
+                    </div>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>HTML Practice Exercises</h4>
+                    <p>Try these exercises to test your HTML skills:</p>
+                    <ol>
+                        <li>Create a page with your favorite recipe (use headings, lists, and images)</li>
+                        <li>Build a simple contact form with name, email, and message fields</li>
+                        <li>Make a personal profile page with sections for about, skills, and contact</li>
+                        <li>Create a product card with image, title, description, and price</li>
+                        <li>Build a responsive navigation menu that works on mobile and desktop</li>
+                    </ol>
+                </div>
+
+                <!-- Next Steps Section -->
+                <div class="content-section" id="next-steps">
+                    <h3>Next Steps in Your Learning Journey</h3>
+                    <p>After mastering HTML basics, here's what to learn next:</p>
+                    
+                    <h4>1. CSS for Styling</h4>
+                    <p>Learn to make your HTML beautiful with colors, layouts, and responsive designs.</p>
+
+                    <h4>2. JavaScript for Interactivity</h4>
+                    <p>Add functionality to your websites with JavaScript.</p>
+
+                    <h4>3. Version Control with Git</h4>
+                    <p>Learn to track changes and collaborate with others using Git and GitHub.</p>
+
+                    <h4>4. Frontend Frameworks</h4>
+                    <p>Explore popular frameworks like React, Vue, or Angular for building complex applications.</p>
+
+                    <h4>5. Backend Development</h4>
+                    <p>Learn server-side programming with Node.js, Python, PHP, or other languages.</p>
+
+                    <div class="note-box">
+                        Remember that HTML is just the beginning—modern web development involves many technologies working together.
+                    </div>
+
+                    <!-- NEW BEGINNER CONTENT -->
+                    <h4>Recommended Learning Path</h4>
+                    <ol>
+                        <li><strong>HTML:</strong> Structure and content (you're here!)</li>
+                        <li><strong>CSS:</strong> Styling and layout</li>
+                        <li><strong>JavaScript:</strong> Interactivity and logic</li>
+                        <li><strong>Responsive Design:</strong> Mobile-friendly websites</li>
+                        <li><strong>CSS Frameworks:</strong> Bootstrap, Tailwind</li>
+                        <li><strong>Frontend Frameworks:</strong> React, Vue, Angular</li>
+                        <li><strong>Backend Development:</strong> Node.js, Python, etc.</li>
+                    </ol>
+                </div>
+
+                <!-- Video Resources Section -->
+                <div class="video-resources">
+                    <h2>Video Tutorials</h2>
+                    <p>Watch these excellent video tutorials to reinforce your HTML knowledge:</p>
+                    
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <a href="https://www.youtube.com/watch?v=qz0aGYrrlhU" target="_blank">
+                                <div class="video-thumbnail">
+                                    <img src="https://i.ytimg.com/vi/qz0aGYrrlhU/maxresdefault.jpg" alt="HTML Crash Course">
+                                </div>
+                                <div class="video-info">
+                                    <h3>HTML Crash Course For Absolute Beginners</h3>
+                                    <p>Traversy Media</p>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="video-card">
+                            <a href="https://www.youtube.com/watch?v=pQN-pnXPaVg" target="_blank">
+                                <div class="video-thumbnail">
+                                    <img src="https://i.ytimg.com/vi/pQN-pnXPaVg/maxresdefault.jpg" alt="HTML Full Course">
+                                </div>
+                                <div class="video-info">
+                                    <h3>HTML Full Course - Build a Website Tutorial</h3>
+                                    <p>freeCodeCamp.org</p>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="video-card">
+                            <a href="https://www.youtube.com/watch?v=UB1O30fR-EE" target="_blank">
+                                <div class="video-thumbnail">
+                                    <img src="https://i.ytimg.com/vi/UB1O30fR-EE/maxresdefault.jpg" alt="HTML Tutorial">
+                                </div>
+                                <div class="video-info">
+                                    <h3>HTML Tutorial for Beginners</h3>
+                                    <p>Programming with Mosh</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Beginner's Guide</span>
+                    </div>
+                    <p>Making programming accessible to everyone. Our mission is to help absolute beginners start their coding journey with confidence.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Cheat Sheets</a></li>
+                        <li><a href="#">Code Challenges</a></li>
+                        <li><a href="#">Projects</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Languages</h3>
+                    <ul>
+                        <li><a href="#">HTML & CSS</a></li>
+                        <li><a href="#">JavaScript</a></li>
+                        <li><a href="#">Python</a></li>
+                        <li><a href="#">Java</a></li>
+                        <li><a href="#">C++</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Beginner's Guide to Programming. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        document.querySelector(targetId).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            menuToggle.querySelector('i').classList.remove('fa-times');
+                            menuToggle.querySelector('i').classList.add('fa-bars');
+                        }
+                    }
+                });
+            });
+
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.content-section, .video-resources');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.content-section, .video-resources');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+        });
+    </script>
+</body>
+</html>

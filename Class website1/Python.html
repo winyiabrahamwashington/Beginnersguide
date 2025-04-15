@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Beginner Tutorial | Beginner's Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --gray: #94a3b8;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Tutorial Content Section */
+        .tutorial-content {
+            background-color: var(--white);
+            padding: 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-top: -50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .content-section {
+            margin-bottom: 60px;
+        }
+
+        .content-section h3 {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            color: var(--dark);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .content-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .content-section p {
+            margin-bottom: 20px;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            line-height: 1.8;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            border-left: 4px solid var(--primary);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        /* Notes and Warnings */
+        .note-box {
+            background-color: #e0f2fe;
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .note-box:before {
+            content: '📝 Note';
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .warning-box {
+            background-color: #fef3c7;
+            border-left: 4px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .warning-box:before {
+            content: '⚠️ Important';
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--warning);
+        }
+
+        /* Image Styles */
+        .tutorial-image {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .tutorial-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .image-caption {
+            margin-top: 10px;
+            font-style: italic;
+            color: var(--gray);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        /* Example Blocks */
+        .example-block {
+            background-color: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Video Resources */
+        .video-resources {
+            background-color: #f8fafc;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 60px 0 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .video-resources h2 {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            color: var(--dark);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .video-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-info h3 {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .video-info p {
+            color: var(--gray);
+            font-size: clamp(0.8rem, 2vw, 0.85rem);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .tutorial-content,
+        body.dark-mode .video-resources,
+        body.dark-mode .video-card {
+            background-color: #1e293b;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .code-block,
+        body.dark-mode .example-block {
+            background-color: #0f172a;
+            border-color: #334155;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .note-box {
+            background-color: #1e3a8a;
+            border-color: #3b82f6;
+        }
+
+        body.dark-mode .warning-box {
+            background-color: #78350f;
+            border-color: #f59e0b;
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            section {
+                padding: 50px 0;
+            }
+            
+            .tutorial-content {
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                text-align: left;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                display: none;
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .tutorial-content {
+                padding: 30px;
+                margin-top: -30px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            section {
+                padding: 40px 0;
+            }
+            
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tutorial-content {
+                padding: 20px;
+            }
+
+            .code-block {
+                padding: 15px;
+            }
+
+            .note-box, .warning-box {
+                padding: 15px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        body.dark-mode table {
+            border-color: #334155;
+        }
+
+        body.dark-mode th, 
+        body.dark-mode td {
+            border-color: #334155;
+        }
+
+        body.dark-mode th {
+            background-color: #1e293b;
+        }
+
+        body.dark-mode tr:hover {
+            background-color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Python Beginner Tutorial</h1>
+            <p>Master the fundamentals of Python programming with this comprehensive guide. Perfect for absolute beginners who want to start coding in Python.</p>
+            <a href="#getting-started" class="btn">Start Learning</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section>
+        <div class="container">
+            <div class="tutorial-content">
+                <div class="section-title">
+                    <h2>Complete Python Guide</h2>
+                </div>
+
+                <!-- Getting Started Section -->
+                <div class="content-section" id="getting-started">
+                    <h3>Getting Started with Python</h3>
+                    <p>Python is a high-level, interpreted programming language known for its simplicity and readability. Created by Guido van Rossum and first released in 1991, Python has become one of the most popular programming languages in the world.</p>
+                    
+                    <div class="tutorial-image">
+                        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Python code on a screen">
+                        <p class="image-caption">Python is used for web development, data science, AI, and more</p>
+                    </div>
+
+                    <div class="note-box">
+                        Python emphasizes code readability with its notable use of significant whitespace and simple syntax.
+                    </div>
+
+                    <h4>What You'll Need</h4>
+                    <ul>
+                        <li>Python installed on your computer (download from python.org)</li>
+                        <li>A text editor or IDE (VS Code, PyCharm, IDLE, etc.)</li>
+                        <li>Basic computer skills</li>
+                    </ul>
+
+                    <h4>Why Learn Python?</h4>
+                    <p>Python is a great first language because:</p>
+                    <ul>
+                        <li><strong>Readable Syntax:</strong> Python code reads almost like English</li>
+                        <li><strong>Versatile:</strong> Used in web development, data science, AI, automation, and more</li>
+                        <li><strong>Large Community:</strong> Extensive support and resources available</li>
+                        <li><strong>Cross-platform:</strong> Runs on Windows, macOS, and Linux</li>
+                        <li><strong>Batteries Included:</strong> Comes with a comprehensive standard library</li>
+                    </ul>
+
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h4>Your First Python Program</h4>
+                        </div>
+                        <p>Here's a very simple Python program that prints "Hello, World!":</p>
+                        <div class="code-block">
+# This is a simple Python program
+print("Hello, World!")
+                        </div>
+                        <p>To run this, save it as <code>hello.py</code> and execute it with <code>python hello.py</code> in your terminal.</p>
+                    </div>
+                </div>
+
+                <!-- Variables and Data Types Section -->
+                <div class="content-section" id="variables">
+                    <h3>Variables and Data Types</h3>
+                    <p>Variables are containers for storing data values. In Python, you don't need to declare variables before using them or declare their type. The interpreter automatically determines the type based on the value assigned.</p>
+                    
+                    <div class="code-block">
+# Variable assignment examples
+name = "Alice"          # String (text)
+age = 25                # Integer (whole number)
+height = 5.9            # Float (decimal number)
+is_student = True       # Boolean (True/False)
+hobbies = ["reading", "coding", "hiking"]  # List
+coordinates = (10.5, 20.3)                 # Tuple
+person = {"name": "Alice", "age": 25}      # Dictionary
+                    </div>
+
+                    <h4>Basic Data Types in Python</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>int</td>
+                                <td>Integer (whole number)</td>
+                                <td>5, -3, 1000</td>
+                            </tr>
+                            <tr>
+                                <td>float</td>
+                                <td>Floating point number (decimal)</td>
+                                <td>3.14, -0.001, 2.0</td>
+                            </tr>
+                            <tr>
+                                <td>str</td>
+                                <td>String (text data)</td>
+                                <td>"hello", 'Python'</td>
+                            </tr>
+                            <tr>
+                                <td>bool</td>
+                                <td>Boolean (True/False)</td>
+                                <td>True, False</td>
+                            </tr>
+                            <tr>
+                                <td>list</td>
+                                <td>Ordered, mutable collection</td>
+                                <td>[1, 2, 3], ["a", "b"]</td>
+                            </tr>
+                            <tr>
+                                <td>tuple</td>
+                                <td>Ordered, immutable collection</td>
+                                <td>(1, 2, 3), ("a", "b")</td>
+                            </tr>
+                            <tr>
+                                <td>dict</td>
+                                <td>Key-value pairs</td>
+                                <td>{"name": "Alice", "age": 25}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="note-box">
+                        Python is dynamically typed, meaning you don't need to declare variable types explicitly. The interpreter infers types at runtime.
+                    </div>
+
+                    <h4>Type Conversion</h4>
+                    <p>You can convert between types using built-in functions:</p>
+                    <div class="code-block">
+x = 10          # int
+y = float(x)    # Convert to float (10.0)
+z = str(x)      # Convert to string ("10")
+
+text = "123"
+number = int(text)  # Convert string to int (123)
+                    </div>
+                </div>
+
+                <!-- Operators Section -->
+                <div class="content-section" id="operators">
+                    <h3>Operators</h3>
+                    <p>Python has various operators for performing operations on variables and values.</p>
+                    
+                    <h4>Arithmetic Operators</h4>
+                    <div class="code-block">
+# Basic arithmetic
+x = 10 + 5    # Addition (15)
+y = 10 - 5    # Subtraction (5)
+z = 10 * 5    # Multiplication (50)
+w = 10 / 3    # Division (3.333...)
+v = 10 // 3   # Floor division (3)
+u = 10 % 3    # Modulus (1)
+t = 2 ** 3    # Exponentiation (8)
+                    </div>
+
+                    <h4>Comparison Operators</h4>
+                    <div class="code-block">
+# Comparisons return True or False
+x == y    # Equal to
+x != y    # Not equal to
+x > y     # Greater than
+x < y     # Less than
+x >= y    # Greater than or equal to
+x <= y    # Less than or equal to
+                    </div>
+
+                    <h4>Logical Operators</h4>
+                    <div class="code-block">
+# Logical operators
+x and y   # True if both are true
+x or y    # True if at least one is true
+not x     # True if x is false
+                    </div>
+
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-calculator"></i>
+                            <h4>Operator Example</h4>
+                        </div>
+                        <div class="code-block">
+# Calculate area of a circle
+radius = 5
+pi = 3.14159
+area = pi * (radius ** 2)
+print(f"The area is {area:.2f}")  # Format to 2 decimal places
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Control Flow Section -->
+                <div class="content-section" id="control-flow">
+                    <h3>Control Flow</h3>
+                    <p>Control flow statements allow you to control the order in which your code executes.</p>
+                    
+                    <h4>Conditional Statements (if, elif, else)</h4>
+                    <div class="code-block">
+# If-elif-else example
+temperature = 30
+
+if temperature > 30:
+    print("It's hot outside")
+elif temperature > 20:
+    print("It's warm outside")
+else:
+    print("It's cool outside")
+
+# Shorthand if-else (ternary operator)
+message = "Welcome back!" if is_student else "Please register"
+print(message)
+                    </div>
+
+                    <h4>Loops (for and while)</h4>
+                    <div class="code-block">
+# For loop examples
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+
+# Loop with index
+for index, fruit in enumerate(fruits):
+    print(f"Fruit #{index + 1}: {fruit}")
+
+# While loop example
+count = 0
+while count < 5:
+    print(f"Count: {count}")
+    count += 1  # Same as count = count + 1
+                    </div>
+
+                    <div class="note-box">
+                        Python uses indentation (whitespace) to define code blocks. Consistent indentation is crucial for your code to work correctly.
+                    </div>
+
+                    <h4>Loop Control Statements</h4>
+                    <div class="code-block">
+# break, continue, and pass
+for num in range(10):
+    if num == 3:
+        continue  # Skip this iteration
+    if num == 7:
+        break     # Exit the loop
+    print(num)
+else:
+    print("Loop completed")  # Executes if loop didn't break
+                    </div>
+                </div>
+
+                <!-- Functions Section -->
+                <div class="content-section" id="functions">
+                    <h3>Functions</h3>
+                    <p>Functions are blocks of reusable code that perform a specific task. They help organize and modularize your code.</p>
+                    
+                    <div class="code-block">
+# Function definition
+def greet(name, time_of_day="morning"):
+    """This function greets a person"""
+    return f"Good {time_of_day}, {name}!"
+
+# Function call
+print(greet("Alice"))  # Uses default parameter
+print(greet("Bob", "afternoon"))  # Overrides default
+
+# Function with multiple return values
+def calculate(x, y):
+    return x+y, x-y, x*y, x/y
+
+sum_result, diff_result, prod_result, div_result = calculate(10, 5)
+                    </div>
+
+                    <h4>Function Parameters</h4>
+                    <ul>
+                        <li><strong>Positional arguments:</strong> Must be in correct positional order</li>
+                        <li><strong>Keyword arguments:</strong> Identified by parameter names</li>
+                        <li><strong>Default arguments:</strong> Assume default value if not provided</li>
+                        <li><strong>Variable-length arguments:</strong> Accept arbitrary number of arguments</li>
+                    </ul>
+
+                    <div class="code-block">
+# Different parameter types
+def describe_pet(pet_name, animal_type='dog'):  # animal_type has default
+    print(f"I have a {animal_type} named {pet_name}.")
+
+# Positional argument
+describe_pet('Willie')  # Uses default animal_type
+describe_pet('Willie', 'hamster')
+
+# Keyword argument
+describe_pet(animal_type='hamster', pet_name='Harry')
+
+# Variable-length arguments
+def make_pizza(*toppings):
+    print("Making pizza with:")
+    for topping in toppings:
+        print(f"- {topping}")
+                    </div>
+
+                    <div class="warning-box">
+                        Always include docstrings (the triple-quoted string right after the function definition) to document what your function does.
+                    </div>
+                </div>
+
+                <!-- Data Structures Section -->
+                <div class="content-section" id="data-structures">
+                    <h3>Data Structures</h3>
+                    <p>Python has several built-in data structures for organizing and storing data efficiently.</p>
+                    
+                    <h4>Lists</h4>
+                    <div class="code-block">
+# List operations
+fruits = ['apple', 'banana', 'cherry']
+fruits.append('orange')      # Add item
+fruits.insert(1, 'grape')    # Insert at position
+fruits.remove('banana')      # Remove item
+last = fruits.pop()          # Remove and return last item
+length = len(fruits)         # Get length
+sorted_fruits = sorted(fruits)  # Returns new sorted list
+fruits.sort()                # Sorts the list in place
+
+# List slicing
+first_two = fruits[:2]       # First two items
+last_two = fruits[-2:]       # Last two items
+every_other = fruits[::2]    # Every other item
+reversed_list = fruits[::-1] # Reversed list
+                    </div>
+
+                    <h4>Dictionaries</h4>
+                    <div class="code-block">
+# Dictionary operations
+person = {
+    'name': 'Alice',
+    'age': 25,
+    'occupation': 'Engineer'
+}
+
+# Accessing values
+name = person['name']        # Access with key
+age = person.get('age')      # Safer access with .get()
+
+# Modifying
+person['age'] = 26           # Update value
+person['city'] = 'New York'  # Add new key-value pair
+del person['occupation']     # Remove key-value pair
+
+# Dictionary methods
+keys = person.keys()         # All keys
+values = person.values()     # All values
+items = person.items()       # All key-value pairs
+                    </div>
+
+                    <h4>Tuples and Sets</h4>
+                    <div class="code-block">
+# Tuples are immutable
+coordinates = (10.5, 20.3)
+x, y = coordinates           # Tuple unpacking
+
+# Sets store unique elements
+unique_numbers = {1, 2, 3, 2, 1}  # Becomes {1, 2, 3}
+unique_numbers.add(4)        # Add element
+unique_numbers.remove(2)     # Remove element
+                    </div>
+
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-shopping-basket"></i>
+                            <h4>Shopping List Example</h4>
+                        </div>
+                        <div class="code-block">
+# Shopping list program
+shopping_list = []
+
+while True:
+    print("\nCurrent shopping list:", shopping_list)
+    action = input("Add, remove, or quit? ").lower()
+    
+    if action == 'quit':
+        break
+    elif action == 'add':
+        item = input("What to add? ")
+        shopping_list.append(item)
+    elif action == 'remove':
+        item = input("What to remove? ")
+        if item in shopping_list:
+            shopping_list.remove(item)
+        else:
+            print(f"{item} not in list!")
+    else:
+        print("Invalid option!")
+                    </div>
+                    <p>This simple program demonstrates lists and basic control flow in a practical example.</p>
+                </div>
+
+                <!-- File Handling Section -->
+                <div class="content-section" id="file-handling">
+                    <h3>File Handling</h3>
+                    <p>Python provides built-in functions for working with files, allowing you to read from and write to files on your computer.</p>
+                    
+                    <div class="code-block">
+# Writing to a file
+with open("diary.txt", "w") as file:  # 'w' for write mode
+    file.write("Today was a good day.\n")
+    file.write("I learned Python file operations.\n")
+
+# Reading from a file
+with open("diary.txt", "r") as file:  # 'r' for read mode
+    content = file.read()
+    print(content)
+
+# Reading line by line
+with open("diary.txt", "r") as file:
+    for line in file:
+        print(line.strip())  # strip() removes extra whitespace
+                    </div>
+
+                    <h4>Common File Modes</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mode</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>'r'</td>
+                                <td>Read (default)</td>
+                            </tr>
+                            <tr>
+                                <td>'w'</td>
+                                <td>Write (creates new or truncates existing)</td>
+                            </tr>
+                            <tr>
+                                <td>'a'</td>
+                                <td>Append (creates new or appends to existing)</td>
+                            </tr>
+                            <tr>
+                                <td>'r+'</td>
+                                <td>Read and write</td>
+                            </tr>
+                            <tr>
+                                <td>'b'</td>
+                                <td>Binary mode (e.g., 'rb' or 'wb')</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="note-box">
+                        Always use the <code>with</code> statement when working with files. It automatically closes the file when done, even if an error occurs.
+                    </div>
+
+                    <h4>Working with CSV Files</h4>
+                    <div class="code-block">
+import csv
+
+# Writing to CSV
+with open('data.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(["Name", "Age", "Occupation"])
+    writer.writerow(["Alice", 25, "Engineer"])
+    writer.writerow(["Bob", 30, "Teacher"])
+
+# Reading from CSV
+with open('data.csv', 'r') as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)
+                    </div>
+                </div>
+
+                <!-- Error Handling Section -->
+                <div class="content-section" id="error-handling">
+                    <h3>Error Handling</h3>
+                    <p>Python uses exceptions to handle errors gracefully. You can catch and handle exceptions to prevent your program from crashing.</p>
+                    
+                    <div class="code-block">
+# Basic try-except block
+try:
+    age = int(input("Enter your age: "))
+    print(f"You are {age} years old")
+except ValueError:
+    print("Please enter a valid number!")
+
+# Handling multiple exceptions
+try:
+    result = 10 / 0
+    num = int("text")
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+except ValueError:
+    print("Invalid number conversion!")
+except Exception as e:
+    print(f"An error occurred: {e}")
+else:
+    print("No errors occurred!")
+finally:
+    print("This always runs, with or without errors")
+                    </div>
+
+                    <h4>Common Python Exceptions</h4>
+                    <ul>
+                        <li><strong>SyntaxError:</strong> Invalid syntax</li>
+                        <li><strong>IndentationError:</strong> Incorrect indentation</li>
+                        <li><strong>NameError:</strong> Variable not found</li>
+                        <li><strong>TypeError:</strong> Operation on wrong type</li>
+                        <li><strong>ValueError:</strong> Invalid value</li>
+                        <li><strong>IndexError:</strong> List index out of range</li>
+                        <li><strong>KeyError:</strong> Dictionary key not found</li>
+                        <li><strong>FileNotFoundError:</strong> File doesn't exist</li>
+                    </ul>
+
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h4>Age Validation Example</h4>
+                        </div>
+                        <div class="code-block">
+def get_valid_age():
+    while True:
+        try:
+            age = int(input("Enter your age (0-120): "))
+            if 0 <= age <= 120:
+                return age
+            else:
+                print("Age must be between 0 and 120")
+        except ValueError:
+            print("Please enter a valid number!")
+
+age = get_valid_age()
+print(f"Your age is {age}")
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Object-Oriented Programming Section -->
+                <div class="content-section" id="oop">
+                    <h3>Object-Oriented Programming</h3>
+                    <p>Python supports object-oriented programming (OOP) which allows you to create your own objects with methods and attributes.</p>
+                    
+                    <div class="code-block">
+# Class definition
+class Dog:
+    # Class attribute
+    species = "Canis familiaris"
+    
+    # Initializer / Instance attributes
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    # Instance method
+    def description(self):
+        return f"{self.name} is {self.age} years old"
+    
+    # Another instance method
+    def speak(self, sound):
+        return f"{self.name} says {sound}"
+
+# Creating objects
+dog1 = Dog("Buddy", 5)
+dog2 = Dog("Molly", 3)
+
+# Accessing attributes and methods
+print(dog1.description())
+print(dog2.speak("Woof!"))
+                    </div>
+
+                    <h4>OOP Concepts</h4>
+                    <ul>
+                        <li><strong>Class:</strong> Blueprint for creating objects</li>
+                        <li><strong>Object:</strong> Instance of a class</li>
+                        <li><strong>Inheritance:</strong> Creating new classes from existing ones</li>
+                        <li><strong>Polymorphism:</strong> Using a unified interface for different types</li>
+                        <li><strong>Encapsulation:</strong> Restricting access to certain components</li>
+                    </ul>
+
+                    <div class="code-block">
+# Inheritance example
+class Bulldog(Dog):  # Inherits from Dog
+    def speak(self, sound="Woof Woof!"):
+        return super().speak(sound)  # Call parent method
+
+# Polymorphism example
+def pet_speak(pet):
+    print(pet.speak())
+
+bulldog = Bulldog("Max", 2)
+pet_speak(bulldog)  # Works with any object that has speak()
+                    </div>
+
+                    <div class="note-box">
+                        The <code>self</code> parameter in methods refers to the instance of the class. It must be included in method definitions but is passed automatically when calling the method.
+                    </div>
+                </div>
+
+                <!-- Modules and Packages Section -->
+                <div class="content-section" id="modules">
+                    <h3>Modules and Packages</h3>
+                    <p>Modules are files containing Python code that can be imported into other Python files. Packages are collections of modules.</p>
+                    
+                    <div class="code-block">
+# Importing modules
+import math
+from datetime import date
+import random as rd
+from os import path
+
+# Using imported modules
+print(math.sqrt(16))          # 4.0
+print(date.today())           # Current date
+print(rd.randint(1, 10))      # Random number
+print(path.exists("myfile"))  # Check if file exists
+                    </div>
+
+                    <h4>Creating Your Own Module</h4>
+                    <p>1. Create a file named <code>mymodule.py</code>:</p>
+                    <div class="code-block">
+def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+                    </div>
+
+                    <p>2. In another file, import and use your module:</p>
+                    <div class="code-block">
+import mymodule
+
+result = mymodule.add(5, 3)
+print(result)  # Output: 8
+
+# Alternative import
+from mymodule import subtract
+print(subtract(10, 4))  # Output: 6
+                    </div>
+
+                    <h4>Popular Python Standard Library Modules</h4>
+                    <ul>
+                        <li><strong>math:</strong> Mathematical functions</li>
+                        <li><strong>random:</strong> Generate random numbers</li>
+                        <li><strong>datetime:</strong> Date and time operations</li>
+                        <li><strong>os:</strong> Operating system interfaces</li>
+                        <li><strong>sys:</strong> System-specific parameters</li>
+                        <li><strong>json:</strong> JSON encoder and decoder</li>
+                        <li><strong>re:</strong> Regular expressions</li>
+                    </ul>
+                </div>
+
+                <!-- How to Practice Section -->
+                <div class="content-section" id="practice">
+                    <h3>How to Practice Python</h3>
+                    <p>Consistent practice is key to mastering Python. Here are some effective ways to practice:</p>
+                    
+                    <h4>1. Build Small Projects</h4>
+                    <ul>
+                        <li>Calculator</li>
+                        <li>To-Do List</li>
+                        <li>Simple game (like Hangman or Tic-Tac-Toe)</li>
+                        <li>Weather app using an API</li>
+                    </ul>
+
+                    <h4>2. Solve Coding Challenges</h4>
+                    <p>Websites like:</p>
+                    <ul>
+                        <li>LeetCode</li>
+                        <li>HackerRank</li>
+                        <li>Codewars</li>
+                        <li>Edabit</li>
+                    </ul>
+
+                    <h4>3. Contribute to Open Source</h4>
+                    <p>Look for beginner-friendly Python projects on GitHub.</p>
+
+                    <h4>4. Automate Everyday Tasks</h4>
+                    <p>Write scripts to automate repetitive tasks like file organization or web scraping.</p>
+
+                    <h4>5. Join Python Communities</h4>
+                    <p>Participate in forums like Stack Overflow, Reddit's r/learnpython, or local Python meetups.</p>
+
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-laptop-code"></i>
+                            <h4>Simple Project Ideas</h4>
+                        </div>
+                        <ul>
+                            <li>Mad Libs Generator</li>
+                            <li>Number Guessing Game</li>
+                            <li>Password Generator</li>
+                            <li>Currency Converter</li>
+                            <li>Basic Web Scraper</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Next Steps Section -->
+                <div class="content-section" id="next-steps">
+                    <h3>Next Steps in Your Learning Journey</h3>
+                    <p>After mastering Python basics, here's what to learn next:</p>
+                    
+                    <h4>1. Intermediate Python Concepts</h4>
+                    <ul>
+                        <li>List comprehensions</li>
+                        <li>Lambda functions</li>
+                        <li>Decorators</li>
+                        <li>Generators</li>
+                        <li>Context managers</li>
+                    </ul>
+
+                    <h4>2. Popular Python Libraries</h4>
+                    <ul>
+                        <li><strong>NumPy:</strong> Scientific computing</li>
+                        <li><strong>Pandas:</strong> Data analysis</li>
+                        <li><strong>Matplotlib/Seaborn:</strong> Data visualization</li>
+                        <li><strong>Requests:</strong> HTTP requests</li>
+                        <li><strong>BeautifulSoup/Scrapy:</strong> Web scraping</li>
+                    </ul>
+
+                    <h4>3. Python Frameworks</h4>
+                    <ul>
+                        <li><strong>Django/Flask:</strong> Web development</li>
+                        <li><strong>PyQt/Tkinter:</strong> GUI applications</li>
+                        <li><strong>PyTorch/TensorFlow:</strong> Machine learning</li>
+                    </ul>
+
+                    <h4>4. Specialize in a Domain</h4>
+                    <ul>
+                        <li>Web Development</li>
+                        <li>Data Science</li>
+                        <li>Machine Learning/AI</li>
+                        <li>Automation</li>
+                        <li>Game Development</li>
+                    </ul>
+
+                    <div class="note-box">
+                        Python's versatility means you can apply it to almost any domain. Focus on what interests you most!
+                    </div>
+                </div>
+
+                <!-- Video Resources Section -->
+                <div class="video-resources">
+                    <h2>Video Tutorials</h2>
+                    <p>Watch these excellent video tutorials to reinforce your Python knowledge:</p>
+                    
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <a href="https://www.youtube.com/watch?v=kqtD5dpn9C8" target="_blank">
+                                <div class="video-thumbnail">
+                                    <img src="https://i.ytimg.com/vi/kqtD5dpn9C8/maxresdefault.jpg" alt="Python Crash Course">
+                                </div>
+                                <div class="video-info">
+                                    <h3>Python Crash Course For Absolute Beginners</h3>
+                                    <p>Programming with Mosh</p>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="video-card">
+                            <a href="https://www.youtube.com/watch?v=rfscVS0vtbw" target="_blank">
+                                <div class="video-thumbnail">
+                                    <img src="https://i.ytimg.com/vi/rfscVS0vtbw/maxresdefault.jpg" alt="Python Full Course">
+                                </div>
+                                <div class="video-info">
+                                    <h3>Python Full Course - Learn Python in 4 Hours</h3>
+                                    <p>freeCodeCamp.org</p>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="video-card">
+                            <a href="https://www.youtube.com/watch?v=JJmcL1N2KQs" target="_blank">
+                                <div class="video-thumbnail">
+                                    <img src="https://i.ytimg.com/vi/JJmcL1N2KQs/maxresdefault.jpg" alt="Python OOP Tutorial">
+                                </div>
+                                <div class="video-info">
+                                    <h3>Python Object Oriented Programming</h3>
+                                    <p>Tech With Tim</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Beginner's Guide</span>
+                    </div>
+                    <p>Making programming accessible to everyone. Our mission is to help absolute beginners start their coding journey with confidence.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Cheat Sheets</a></li>
+                        <li><a href="#">Code Challenges</a></li>
+                        <li><a href="#">Projects</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Languages</h3>
+                    <ul>
+                        <li><a href="#">Python</a></li>
+                        <li><a href="#">JavaScript</a></li>
+                        <li><a href="#">HTML & CSS</a></li>
+                        <li><a href="#">Java</a></li>
+                        <li><a href="#">C++</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Beginner's Guide to Programming. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        document.querySelector(targetId).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            menuToggle.querySelector('i').classList.remove('fa-times');
+                            menuToggle.querySelector('i').classList.add('fa-bars');
+                        }
+                    }
+                });
+            });
+
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.content-section, .video-resources');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.content-section, .video-resources');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+        });
+    </script>
+</body>
+</html>

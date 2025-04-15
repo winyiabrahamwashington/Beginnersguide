@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beginner's Guide to Programming</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --gray: #94a3b8;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Features Section */
+        .features {
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        /* Tutorials Section */
+        .tutorials {
+            background-color: #f8fafc;
+        }
+
+        .tutorials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .tutorial-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tutorial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .tutorial-img {
+            height: 180px;
+            background-color: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tutorial-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .tutorial-card:hover .tutorial-img img {
+            transform: scale(1.05);
+        }
+
+        .tutorial-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.8), rgba(124, 58, 237, 0.8));
+            z-index: 1;
+        }
+
+        .tutorial-img span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            font-size: 3rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .tutorial-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tutorial-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .tutorial-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .difficulty {
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .beginner {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .tutorial-desc {
+            margin-bottom: 20px;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .tutorial-link {
+            color: var(--primary);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        .tutorial-link:hover {
+            color: var(--secondary);
+            gap: 10px;
+        }
+
+        /* Dynamic Tutorial Detail Panel */
+        .tutorial-detail {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            padding: 2rem;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .tutorial-detail.active {
+            right: 0;
+        }
+
+        .tutorial-detail-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.3s ease;
+            background: none;
+            border: none;
+        }
+
+        .tutorial-detail-close:hover {
+            color: var(--danger);
+        }
+
+        .tutorial-hero {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            margin: -2rem -2rem 2rem -2rem;
+            position: relative;
+        }
+
+        .tutorial-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.8), rgba(124, 58, 237, 0.8));
+        }
+
+        /* Overlay when detail panel is open */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .newsletter-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .newsletter h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: 20px;
+        }
+
+        .newsletter p {
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+            min-width: 0;
+        }
+
+        .newsletter-form button {
+            background-color: var(--accent);
+            color: var(--white);
+            border: none;
+            padding: 0 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .newsletter-form button:hover {
+            background-color: #db2777;
+        }
+
+        /* Subscription success message */
+        .subscription-message {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .subscription-message i {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .feature-card,
+        body.dark-mode .tutorial-card,
+        body.dark-mode .tutorial-detail {
+            background-color: #1e293b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .feature-card h3,
+        body.dark-mode .tutorial-content h3,
+        body.dark-mode .section-title h2 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .tutorial-desc,
+        body.dark-mode .tutorial-meta {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .tutorials {
+            background-color: #0f172a;
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        body.dark-mode .footer-links ul li a:hover {
+            color: var(--primary-light);
+        }
+
+        /* Fix for Why Learn With Us heading in dark mode */
+        body.dark-mode .section-title h2 {
+            color: #f8fafc !important;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            section {
+                padding: 60px 0;
+            }
+
+            .tutorial-detail {
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                gap: 0;
+                padding: 20px 0;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                display: none;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            nav ul li {
+                padding: 10px 20px;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 10px 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                border-radius: 10px;
+            }
+            
+            .newsletter-form input,
+            .newsletter-form button {
+                width: 100%;
+                border-radius: 10px;
+            }
+            
+            .newsletter-form button {
+                padding: 15px;
+                margin-top: 10px;
+            }
+
+            .tutorial-detail {
+                width: 100%;
+                padding: 1.5rem;
+            }
+
+            body.dark-mode nav ul {
+                background-color: #1e293b;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .features-grid,
+            .tutorials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-links h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .footer-social {
+                justify-content: center;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            header, .newsletter, footer, .dark-mode-toggle {
+                display: none !important;
+            }
+
+            body {
+                background-color: white !important;
+                color: black !important;
+                font-size: 12pt;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                padding: 0;
+            }
+
+            section {
+                padding: 20px 0 !important;
+                page-break-inside: avoid;
+            }
+
+            .features-grid, .tutorials-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .feature-card, .tutorial-card {
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+                margin-bottom: 20px;
+                page-break-inside: avoid;
+            }
+
+            a::after {
+                content: " (" attr(href) ")";
+                font-size: 0.8em;
+                font-weight: normal;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+            </div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Start Your Coding Journey Today</h1>
+            <p>Learn programming from scratch with our beginner-friendly tutorials, hands-on exercises, and real-world projects. Perfect for absolute beginners!</p>
+            <a href="#" class="btn">Get Started for Free</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Learn With Us</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Step-by-Step Lessons</h3>
+                    <p>Our tutorials break down complex concepts into easy-to-understand steps perfect for beginners.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Interactive Coding</h3>
+                    <p>Practice coding directly in your browser with our interactive coding environment.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Real Projects</h3>
+                    <p>Build portfolio-worthy projects that demonstrate your skills to potential employers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tutorials Section -->
+    <section class="tutorials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Beginner Tutorials</h2>
+            </div>
+            <div class="tutorials-grid">
+                <div class="tutorial-card" data-tutorial="html">
+                    <div class="tutorial-img">
+                        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="HTML Tutorial">
+                        <span>HTML</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>HTML Fundamentals</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 2 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Learn the building blocks of web development with this comprehensive HTML tutorial.</p>
+                        <button class="tutorial-link" data-tutorial="html">Start Learning <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="tutorial-card" data-tutorial="css">
+                    <div class="tutorial-img">
+                        <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="CSS Tutorial">
+                        <span>CSS</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>CSS Styling Basics</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 3 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Make your websites beautiful with colors, layouts, and responsive design techniques.</p>
+                        <button class="tutorial-link" data-tutorial="css">Start Learning <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="tutorial-card" data-tutorial="js">
+                    <div class="tutorial-img">
+                        <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="JavaScript Tutorial">
+                        <span>JS</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>JavaScript for Beginners</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 4 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Add interactivity to your websites with JavaScript. Learn variables, functions, and DOM manipulation.</p>
+                        <button class="tutorial-link" data-tutorial="js">Start Learning <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="tutorial-card" data-tutorial="python">
+                    <div class="tutorial-img">
+                        <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" alt="Python Tutorial">
+                        <span>PY</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <h3>Python Basics</h3>
+                        <div class="tutorial-meta">
+                            <span><i class="far fa-clock"></i> 3 hours</span>
+                            <span class="difficulty beginner">Beginner</span>
+                        </div>
+                        <p class="tutorial-desc">Start with Python, one of the most beginner-friendly programming languages.</p>
+                        <button class="tutorial-link" data-tutorial="python">Start Learning <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Tutorial Detail Panel -->
+    <div class="overlay" id="overlay"></div>
+    <div class="tutorial-detail" id="tutorialDetail">
+        <!-- Content will be loaded here dynamically -->
+    </div>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container newsletter-content">
+            <h2>Join Our Coding Community</h2>
+            <p>Subscribe to get weekly coding tips, tutorials, and exclusive beginner resources.</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+            <div class="subscription-message" id="subscriptionMessage">
+                <i class="fas fa-check-circle"></i>
+                <p>Thank you for subscribing! You'll receive our first coding tips soon.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Beginner's Guide</span>
+                    </div>
+                    <p>Making programming accessible to everyone. Our mission is to help absolute beginners start their coding journey with confidence.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Cheat Sheets</a></li>
+                        <li><a href="#">Code Challenges</a></li>
+                        <li><a href="#">Projects</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Languages</h3>
+                    <ul>
+                        <li><a href="#">HTML & CSS</a></li>
+                        <li><a href="#">JavaScript</a></li>
+                        <li><a href="#">Python</a></li>
+                        <li><a href="#">Java</a></li>
+                        <li><a href="#">C++</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Beginner's Guide to Programming. All rights reserved. <span id="currentDate"></span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle Dark Mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+                
+                // Close menu when clicking outside
+                if (navMenu.classList.contains('active')) {
+                    document.addEventListener('click', closeMenuOnClickOutside);
+                } else {
+                    document.removeEventListener('click', closeMenuOnClickOutside);
+                }
+            });
+            
+            function closeMenuOnClickOutside(e) {
+                if (!navMenu.contains(e.target) && e.target !== menuToggle && !menuToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                    document.removeEventListener('click', closeMenuOnClickOutside);
+                }
+            }
+            
+            // Close menu when clicking a link (for mobile)
+            document.querySelectorAll('#navMenu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        navMenu.classList.remove('active');
+                        const icon = menuToggle.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            });
+            
+            // Newsletter Form Submission
+            const newsletterForm = document.getElementById('newsletterForm');
+            const subscriptionMessage = document.getElementById('subscriptionMessage');
+            
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const emailInput = this.querySelector('input');
+                const email = emailInput.value;
+                
+                if (email && email.includes('@')) {
+                    // Show the nice message
+                    subscriptionMessage.style.display = 'block';
+                    
+                    // Hide the form temporarily
+                    this.style.display = 'none';
+                    
+                    // Clear the form
+                    this.reset();
+                    
+                    // Hide the message after 5 seconds and show form again
+                    setTimeout(() => {
+                        subscriptionMessage.style.display = 'none';
+                        this.style.display = 'flex';
+                    }, 5000);
+                } else {
+                    alert('Please enter a valid email address.');
+                    emailInput.focus();
+                }
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Update current date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+            
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.feature-card, .tutorial-card, .section-title');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.feature-card, .tutorial-card, .section-title');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+
+            // Dynamic Tutorial Panel
+            const tutorialLinks = document.querySelectorAll('.tutorial-link');
+            const tutorialDetail = document.getElementById('tutorialDetail');
+            const overlay = document.getElementById('overlay');
+
+            // Tutorial content data
+            const tutorials = {
+                html: {
+                    title: "HTML Fundamentals",
+                    content: `
+                        <h1>HTML Fundamentals</h1>
+                        <p>HTML (HyperText Markup Language) is the foundation of all web pages. It provides the structure for your content.</p>
+                        
+                        <h2>What You'll Learn</h2>
+                        <ul>
+                            <li>Basic HTML document structure</li>
+                            <li>Common HTML tags (headings, paragraphs, links)</li>
+                            <li>Creating lists and tables</li>
+                            <li>Adding images and media</li>
+                        </ul>
+                        
+                        <h2>Sample Code</h2>
+                        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My First Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+    &lt;p&gt;This is my first webpage.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                        
+                        <button class="btn">Start This Tutorial</button>
+                    `,
+                    image: "https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80"
+                },
+                css: {
+                    title: "CSS Basics",
+                    content: `
+                        <h1>CSS Basics</h1>
+                        <p>CSS (Cascading Style Sheets) is used to style and layout web pages.</p>
+                        
+                        <h2>What You'll Learn</h2>
+                        <ul>
+                            <li>CSS selectors and properties</li>
+                            <li>Working with colors and fonts</li>
+                            <li>The box model</li>
+                            <li>Basic layout techniques</li>
+                        </ul>
+                        
+                        <h2>Sample Code</h2>
+                        <pre><code>body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+h1 {
+    color: #0066cc;
+    text-align: center;
+}</code></pre>
+                        
+                        <button class="btn">Start This Tutorial</button>
+                    `,
+                    image: "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                },
+                js: {
+                    title: "JavaScript for Beginners",
+                    content: `
+                        <h1>JavaScript Basics</h1>
+                        <p>JavaScript makes web pages interactive and dynamic.</p>
+                        
+                        <h2>What You'll Learn</h2>
+                        <ul>
+                            <li>Variables and data types</li>
+                            <li>Functions and events</li>
+                            <li>DOM manipulation</li>
+                            <li>Basic programming concepts</li>
+                        </ul>
+                        
+                        <h2>Sample Code</h2>
+                        <pre><code>// Change text when button is clicked
+document.getElementById('myButton').addEventListener('click', function() {
+    document.getElementById('message').textContent = 'Hello JavaScript!';
+});</code></pre>
+                        
+                        <button class="btn">Start This Tutorial</button>
+                    `,
+                    image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+                },
+                python: {
+                    title: "Python Basics",
+                    content: `
+                        <h1>Python Programming</h1>
+                        <p>Python is a versatile, beginner-friendly programming language.</p>
+                        
+                        <h2>What You'll Learn</h2>
+                        <ul>
+                            <li>Variables and data types</li>
+                            <li>Conditionals and loops</li>
+                            <li>Functions and modules</li>
+                            <li>Basic file operations</li>
+                        </ul>
+                        
+                        <h2>Sample Code</h2>
+                        <pre><code># Simple Python program
+name = input("What's your name? ")
+print(f"Hello, {name}!")
+
+if len(name) > 5:
+    print("That's a long name!")
+else:
+    print("That's a short name!")</code></pre>
+                        
+                        <button class="btn">Start This Tutorial</button>
+                    `,
+                    image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80"
+                }
+            };
+
+            // Close button for tutorial panel
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'tutorial-detail-close';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.setAttribute('aria-label', 'Close tutorial');
+            closeBtn.addEventListener('click', closeTutorial);
+            tutorialDetail.appendChild(closeBtn);
+
+            // Handle tutorial link clicks
+            tutorialLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tutorialId = this.getAttribute('data-tutorial');
+                    loadTutorial(tutorialId);
+                });
+            });
+
+            // Load tutorial content
+            function loadTutorial(id) {
+                const tutorial = tutorials[id];
+                tutorialDetail.innerHTML = `
+                    <button class="tutorial-detail-close" aria-label="Close tutorial">&times;</button>
+                    <div class="tutorial-hero" style="background-image: url('${tutorial.image}')"></div>
+                    <div class="tutorial-content">
+                        ${tutorial.content}
+                    </div>
+                `;
+                tutorialDetail.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Add event listener to new close button
+                tutorialDetail.querySelector('.tutorial-detail-close').addEventListener('click', closeTutorial);
+                
+                // Add event listener to the new button in the tutorial content
+                const startBtn = tutorialDetail.querySelector('.btn');
+                if (startBtn) {
+                    startBtn.addEventListener('click', function() {
+                        alert(`Starting the ${tutorial.title} tutorial!`);
+                        closeTutorial();
+                    });
+                }
+            }
+
+            // Close tutorial panel
+            function closeTutorial() {
+                tutorialDetail.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            // Close when clicking overlay
+            overlay.addEventListener('click', closeTutorial);
+            
+            // Close with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && tutorialDetail.classList.contains('active')) {
+                    closeTutorial();
+                }
+            });
+            
+            // Make all buttons have pointer cursor
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.style.cursor = 'pointer';
+            });
+            
+            // Make hero button functional
+            document.querySelector('.hero .btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'Tutorials.html';
+            });
+        });
+    </script>
+</body>
+</html>

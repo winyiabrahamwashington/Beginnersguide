@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeScript | Beginner's Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+         /* Modern CSS Variables */
+         :root {
+            --primary: #00ADD8;
+            --primary-light: #5DC9E2;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --gray: #94a3b8;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Tutorial Content Section */
+        .tutorial-content {
+            background-color: var(--white);
+            padding: 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-top: -50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .content-section {
+            margin-bottom: 60px;
+        }
+
+        .content-section h3 {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            color: var(--dark);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .content-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .content-section p {
+            margin-bottom: 20px;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            line-height: 1.8;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            border-left: 4px solid var(--primary);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        /* Notes and Warnings */
+        .note-box {
+            background-color: #e0f2fe;
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .note-box:before {
+            content: '📝 Note';
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .warning-box {
+            background-color: #fef3c7;
+            border-left: 4px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .warning-box:before {
+            content: '⚠️ Important';
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--warning);
+        }
+
+        /* Image Styles */
+        .tutorial-image {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .tutorial-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .image-caption {
+            margin-top: 10px;
+            font-style: italic;
+            color: var(--gray);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        /* Example Blocks */
+        .example-block {
+            background-color: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Video Resources */
+        .video-resources {
+            background-color: #f8fafc;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 60px 0 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .video-resources h2 {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            color: var(--dark);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .video-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-info h3 {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .video-info p {
+            color: var(--gray);
+            font-size: clamp(0.8rem, 2vw, 0.85rem);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .tutorial-content,
+        body.dark-mode .video-resources,
+        body.dark-mode .video-card {
+            background-color: #1e293b;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .code-block,
+        body.dark-mode .example-block {
+            background-color: #0f172a;
+            border-color: #334155;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .note-box {
+            background-color: #1e3a8a;
+            border-color: #3b82f6;
+        }
+
+        body.dark-mode .warning-box {
+            background-color: #78350f;
+            border-color: #f59e0b;
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            section {
+                padding: 50px 0;
+            }
+            
+            .tutorial-content {
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                text-align: left;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                display: none;
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .tutorial-content {
+                padding: 30px;
+                margin-top: -30px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            section {
+                padding: 40px 0;
+            }
+            
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tutorial-content {
+                padding: 20px;
+            }
+
+            .code-block {
+                padding: 15px;
+            }
+
+            .note-box, .warning-box {
+                padding: 15px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        body.dark-mode table {
+            border-color: #334155;
+        }
+
+        body.dark-mode th, 
+        body.dark-mode td {
+            border-color: #334155;
+        }
+
+        body.dark-mode th {
+            background-color: #1e293b;
+        }
+
+        body.dark-mode tr:hover {
+            background-color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>TypeScript Tutorial</h1>
+            <p>Master the fundamentals of TypeScript with this comprehensive guide. Perfect for JavaScript developers who want to add static typing to their projects.</p>
+            <a href="#getting-started" class="btn">Start Learning</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section>
+        <div class="container">
+            <div class="tutorial-content">
+                <div class="section-title">
+                    <h2>Complete TypeScript Guide</h2>
+                </div>
+
+                <!-- Getting Started Section -->
+                <div class="content-section" id="getting-started">
+                    <h3>Getting Started with TypeScript</h3>
+                    <p>TypeScript is a strongly typed superset of JavaScript that compiles to plain JavaScript. Developed by Microsoft, it adds optional static typing and class-based object-oriented programming to JavaScript.</p>
+                    
+                    <div class="tutorial-image">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="TypeScript code on a screen">
+                        <p class="image-caption">TypeScript is widely used in large-scale JavaScript applications</p>
+                    </div>
+
+                    <div class="note-box">
+                        TypeScript is not a completely different language - it's JavaScript with additional features. All valid JavaScript code is also valid TypeScript code.
+                    </div>
+
+                    <h4>What You'll Need</h4>
+                    <ul>
+                        <li>Node.js installed on your computer</li>
+                        <li>A text editor or IDE (VS Code is highly recommended)</li>
+                        <li>Basic knowledge of JavaScript</li>
+                    </ul>
+
+                    <h4>Why Learn TypeScript?</h4>
+                    <p>TypeScript offers several advantages over plain JavaScript:</p>
+                    <ul>
+                        <li><strong>Static Typing:</strong> Catch errors during development rather than runtime</li>
+                        <li><strong>Better Tooling:</strong> Improved autocompletion, navigation, and refactoring</li>
+                        <li><strong>Enhanced Readability:</strong> Explicit types make code more self-documenting</li>
+                        <li><strong>Growing Popularity:</strong> Used by Angular, Vue 3, React (optionally), and many large companies</li>
+                        <li><strong>Future JavaScript Features:</strong> Use modern features that compile to older JavaScript versions</li>
+                    </ul>
+
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h4>Your First TypeScript Program</h4>
+                        </div>
+                        <p>Here's the classic "Hello, World!" program in TypeScript:</p>
+                        <div class="code-block">
+// hello.ts
+function greet(name: string): string {
+    return `Hello, ${name}!`;
+}
+
+const message: string = greet("TypeScript");
+console.log(message);
+                        </div>
+                        <p>To compile and run this:</p>
+                        <ol>
+                            <li>Save it as <code>hello.ts</code></li>
+                            <li>Run <code>tsc hello.ts</code> to compile to JavaScript</li>
+                            <li>Run <code>node hello.js</code> to execute the compiled code</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Basic Types Section -->
+                <div class="content-section" id="basic-types">
+                    <h3>Basic Types</h3>
+                    <p>TypeScript provides several basic types that you can use to annotate your variables and function parameters.</p>
+                    
+                    <div class="code-block">
+// Primitive types
+let isDone: boolean = false;
+let count: number = 10;
+let name: string = "Alice";
+
+// Arrays
+let numbers: number[] = [1, 2, 3];
+let names: Array<string> = ["Alice", "Bob"]; // Generic array type
+
+// Tuples - fixed length arrays where each element has its own type
+let tuple: [string, number] = ["Alice", 25];
+
+// Enums - way to give friendly names to sets of numeric values
+enum Color {Red, Green, Blue}
+let c: Color = Color.Green;
+
+// Any - opt-out of type checking
+let notSure: any = 4;
+notSure = "maybe a string instead";
+
+// Void - absence of any type (usually for functions that don't return)
+function warnUser(): void {
+    console.log("This is a warning");
+}
+
+// Never - represents values that never occur
+function error(message: string): never {
+    throw new Error(message);
+}
+                    </div>
+
+                    <h4>Type Inference</h4>
+                    <p>TypeScript can often infer types without explicit annotations:</p>
+                    <div class="code-block">
+let x = 3; // TypeScript infers x is number
+let y = "hello"; // TypeScript infers y is string
+
+// Contextual typing
+window.onmousedown = function(event) {
+    console.log(event.button); // TypeScript knows event is MouseEvent
+};
+                    </div>
+
+                    <div class="note-box">
+                        While TypeScript can infer types, it's often good practice to explicitly annotate function return types and complex object shapes for better documentation and error checking.
+                    </div>
+                </div>
+
+                <!-- Interfaces Section -->
+                <div class="content-section" id="interfaces">
+                    <h3>Interfaces</h3>
+                    <p>Interfaces are a powerful way to define contracts within your code and with code outside of your project.</p>
+                    
+                    <div class="code-block">
+// Basic interface
+interface Person {
+    firstName: string;
+    lastName: string;
+    age?: number; // Optional property
+    readonly ssn: string; // Readonly property
+}
+
+function greet(person: Person): string {
+    return `Hello, ${person.firstName} ${person.lastName}`;
+}
+
+let user = {firstName: "John", lastName: "Doe", ssn: "123-45-6789"};
+console.log(greet(user));
+
+// Interface with function type
+interface SearchFunc {
+    (source: string, subString: string): boolean;
+}
+
+let mySearch: SearchFunc;
+mySearch = function(src: string, sub: string) {
+    return src.search(sub) > -1;
+}
+
+// Interface for array type
+interface StringArray {
+    [index: number]: string;
+}
+
+let myArray: StringArray;
+myArray = ["Bob", "Fred"];
+                    </div>
+
+                    <h4>Extending Interfaces</h4>
+                    <div class="code-block">
+interface Shape {
+    color: string;
+}
+
+interface Square extends Shape {
+    sideLength: number;
+}
+
+let square = {} as Square;
+square.color = "blue";
+square.sideLength = 10;
+
+// Multiple interface inheritance
+interface PenStroke {
+    penWidth: number;
+}
+
+interface SquareWithPen extends Shape, PenStroke {
+    sideLength: number;
+}
+                    </div>
+
+                    <div class="warning-box">
+                        Interfaces only exist at compile time - they are removed when TypeScript is compiled to JavaScript. They are purely for type checking during development.
+                    </div>
+                </div>
+
+                <!-- Classes Section -->
+                <div class="content-section" id="classes">
+                    <h3>Classes</h3>
+                    <p>TypeScript classes add type annotations and visibility modifiers to JavaScript classes.</p>
+                    
+                    <div class="code-block">
+class Animal {
+    // Properties
+    private name: string;
+    protected age: number;
+    public readonly species: string;
+    
+    // Constructor
+    constructor(name: string, age: number, species: string) {
+        this.name = name;
+        this.age = age;
+        this.species = species;
+    }
+    
+    // Method
+    move(distance: number = 0) {
+        console.log(`${this.name} moved ${distance}m.`);
+    }
+}
+
+class Dog extends Animal {
+    // Additional property
+    breed: string;
+    
+    constructor(name: string, age: number, breed: string) {
+        super(name, age, "Canine");
+        this.breed = breed;
+    }
+    
+    // Override method
+    move(distance = 5) {
+        console.log("Running...");
+        super.move(distance);
+    }
+    
+    // New method
+    bark() {
+        console.log("Woof! Woof!");
+    }
+}
+
+const dog = new Dog("Buddy", 3, "Golden Retriever");
+dog.move();
+dog.bark();
+                    </div>
+
+                    <h4>Access Modifiers</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Modifier</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>public</code></td>
+                                <td>Default. Accessible anywhere</td>
+                            </tr>
+                            <tr>
+                                <td><code>private</code></td>
+                                <td>Only accessible within class</td>
+                            </tr>
+                            <tr>
+                                <td><code>protected</code></td>
+                                <td>Accessible within class and subclasses</td>
+                            </tr>
+                            <tr>
+                                <td><code>readonly</code></td>
+                                <td>Can only be set during initialization</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Abstract Classes</h4>
+                    <div class="code-block">
+abstract class Department {
+    constructor(public name: string) {}
+    
+    abstract printMeeting(): void; // Must be implemented in derived classes
+    
+    printDepartmentName(): void {
+        console.log(`Department: ${this.name}`);
+    }
+}
+
+class AccountingDepartment extends Department {
+    constructor() {
+        super("Accounting");
+    }
+    
+    printMeeting(): void {
+        console.log("Accounting meeting at 10AM");
+    }
+}
+
+let department: Department; // Can create a reference to abstract type
+department = new AccountingDepartment(); // Can assign subclass instance
+department.printMeeting();
+                    </div>
+                </div>
+
+                <!-- Functions Section -->
+                <div class="content-section" id="functions">
+                    <h3>Functions</h3>
+                    <p>TypeScript adds type annotations to JavaScript functions, enabling better parameter and return type checking.</p>
+                    
+                    <div class="code-block">
+// Function with typed parameters and return value
+function add(x: number, y: number): number {
+    return x + y;
+}
+
+// Optional parameters
+function buildName(firstName: string, lastName?: string): string {
+    return lastName ? `${firstName} ${lastName}` : firstName;
+}
+
+// Default parameters
+function createUser(name: string, isAdmin: boolean = false) {
+    return { name, isAdmin };
+}
+
+// Rest parameters
+function sumAll(...numbers: number[]): number {
+    return numbers.reduce((total, num) => total + num, 0);
+}
+
+// Function type
+let myAdd: (x: number, y: number) => number;
+myAdd = function(x: number, y: number): number {
+    return x + y;
+};
+
+// Arrow functions
+const multiply = (x: number, y: number): number => x * y;
+                    </div>
+
+                    <h4>Function Overloads</h4>
+                    <div class="code-block">
+// Overload signatures
+function makeDate(timestamp: number): Date;
+function makeDate(year: number, month: number, day: number): Date;
+
+// Implementation
+function makeDate(timestampOrYear: number, month?: number, day?: number): Date {
+    if (month !== undefined && day !== undefined) {
+        return new Date(timestampOrYear, month, day);
+    } else {
+        return new Date(timestampOrYear);
+    }
+}
+
+const d1 = makeDate(12345678);
+const d2 = makeDate(2023, 5, 15);
+// const d3 = makeDate(2023, 5); // Error: No overload expects 2 arguments
+                    </div>
+
+                    <div class="note-box">
+                        Function overloads in TypeScript don't create multiple functions like in some other languages. They simply provide multiple ways to call a single function with different parameter combinations.
+                    </div>
+                </div>
+
+                <!-- Generics Section -->
+                <div class="content-section" id="generics">
+                    <h3>Generics</h3>
+                    <p>Generics provide a way to create reusable components that work with multiple types rather than a single one.</p>
+                    
+                    <div class="code-block">
+// Generic function
+function identity<T>(arg: T): T {
+    return arg;
+}
+
+let output1 = identity<string>("myString");
+let output2 = identity<number>(100);
+let output3 = identity("myString"); // Type inference
+
+// Generic interface
+interface GenericIdentityFn<T> {
+    (arg: T): T;
+}
+
+let myIdentity: GenericIdentityFn<number> = identity;
+
+// Generic class
+class GenericNumber<T> {
+    zeroValue: T;
+    add: (x: T, y: T) => T;
+}
+
+let myGenericNumber = new GenericNumber<number>();
+myGenericNumber.zeroValue = 0;
+myGenericNumber.add = function(x, y) { return x + y; };
+
+// Generic constraints
+interface Lengthwise {
+    length: number;
+}
+
+function loggingIdentity<T extends Lengthwise>(arg: T): T {
+    console.log(arg.length);
+    return arg;
+}
+
+loggingIdentity("hello"); // OK
+loggingIdentity({length: 10, value: 3}); // OK
+// loggingIdentity(3); // Error: number doesn't have .length
+                    </div>
+
+                    <h4>Using Type Parameters in Generic Constraints</h4>
+                    <div class="code-block">
+function getProperty<T, K extends keyof T>(obj: T, key: K) {
+    return obj[key];
+}
+
+let x = { a: 1, b: 2, c: 3 };
+getProperty(x, "a"); // OK
+// getProperty(x, "d"); // Error: Argument of type '"d"' is not assignable
+                    </div>
+
+                    <div class="warning-box">
+                        While generics are powerful, overusing them can make your code harder to understand. Use them when you need type flexibility but want to maintain type safety.
+                    </div>
+                </div>
+
+                <!-- Advanced Types Section -->
+                <div class="content-section" id="advanced-types">
+                    <h3>Advanced Types</h3>
+                    <p>TypeScript offers several advanced type features that help model complex scenarios.</p>
+                    
+                    <h4>Union and Intersection Types</h4>
+                    <div class="code-block">
+// Union types
+function padLeft(value: string, padding: string | number) {
+    if (typeof padding === "number") {
+        return Array(padding + 1).join(" ") + value;
+    }
+    return padding + value;
+}
+
+// Intersection types
+interface BusinessPartner {
+    name: string;
+    credit: number;
+}
+
+interface Contact {
+    email: string;
+    phone: string;
+}
+
+type Customer = BusinessPartner & Contact;
+
+let customer: Customer = {
+    name: "Acme Corp",
+    credit: 1000000,
+    email: "contact@acme.com",
+    phone: "555-1234"
+};
+                    </div>
+
+                    <h4>Type Guards and Differentiating Types</h4>
+                    <div class="code-block">
+// Using typeof
+function printAll(strs: string | string[] | null) {
+    if (typeof strs === "object") {
+        for (const s of strs!) { // Non-null assertion
+            console.log(s);
+        }
+    } else if (typeof strs === "string") {
+        console.log(strs);
+    }
+}
+
+// Using instanceof
+class Bird {
+    fly() {
+        console.log("flying");
+    }
+}
+
+class Fish {
+    swim() {
+        console.log("swimming");
+    }
+}
+
+function move(pet: Bird | Fish) {
+    if (pet instanceof Bird) {
+        pet.fly();
+    } else {
+        pet.swim();
+    }
+}
+
+// User-defined type guards
+function isFish(pet: Fish | Bird): pet is Fish {
+    return (pet as Fish).swim !== undefined;
+}
+
+function getSmallPet(): Fish | Bird {
+    return Math.random() > 0.5 ? new Fish() : new Bird();
+}
+
+let pet = getSmallPet();
+if (isFish(pet)) {
+    pet.swim();
+} else {
+    pet.fly();
+}
+                    </div>
+
+                    <h4>Mapped Types</h4>
+                    <div class="code-block">
+interface Person {
+    name: string;
+    age: number;
+    location: string;
+}
+
+type ReadonlyPerson = Readonly<Person>;
+type PartialPerson = Partial<Person>;
+type PickNameAndAge = Pick<Person, "name" | "age">;
+type OmitAge = Omit<Person, "age">;
+
+// Custom mapped type
+type Nullable<T> = {
+    [P in keyof T]: T[P] | null;
+};
+
+type NullablePerson = Nullable<Person>;
+                    </div>
+                </div>
+
+                <!-- Modules Section -->
+                <div class="content-section" id="modules">
+                    <h3>Modules</h3>
+                    <p>TypeScript supports modern JavaScript modules and adds type safety to imports and exports.</p>
+                    
+                    <div class="code-block">
+// math.ts - Exporting
+export function square(x: number): number {
+    return x * x;
+}
+
+export const PI = 3.14159;
+
+export interface Circle {
+    radius: number;
+    area: () => number;
+}
+
+// Default export
+export default class Calculator {
+    add(x: number, y: number): number {
+        return x + y;
+    }
+}
+
+// app.ts - Importing
+import Calculator, { square, PI, Circle } from "./math";
+
+const calc = new Calculator();
+console.log(calc.add(2, 3));
+console.log(square(5));
+
+const circle: Circle = {
+    radius: 10,
+    area: () => PI * 10 * 10
+};
+                    </div>
+
+                    <h4>Namespaces</h4>
+                    <div class="code-block">
+namespace Validation {
+    export interface StringValidator {
+        isAcceptable(s: string): boolean;
+    }
+
+    const lettersRegexp = /^[A-Za-z]+$/;
+    const numberRegexp = /^[0-9]+$/;
+
+    export class LettersOnlyValidator implements StringValidator {
+        isAcceptable(s: string) {
+            return lettersRegexp.test(s);
+        }
+    }
+
+    export class ZipCodeValidator implements StringValidator {
+        isAcceptable(s: string) {
+            return s.length === 5 && numberRegexp.test(s);
+        }
+    }
+}
+
+// Usage
+let validators: { [s: string]: Validation.StringValidator } = {};
+validators["Letters only"] = new Validation.LettersOnlyValidator();
+validators["Zip code"] = new Validation.ZipCodeValidator();
+                    </div>
+
+                    <div class="note-box">
+                        While namespaces are still supported in TypeScript, ES6 modules are generally preferred for new projects as they are the standard in modern JavaScript.
+                    </div>
+                </div>
+
+                <!-- Decorators Section -->
+                <div class="content-section" id="decorators">
+                    <h3>Decorators</h3>
+                    <p>Decorators provide a way to add annotations and a meta-programming syntax for class declarations and members.</p>
+                    
+                    <div class="code-block">
+// Class decorator
+function sealed(constructor: Function) {
+    Object.seal(constructor);
+    Object.seal(constructor.prototype);
+}
+
+@sealed
+class Greeter {
+    greeting: string;
+    
+    constructor(message: string) {
+        this.greeting = message;
+    }
+    
+    greet() {
+        return "Hello, " + this.greeting;
+    }
+}
+
+// Method decorator
+function enumerable(value: boolean) {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        descriptor.enumerable = value;
+    };
+}
+
+class Person {
+    name: string;
+    
+    constructor(name: string) {
+        this.name = name;
+    }
+    
+    @enumerable(false)
+    greet() {
+        return "Hello, " + this.name;
+    }
+}
+
+// Property decorator
+function format(formatString: string) {
+    return function (target: any, propertyKey: string): any {
+        let value = target[propertyKey];
+        
+        function getter() {
+            return `${formatString} ${value}`;
+        }
+        
+        function setter(newVal: string) {
+            value = newVal;
+        }
+        
+        return {
+            get: getter,
+            set: setter,
+            enumerable: true,
+            configurable: true
+        };
+    }
+}
+
+class Greeter2 {
+    @format("Hello")
+    greeting: string;
+    
+    constructor(message: string) {
+        this.greeting = message;
+    }
+}
+
+let greeter2 = new Greeter2("World");
+console.log(greeter2.greeting); // "Hello World"
+                    </div>
+
+                    <div class="warning-box">
+                        Decorators are an experimental feature in TypeScript. To use them, you must enable the <code>experimentalDecorators</code> compiler option in your <code>tsconfig.json</code> file.
+                    </div>
+                </div>
+
+                <!-- TypeScript with React Section -->
+                <div class="content-section" id="react">
+                    <h3>TypeScript with React</h3>
+                    <p>TypeScript works exceptionally well with React, providing type safety for props, state, and hooks.</p>
+                    
+                    <div class="code-block">
+// Functional component with TypeScript
+import React, { useState } from 'react';
+
+interface Props {
+    name: string;
+    age?: number;
+}
+
+const Greeting: React.FC<Props> = ({ name, age = 18 }) => {
+    const [count, setCount] = useState<number>(0);
+    
+    return (
+        <div>
+            <h1>Hello, {name}! You are {age} years old.</h1>
+            <p>Count: {count}</p>
+            <button onClick={ => setCount(count + 1)}>Increment</button>
+        </div>
+    );
+};
+
+// Class component with TypeScript
+interface State {
+    count: number;
+}
+
+class Counter extends React.Component<{}, State> {
+    state: State = {
+        count: 0
+    };
+    
+    increment = () => {
+        this.setState(prevState => ({
+            count: prevState.count + 1
+        }));
+    };
+    
+    render() {
+        return (
+            <div>
+                <p>Count: {this.state.count}</p>
+                <button onClick={this.increment}>Increment</button>
+            </div>
+        );
+    }
+}
+                    </div>
+
+                    <h4>Typing Events</h4>
+                    <div class="code-block">
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+};
+
+const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log("Clicked!");
+};
+
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Handle form submission
+};
+                    </div>
+
+                    <h4>Using Context with TypeScript</h4>
+                    <div class="code-block">
+interface ThemeContextType {
+    theme: string;
+    toggleTheme: () => void;
+}
+
+const ThemeContext = React.createContext<ThemeContextType>({
+    theme: 'light',
+    toggleTheme: () => {}
+});
+
+const ThemeProvider: React.FC = ({ children }) => {
+    const [theme, setTheme] = useState<'light' | 'dark'>('light');
+    
+    const toggleTheme = () => {
+        setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+    };
+    
+    return (
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            {children}
+        </ThemeContext.Provider>
+    );
+};
+
+const useTheme = () => React.useContext(ThemeContext);
+                    </div>
+                </div>
+
+                <!-- How to Practice Section -->
+                <div class="content-section" id="practice">
+                    <h3>How to Practice TypeScript</h3>
+                    <p>Here are some effective ways to improve your TypeScript skills:</p>
+                    
+                    <h4>1. Convert JavaScript Projects to TypeScript</h4>
+                    <ul>
+                        <li>Start with small JavaScript projects and add TypeScript types</li>
+                        <li>Gradually enable stricter TypeScript compiler options</li>
+                        <li>Fix type errors one by one</li>
+                    </ul>
+
+                    <h4>2. Build Projects with TypeScript</h4>
+                    <ul>
+                        <li>Todo app with TypeScript</li>
+                        <li>Weather app using a typed API</li>
+                        <li>Full-stack application with TypeScript on both ends</li>
+                    </ul>
+
+                    <h4>3. Solve Type Challenges</h4>
+                    <p>Websites like:</p>
+                    <ul>
+                        <li>Type Challenges (github.com/type-challenges/type-challenges)</li>
+                        <li>Codewars TypeScript track</li>
+                    </ul>
+
+                    <h4>4. Contribute to Open Source TypeScript Projects</h4>
+                    <p>Look for projects with "good first issue" tags that involve TypeScript.</p>
+
+                    <h4>5. Read TypeScript Code</h4>
+                    <p>Study well-typed open source projects to learn best practices.</p>
+
+                    <div class="example-block">
+                        <div class="example-header">
+                            <i class="fas fa-laptop-code"></i>
+                            <h4>TypeScript Project Ideas</h4>
+                        </div>
+                        <ul>
+                            <li>Typed API client for a public API</li>
+                            <li>TypeScript library with extensive type definitions</li>
+                            <li>React/TypeScript component library</li>
+                            <li>Node.js backend service with TypeScript</li>
+                            <li>Browser extension with TypeScript</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Next Steps Section -->
+                <div class="content-section" id="next-steps">
+                    <h3>Next Steps in Your Learning Journey</h3>
+                    <p>After mastering TypeScript basics, here's what to explore next:</p>
+                    
+                    <h4>1. Advanced TypeScript Features</h4>
+                    <ul>
+                        <li>Conditional types</li>
+                        <li>Template literal types</li>
+                        <li>Mapped types</li>
+                        <li>Declaration merging</li>
+                    </ul>
+
+                    <h4>2. TypeScript with Popular Frameworks</h4>
+                    <ul>
+                        <li><strong>React:</strong> Typed components, hooks, and context</li>
+                        <li><strong>Vue:</strong> Composition API with TypeScript</li>
+                        <li><strong>Angular:</strong> Built with TypeScript</li>
+                        <li><strong>Node.js:</strong> Typed backend services</li>
+                    </ul>
+
+                    <h4>3. Tooling and Configuration</h4>
+                    <ul>
+                        <li>Advanced tsconfig.json options</li>
+                        <li>TypeScript with Webpack</li>
+                        <li>TypeScript ESLint rules</li>
+                        <li>Generating type documentation</li>
+                    </ul>
+
+                    <h4>4. Performance Optimization</h4>
+                    <ul>
+                        <li>Compiler performance tuning</li>
+                        <li>Project references</li>
+                        <li>Incremental builds</li>
+                    </ul>
+
+                    <div class="note-box">
+                        TypeScript is constantly evolving. Follow the TypeScript blog (devblogs.microsoft.com/typescript) to stay updated on new features and best practices.
+                    </div>
+                </div>
+
+                <!-- Video Resources Section -->
+                <div class="video-resources">
+                    <h2>Video Tutorials</h2>
+                    <p>Watch these excellent video tutorials to reinforce your TypeScript knowledge:</p>
+                    
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <a href="https://www.youtube.com/watch?v=BwuLxPH8IDs" target="_blank">
+                                <div class="video-thumbnail">
+                                    <img src="https://i.ytimg.com/vi/BwuLxPH8IDs/maxresdefault.jpg" alt="TypeScript Crash Course">
+                                </div>
+                                <div class="video-info">
+                                    <h3>TypeScript Crash Course</h3>
+                                    <p>Traversy Media</p>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="video-card">
+                            <a href="https://www.youtube.com/watch?v=d56mG7DezGs" target="_blank">
+                                <div class="video-thumbnail">
+                                    <img src="https://i.ytimg.com/vi/d56mG7DezGs/maxresdefault.jpg" alt="TypeScript Full Course">
+                                </div>
+                                <div class="video-info">
+                                    <h3>TypeScript Full Course</h3>
+                                    <p>freeCodeCamp.org</p>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="video-card">
+                            <a href="https://www.youtube.com/watch?v=ahCwqrYpIuM" target="_blank">
+                                <div class="video-thumbnail">
+                                    <img src="https://i.ytimg.com/vi/ahCwqrYpIuM/maxresdefault.jpg" alt="TypeScript for React">
+                                </div>
+                                <div class="video-info">
+                                    <h3>TypeScript for React</h3>
+                                    <p>Ben Awad</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Beginner's Guide</span>
+                    </div>
+                    <p>Making programming accessible to everyone. Our mission is to help absolute beginners start their coding journey with confidence.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Cheat Sheets</a></li>
+                        <li><a href="#">Code Challenges</a></li>
+                        <li><a href="#">Projects</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Languages</h3>
+                    <ul>
+                        <li><a href="#">TypeScript</a></li>
+                        <li><a href="#">JavaScript</a></li>
+                        <li><a href="#">Python</a></li>
+                        <li><a href="#">Java</a></li>
+                        <li><a href="#">C++</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Beginner's Guide to Programming. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        document.querySelector(targetId).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            menuToggle.querySelector('i').classList.remove('fa-times');
+                            menuToggle.querySelector('i').classList.add('fa-bars');
+                        }
+                    }
+                });
+            });
+
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.content-section, .video-resources');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.content-section, .video-resources');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+        });
+    </script>
+</body>
+</html>

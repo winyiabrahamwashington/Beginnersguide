@@ -1,0 +1,2244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruby Programming | Beginner's Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables - Matching Swift site */
+        :root {
+            --primary: #7F52FF;
+            --primary-light: #9a7aff;
+            --secondary: #FF6E4A;
+            --accent: #FF4081;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --gray: #94a3b8;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation - Exactly matching Kotlin site */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav {
+            width: 100%;
+            order: 1;
+            margin-top: 15px;
+            display: none;
+        }
+
+        nav.active {
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: block;
+            cursor: pointer;
+            font-size: 1.5rem;
+            order: 1;
+        }
+
+        /* Hero Section - Matching Kotlin site */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.ruby-lang.org/images/header-ruby-logo@2x.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 64, 129, 0.6);
+        }
+
+        /* Content Section */
+        .content-section {
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        /* Content Cards - Matching Kotlin site */
+        .content-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .content-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .content-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .code-example {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+            position: relative;
+            border-left: 4px solid var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            border: none;
+            color: var(--dark);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .example-image {
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        /* Box Styles - Matching Kotlin site */
+        .tip-box {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .note-box {
+            background-color: rgba(204, 52, 45, 0.1);
+            border-left: 4px solid var(--primary-light);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .learning-objectives {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(204, 52, 45, 0.05);
+            border-radius: 8px;
+        }
+
+        .learning-objectives h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .learning-objectives ul {
+            margin-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .learning-objectives li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .prerequisites {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(245, 158, 11, 0.05);
+            border-radius: 8px;
+        }
+
+        .prerequisites h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--warning);
+        }
+
+        .prerequisites p {
+            margin-bottom: 5px;
+        }
+
+        .beginner-tips {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+        }
+
+        .beginner-tips h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .beginner-tips p {
+            margin-bottom: 5px;
+        }
+
+        .tutorial-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-link:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .tutorial-link i {
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-link:hover i {
+            margin-left: 10px;
+        }
+
+        /* YouTube Links Section - Matching Kotlin site */
+        .youtube-links {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .youtube-links::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .youtube-links h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .youtube-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .youtube-thumbnail {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .youtube-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .youtube-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            font-size: 3rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+        }
+
+        .youtube-info {
+            padding: 15px;
+            color: var(--dark);
+        }
+
+        .youtube-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .youtube-info p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Footer - Exactly matching Kotlin site */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 50px 0 25px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle - Matching Kotlin site */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Styles - Matching Kotlin site */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .content-card {
+            background-color: #1e293b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .content-card h3,
+        body.dark-mode .section-title h2 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .code-example {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border-left: 4px solid var(--accent);
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        body.dark-mode .footer-links ul li a:hover {
+            color: var(--primary-light);
+        }
+
+        body.dark-mode .learning-objectives {
+            background-color: rgba(204, 52, 45, 0.1);
+        }
+
+        body.dark-mode .prerequisites {
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        body.dark-mode .beginner-tips {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .youtube-info {
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .youtube-info p {
+            color: #94a3b8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles - Matching Kotlin site */
+        @media (min-width: 576px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .content-card {
+                padding: 30px;
+            }
+            
+            .youtube-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            nav {
+                width: auto;
+                order: 0;
+                margin-top: 0;
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: row;
+                gap: 25px;
+            }
+            
+            nav ul li a {
+                padding: 5px 0;
+                display: inline-block;
+            }
+            
+            .menu-toggle {
+                display: none;
+            }
+            
+            .hero {
+                padding: 100px 0;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+            
+            .content-card {
+                padding: 40px;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) {
+            section {
+                padding: 80px 0;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .youtube-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation - Exactly matching Kotlin site -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+            </div>
+            <nav id="navMenu">
+                <ul id="navMenu">
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Hero Section - Matching Kotlin site -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Learn Ruby Programming</h1>
+            <p>A dynamic, open source language with a focus on simplicity and productivity</p>
+            <a href="#what-is-ruby" class="btn">Start Learning</a>
+        </div>
+    </section>
+
+    <!-- What is Ruby Section -->
+    <section class="content-section" id="what-is-ruby">
+        <div class="container">
+            <div class="section-title">
+                <h2>What is Ruby?</h2>
+                <p>An elegant, object-oriented programming language</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>The Language of Developer Happiness</h3>
+                <p><strong>Ruby</strong> is a dynamic, open source programming language created by Yukihiro "Matz" Matsumoto in the mid-1990s in Japan. Designed for programmer productivity and fun, Ruby combines simple syntax with powerful object-oriented capabilities.</p>
+                
+                <div class="example-image">
+                    <img src="https://www.ruby-lang.org/images/header-ruby-logo@2x.png" alt="Ruby Programming" style="max-width: 800px;">
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Key Features of Ruby</h4>
+                    <ul>
+                        <li><strong>Object-Oriented</strong>: Everything in Ruby is an object</li>
+                        <li><strong>Dynamic Typing</strong>: No need to declare variable types</li>
+                        <li><strong>Readable Syntax</strong>: Designed to be natural to read and write</li>
+                        <li><strong>Flexible</strong>: Allows modification of its own parts</li>
+                        <li><strong>Garbage Collected</strong>: Automatic memory management</li>
+                        <li><strong>Rich Standard Library</strong>: Comes with many built-in methods</li>
+                    </ul>
+                </div>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code># Simple Ruby example
+puts "Hello, Ruby!"
+
+# Variables and constants
+name = "Alice"  # Variable
+AGE = 30        # Constant
+
+# String interpolation
+puts "My name is #{name} and I'm #{AGE} years old."
+
+# Everything is an object
+5.times { puts "Ruby is fun!" }
+
+# Blocks and iterators
+[1, 2, 3].each do |num|
+  puts num * 2
+end</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Did you know?</strong> Ruby is most famous as the language behind the Ruby on Rails web framework, but it's also used for scripting, automation, data processing, and more. The language's motto is "Matz is nice and so we are nice" (MINASWAN).</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Absolute Beginner's Guide to Ruby</h4>
+                    <p>If you're completely new to programming or Ruby, here's what you need to know to get started:</p>
+                    
+                    <h5>1. Understanding Programming Basics</h5>
+                    <p>Before diving into Ruby, it's helpful to understand some fundamental programming concepts:</p>
+                    <ul>
+                        <li><strong>Variables</strong>: Containers for storing data values</li>
+                        <li><strong>Constants</strong>: Values that don't change after being set</li>
+                        <li><strong>Data Types</strong>: Different kinds of data (numbers, text, true/false)</li>
+                        <li><strong>Control Flow</strong>: How your program makes decisions (if/else statements)</li>
+                        <li><strong>Loops</strong>: Repeating actions multiple times</li>
+                        <li><strong>Functions</strong>: Reusable blocks of code (called methods in Ruby)</li>
+                        <li><strong>Classes</strong>: Blueprints for creating objects</li>
+                    </ul>
+                    
+                    <h5>2. Ruby's Unique Features</h5>
+                    <p>Ruby has several features that make it beginner-friendly:</p>
+                    <ul>
+                        <li><strong>Everything is an object</strong>: Even primitive types like numbers</li>
+                        <li><strong>Flexible syntax</strong>: Multiple ways to accomplish the same thing</li>
+                        <li><strong>Blocks</strong>: Powerful way to pass around chunks of code</li>
+                        <li><strong>Mixins</strong>: Share functionality between classes</li>
+                        <li><strong>Metaprogramming</strong>: Code that writes code</li>
+                    </ul>
+                    
+                    <h5>3. Your First Steps in Ruby</h5>
+                    <p>To write your first Ruby program:</p>
+                    <ol>
+                        <li>Install Ruby on your computer</li>
+                        <li>Create a new file with a .rb extension</li>
+                        <li>Type the "Hello, World!" example above</li>
+                        <li>Run the program with <code>ruby filename.rb</code></li>
+                        <li>Experiment by changing the text and running it again</li>
+                    </ol>
+                    
+                    <h5>4. Learning Resources</h5>
+                    <p>Here are some great places to start learning Ruby:</p>
+                    <ul>
+                        <li>Official <a href="https://www.ruby-lang.org/en/documentation/" target="_blank">Ruby documentation</a></li>
+                        <li>Interactive Ruby tutorials like TryRuby</li>
+                        <li>Ruby Koans for hands-on learning</li>
+                        <li>YouTube tutorials for visual demonstrations</li>
+                    </ul>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>First Steps Exercise:</strong> Try creating a Ruby file and experiment with printing messages, creating variables, and simple math operations. The IRB (Interactive Ruby) lets you see results immediately as you type.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section class="content-section" id="getting-started">
+        <div class="container">
+            <div class="section-title">
+                <h2>Getting Started</h2>
+                <p>Setting up your Ruby development environment</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>1. Install Ruby</h3>
+                <p>Ruby comes pre-installed on macOS and many Linux distributions. For Windows or to get the latest version, you'll need to install it.</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Steps to Install Ruby</h4>
+                    <ol>
+                        <li><strong>Windows:</strong> Download RubyInstaller from <a href="https://rubyinstaller.org/" target="_blank">rubyinstaller.org</a></li>
+                        <li><strong>macOS:</strong> Use Homebrew: <code>brew install ruby</code></li>
+                        <li><strong>Linux:</strong> Use your package manager (e.g., <code>sudo apt-get install ruby-full</code> on Ubuntu)</li>
+                        <li>Verify installation by running <code>ruby -v</code> in your terminal</li>
+                    </ol>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://www.ruby-lang.org/images/download-ruby.png" alt="Ruby Installation" style="max-width: 600px;">
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Version Management:</strong> For serious Ruby development, consider using a version manager like RVM or rbenv. These tools let you switch between different Ruby versions easily.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-download"></i> Ruby Installation Explained</h4>
+                    <p>Here's what beginners should know about installing Ruby:</p>
+                    
+                    <h5>Installation Options</h5>
+                    <ul>
+                        <li><strong>System Ruby</strong>: Comes with macOS/Linux (may be outdated)</li>
+                        <li><strong>RubyInstaller</strong>: Easy Windows installation</li>
+                        <li><strong>Package Managers</strong>: Homebrew (macOS), apt/yum (Linux)</li>
+                        <li><strong>Version Managers</strong>: RVM, rbenv, chruby (advanced)</li>
+                    </ul>
+                    
+                    <h5>Verifying Your Installation</h5>
+                    <p>After installing, check it works:</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code># Check Ruby version
+ruby -v
+
+# Run the interactive Ruby shell (IRB)
+irb
+
+# In IRB, try simple Ruby code
+puts "Hello, Ruby!"</code></pre>
+                    </div>
+                    
+                    <h5>Alternative Options</h5>
+                    <p>If you want to try Ruby without installing:</p>
+                    <ul>
+                        <li><strong>Online Editors</strong>: TryRuby, Replit, etc.</li>
+                        <li><strong>Docker</strong>: Run Ruby in a container</li>
+                        <li><strong>Cloud IDEs</strong>: GitHub Codespaces, etc.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>2. Choose an Editor or IDE</h3>
+                <p>You can use any text editor for Ruby development, but these are popular choices:</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code># Popular Ruby Editors/IDEs:
+# - VS Code (with Ruby extensions)
+# - RubyMine (full-featured Ruby IDE)
+# - Sublime Text
+# - Atom
+# - Vim/Emacs (for experienced users)
+
+# Simple Ruby program example
+def greet(name)
+  puts "Hello, #{name}!"
+end
+
+greet("Alice")</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Editor Setup:</strong> For VS Code, install the Ruby extension for syntax highlighting, linting, and debugging support. RubyMine is a paid IDE with excellent Ruby support out of the box.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-code"></i> Editor Setup Guide</h4>
+                    <p>Setting up your editor properly will make learning Ruby easier:</p>
+                    
+                    <h5>VS Code Setup</h5>
+                    <ol>
+                        <li>Install VS Code from code.visualstudio.com</li>
+                        <li>Install the "Ruby" extension by Peng Lv</li>
+                        <li>Install the "Ruby Solargraph" extension for code completion</li>
+                        <li>Install the "endwise" extension for automatic end insertion</li>
+                    </ol>
+                    
+                    <h5>Recommended Extensions</h5>
+                    <ul>
+                        <li><strong>RuboCop</strong>: Code linter for style checking</li>
+                        <li><strong>Debugger</strong>: For debugging Ruby code</li>
+                        <li><strong>ERB Helper</strong>: For Rails view files</li>
+                    </ul>
+                    
+                    <h5>Basic Editor Features</h5>
+                    <p>Learn to use these features in your editor:</p>
+                    <ul>
+                        <li>Syntax highlighting</li>
+                        <li>Code completion</li>
+                        <li>Running Ruby files</li>
+                        <li>Debugging support</li>
+                        <li>Version control integration</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>3. Interactive Ruby (IRB)</h3>
+                <p>Ruby comes with an interactive shell called IRB where you can experiment with Ruby code.</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Using IRB</h4>
+                    <ol>
+                        <li>Open your terminal</li>
+                        <li>Type <code>irb</code> and press Enter</li>
+                        <li>Type Ruby code and see immediate results</li>
+                        <li>Exit with <code>exit</code> or Ctrl+D</li>
+                    </ol>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://miro.medium.com/v2/resize:fit:1400/1*J9k9YkK8Qx4H6e2jD8zZJg.png" alt="IRB Example" style="max-width: 600px;">
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>IRB Features:</strong> Modern Ruby versions include an enhanced IRB with syntax highlighting, autocompletion, and more. You can also use alternative REPLs like Pry for an even more powerful interactive experience.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-terminal"></i> IRB Learning Path</h4>
+                    <p>To get the most from IRB as a beginner:</p>
+                    
+                    <h5>Beginner Exercises</h5>
+                    <p>Try these in IRB:</p>
+                    <ol>
+                        <li>Basic math operations</li>
+                        <li>String manipulation</li>
+                        <li>Array creation and manipulation</li>
+                        <li>Hash creation and access</li>
+                        <li>Defining and calling methods</li>
+                    </ol>
+                    
+                    <h5>Sample Code to Try</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code># Math operations
+5 + 3 * 2
+(10 - 4) / 2.0
+
+# String manipulation
+"hello".upcase
+"Ruby".reverse
+"hello".gsub('l', '1')
+
+# Arrays
+numbers = [1, 2, 3, 4]
+numbers.map { |n| n * 2 }
+numbers.select { |n| n > 2 }
+
+# Hashes
+person = { name: "Alice", age: 30 }
+person[:name]
+person.keys
+
+# Methods
+def square(x)
+  x * x
+end
+square(5)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Syntax Basics Section -->
+    <section class="content-section" id="syntax-basics">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ruby Syntax Basics</h2>
+                <p>Fundamental concepts every Ruby developer needs to know</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Variables and Data Types</h3>
+                <p>Ruby is dynamically typed, so you don't need to declare variable types.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code># Variables (snake_case convention)
+name = "Alice"  # String
+age = 30        # Integer
+price = 19.99   # Float
+is_active = true # Boolean
+
+# Constants (start with capital letter)
+Pi = 3.14159
+
+# Arrays
+colors = ["red", "green", "blue"]
+numbers = [1, 2, 3, 4, 5]
+
+# Hashes (key-value pairs)
+person = { name: "Alice", age: 30 } # Symbol keys (Ruby 1.9+ syntax)
+person = { :name => "Alice", :age => 30 } # Older syntax
+
+# Everything is an object
+5.class # => Integer
+"hello".class # => String
+true.class # => TrueClass
+nil.class # => NilClass</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Naming Conventions:</strong> Ruby uses snake_case for variables and methods, CamelCase for classes and modules, and SCREAMING_SNAKE_CASE for constants. Use descriptive names that explain their purpose.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-code"></i> Variables and Data Types Explained</h4>
+                    <p>Understanding variables and data types is crucial for beginners:</p>
+                    
+                    <h5>Key Differences</h5>
+                    <table>
+                        <tr>
+                            <th>Data Type</th>
+                            <th>Example</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>String</td>
+                            <td><code>"hello"</code></td>
+                            <td>Text data</td>
+                        </tr>
+                        <tr>
+                            <td>Integer</td>
+                            <td><code>42</code></td>
+                            <td>Whole numbers</td>
+                        </tr>
+                        <tr>
+                            <td>Float</td>
+                            <td><code>3.14</code></td>
+                            <td>Decimal numbers</td>
+                        </tr>
+                        <tr>
+                            <td>Boolean</td>
+                            <td><code>true</code>, <code>false</code></td>
+                            <td>True/false values</td>
+                        </tr>
+                        <tr>
+                            <td>Array</td>
+                            <td><code>[1, 2, 3]</code></td>
+                            <td>Ordered collection</td>
+                        </tr>
+                        <tr>
+                            <td>Hash</td>
+                            <td><code>{a: 1, b: 2}</code></td>
+                            <td>Key-value pairs</td>
+                        </tr>
+                    </table>
+                    
+                    <h5>Best Practices</h5>
+                    <ul>
+                        <li>Use descriptive variable names</li>
+                        <li>Use constants for values that shouldn't change</li>
+                        <li>Prefer symbols over strings for hash keys when possible</li>
+                        <li>Use the new hash syntax (<code>{key: value}</code>) when possible</li>
+                    </ul>
+                    
+                    <h5>Common Mistakes</h5>
+                    <ul>
+                        <li>Using the wrong case for constants (must start with capital)</li>
+                        <li>Using vague names like <code>a</code> or <code>temp</code></li>
+                        <li>Confusing symbols and strings</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Control Flow</h3>
+                <p>Control the flow of your program's execution with conditionals and loops.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code># If-else statement
+if age >= 18
+  puts "You're an adult"
+elsif age >= 13
+  puts "You're a teenager"
+else
+  puts "You're a child"
+end
+
+# Unless statement (opposite of if)
+unless age < 18
+  puts "You can vote"
+end
+
+# Case statement
+grade = 'B'
+case grade
+when 'A'
+  puts "Excellent!"
+when 'B'
+  puts "Good job"
+when 'C'
+  puts "Needs improvement"
+else
+  puts "See me after class"
+end
+
+# While loop
+count = 0
+while count < 5
+  puts count
+  count += 1
+end
+
+# Until loop (opposite of while)
+until count == 0
+  puts count
+  count -= 1
+end
+
+# For loop (less common in Ruby)
+for i in 1..5
+  puts i
+end
+
+# Each iterator (preferred over for loops)
+(1..5).each do |i|
+  puts i
+end
+
+# Ranges
+1..10    # inclusive range
+1...10   # exclusive range (1-9)
+'a'..'d' # letter range</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Ruby Style:</strong> In Ruby, we prefer using iterators like <code>each</code> rather than traditional for loops. Ruby provides many powerful iterators for different use cases.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-random"></i> Control Flow Explained</h4>
+                    <p>Control flow is how your program makes decisions and repeats actions:</p>
+                    
+                    <h5>Conditional Statements</h5>
+                    <ul>
+                        <li><strong>if/elsif/else</strong>: Basic conditional execution</li>
+                        <li><strong>unless</strong>: Execute unless condition is true</li>
+                        <li><strong>case/when</strong>: Multiple condition checks</li>
+                        <li><strong>ternary operator</strong>: Short if/else (<code>condition ? true_expr : false_expr</code>)</li>
+                    </ul>
+                    
+                    <h5>Looping Constructs</h5>
+                    <ul>
+                        <li><strong>while</strong>: Repeat while condition is true</li>
+                        <li><strong>until</strong>: Repeat until condition is true</li>
+                        <li><strong>for</strong>: Iterate over a range or collection</li>
+                        <li><strong>each</strong>: Preferred iterator for collections</li>
+                    </ul>
+                    
+                    <h5>Control Transfer</h5>
+                    <ul>
+                        <li><strong>break</strong>: Exit loop immediately</li>
+                        <li><strong>next</strong>: Skip to next iteration</li>
+                        <li><strong>redo</strong>: Restart current iteration</li>
+                        <li><strong>return</strong>: Exit from method</li>
+                    </ul>
+                    
+                    <h5>Practical Examples</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code># Checking multiple conditions
+if age >= 18 && has_id
+  puts "You can vote"
+else
+  puts "You cannot vote"
+end
+
+# Looping through an array
+names = ["Alice", "Bob", "Charlie"]
+names.each do |name|
+  puts "Hello, #{name}!"
+end
+
+# While loop with condition
+counter = 0
+while counter < 10
+  puts counter
+  counter += 1
+end
+
+# Case statement with ranges
+score = 85
+case score
+when 90..100 then puts "A"
+when 80..89  then puts "B"
+when 70..79  then puts "C"
+else              puts "F"
+end</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Methods</h3>
+                <p>Methods are defined with the <code>def</code> keyword and can return values.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code># Simple method
+def greet(name)
+  puts "Hello, #{name}!"
+end
+
+# Method with default argument
+def say(message = "Hello")
+  puts message
+end
+
+# Method with return value
+def add(a, b)
+  a + b  # Last expression is returned
+end
+
+# Method with explicit return
+def max(a, b)
+  return a if a > b
+  b
+end
+
+# Method with variable arguments
+def sum(*numbers)
+  numbers.sum
+end
+
+# Calling methods
+greet("Alice")
+say
+result = add(5, 7)
+puts "Sum is #{result}"
+puts "Max is #{max(10, 20)}"
+puts "Sum is #{sum(1, 2, 3, 4, 5)}"
+
+# Predicate methods (convention: end with ?)
+def even?(number)
+  number % 2 == 0
+end
+
+# Bang methods (convention: end with !)
+def capitalize!(string)
+  string.upcase!
+end</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Method Conventions:</strong> Ruby has naming conventions for methods: <code>?</code> for predicate methods that return true/false, <code>!</code> for methods that modify their receiver or raise errors, and <code>=</code> for setter methods.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-cogs"></i> Methods Explained</h4>
+                    <p>Methods are reusable blocks of code that perform specific tasks:</p>
+                    
+                    <h5>Method Components</h5>
+                    <ul>
+                        <li><strong>def</strong>: Keyword to define a method</li>
+                        <li><strong>Name</strong>: Should be descriptive and lowercase</li>
+                        <li><strong>Parameters</strong>: Inputs the method accepts</li>
+                        <li><strong>Body</strong>: Code that executes when method is called</li>
+                        <li><strong>Return value</strong>: Last expression evaluated (or explicit return)</li>
+                    </ul>
+                    
+                    <h5>Special Method Types</h5>
+                    <ul>
+                        <li><strong>Predicate methods</strong>: End with ? and return boolean</li>
+                        <li><strong>Bang methods</strong>: End with ! and modify receiver or raise errors</li>
+                        <li><strong>Setter methods</strong>: End with = for attribute assignment</li>
+                    </ul>
+                    
+                    <h5>Best Practices</h5>
+                    <ul>
+                        <li>Keep methods small and focused</li>
+                        <li>Use descriptive names</li>
+                        <li>Follow naming conventions (? ! =)</li>
+                        <li>Limit side effects when possible</li>
+                        <li>Document complex methods</li>
+                    </ul>
+                    
+                    <h5>Common Mistakes</h5>
+                    <ul>
+                        <li>Forgetting to call the method (just defining it)</li>
+                        <li>Confusing return values (last expression is returned)</li>
+                        <li>Using unclear method names</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Blocks and Iterators</h3>
+                <p>Blocks are chunks of code that can be passed to methods, a powerful Ruby feature.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code># Block (used with methods)
+[1, 2, 3].each { |n| puts n * 2 }
+
+# Multi-line block
+[1, 2, 3].each do |n|
+  puts n * 2
+end
+
+# Yield keyword (method that accepts a block)
+def three_times
+  yield
+  yield
+  yield
+end
+
+three_times { puts "Hello" }
+
+# Block parameters
+def math_operation(a, b)
+  yield(a, b)
+end
+
+result = math_operation(5, 3) { |x, y| x * y }
+puts result # => 15
+
+# Common iterators
+numbers = [1, 2, 3, 4, 5]
+
+# Map/collect
+squares = numbers.map { |n| n * n }
+
+# Select/find_all
+evens = numbers.select { |n| n.even? }
+
+# Reject
+odds = numbers.reject { |n| n.even? }
+
+# Reduce/inject
+sum = numbers.reduce(0) { |total, n| total + n }
+
+# Each with index
+["a", "b", "c"].each_with_index do |item, index|
+  puts "#{index}: #{item}"
+end</code></pre>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Block Variables:</strong> Be careful with variable names in blocks. Variables defined in blocks can sometimes affect variables in the outer scope, especially in older Ruby versions. Use unique names to avoid confusion.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-code-branch"></i> Blocks and Iterators Explained</h4>
+                    <p>Blocks are one of Ruby's most powerful features. Here's what beginners should know:</p>
+                    
+                    <h5>What Are Blocks?</h5>
+                    <p>Blocks are anonymous chunks of code that can be passed to methods. They can be enclosed in either curly braces <code>{}</code> or <code>do...end</code>.</p>
+                    
+                    <h5>Common Uses</h5>
+                    <ul>
+                        <li><strong>Iteration</strong>: <code>each</code>, <code>map</code>, <code>select</code>, etc.</li>
+                        <li><strong>Resource management</strong>: Ensure resources are cleaned up</li>
+                        <li><strong>Custom behavior</strong>: Pass behavior into methods</li>
+                    </ul>
+                    
+                    <h5>Key Concepts</h5>
+                    <table>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                        <tr>
+                            <td>Block</td>
+                            <td>Chunk of code passed to method</td>
+                            <td><code>{ |x| puts x }</code></td>
+                        </tr>
+                        <tr>
+                            <td>Yield</td>
+                            <td>Execute the passed block</td>
+                            <td><code>yield(arg)</code></td>
+                        </tr>
+                        <tr>
+                            <td>Proc</td>
+                            <td>Saved block (procedure)</td>
+                            <td><code>Proc.new { |x| x * 2 }</code></td>
+                        </tr>
+                        <tr>
+                            <td>Lambda</td>
+                            <td>Stricter Proc with argument checking</td>
+                            <td><code>->(x) { x * 2 }</code></td>
+                        </tr>
+                    </table>
+                    
+                    <h5>Practical Examples</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code># File operations with blocks (auto-closes file)
+File.open("example.txt", "w") do |file|
+  file.puts "Hello, world!"
+end
+
+# Custom method with block
+def benchmark
+  start_time = Time.now
+  yield
+  end_time = Time.now
+  puts "Time taken: #{end_time - start_time} seconds"
+end
+
+benchmark do
+  # Some expensive operation
+  (1..1000000).each { |n| n * n }
+end
+
+# Using procs
+double = Proc.new { |n| n * 2 }
+puts [1, 2, 3].map(&double)
+
+# Using lambdas
+square = ->(n) { n * n }
+puts [1, 2, 3].map(&square)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Features Section -->
+    <section class="content-section" id="ruby-features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Advanced Ruby Features</h2>
+                <p>Powerful features that make Ruby expressive and flexible</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Classes and Objects</h3>
+                <p>Ruby is a pure object-oriented language where everything is an object.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>class Person
+  # Constructor
+  def initialize(name, age)
+    @name = name  # Instance variable
+    @age = age
+  end
+  
+  # Instance method
+  def introduce
+    puts "Hi, I'm #{@name} and I'm #{@age} years old."
+  end
+  
+  # Getter method
+  def name
+    @name
+  end
+  
+  # Setter method
+  def name=(new_name)
+    @name = new_name
+  end
+  
+  # Class method
+  def self.species
+    "Homo sapiens"
+  end
+  
+  # Attribute accessors (creates getters/setters)
+  attr_accessor :age
+  attr_reader :id
+  attr_writer :secret
+end
+
+# Create an object
+person = Person.new("Alice", 30)
+person.introduce
+person.name = "Alicia"  # Call setter method
+puts person.name        # Call getter method
+
+# Class method call
+puts Person.species
+
+# Inheritance
+class Employee < Person
+  def initialize(name, age, position)
+    super(name, age)
+    @position = position
+  end
+  
+  def introduce
+    super
+    puts "I work as a #{@position}."
+  end
+end
+
+employee = Employee.new("Bob", 40, "Developer")
+employee.introduce</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Attribute Accessors:</strong> Ruby provides <code>attr_accessor</code> (getter + setter), <code>attr_reader</code> (getter only), and <code>attr_writer</code> (setter only) to automatically generate getter and setter methods for instance variables.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-cube"></i> Object-Oriented Ruby Explained</h4>
+                    <p>Ruby's object-oriented features are central to the language:</p>
+                    
+                    <h5>Key Concepts</h5>
+                    <ul>
+                        <li><strong>Class</strong>: Blueprint for creating objects</li>
+                        <li><strong>Object</strong>: Instance of a class</li>
+                        <li><strong>Instance variables</strong>: <code>@variable</code> - unique to each object</li>
+                        <li><strong>Class variables</strong>: <code>@@variable</code> - shared by all instances</li>
+                        <li><strong>Instance methods</strong>: Called on objects</li>
+                        <li><strong>Class methods</strong>: Called on the class itself</li>
+                    </ul>
+                    
+                    <h5>Inheritance</h5>
+                    <p>Ruby uses single inheritance (one superclass) with mixins for additional functionality:</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>class Animal
+  def speak
+    "Some sound"
+  end
+end
+
+class Dog < Animal
+  def speak
+    "Woof!"
+  end
+end
+
+dog = Dog.new
+puts dog.speak # => "Woof!"</code></pre>
+                    </div>
+                    
+                    <h5>Best Practices</h5>
+                    <ul>
+                        <li>Follow the single responsibility principle</li>
+                        <li>Keep classes small and focused</li>
+                        <li>Use composition over inheritance when possible</li>
+                        <li>Use modules for shared behavior</li>
+                        <li>Name classes with nouns and methods with verbs</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Modules and Mixins</h3>
+                <p>Modules are collections of methods and constants that can be included in classes.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>module Greetable
+  def greet
+    puts "Hello from #{self.class}"
+  end
+end
+
+class Person
+  include Greetable
+end
+
+class Robot
+  include Greetable
+end
+
+Person.new.greet  # => "Hello from Person"
+Robot.new.greet   # => "Hello from Robot"
+
+# Namespacing with modules
+module Math
+  PI = 3.14159
+  
+  def self.square(x)
+    x * x
+  end
+end
+
+puts Math::PI
+puts Math.square(5)
+
+# Module as container
+module MyLibrary
+  class Book
+    # ...
+  end
+  
+  class Author
+    # ...
+  end
+end
+
+book = MyLibrary::Book.new</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Modules vs. Classes:</strong> Modules cannot be instantiated or subclassed. They're used for namespacing and mixins. Classes can be instantiated and follow single inheritance, but can include multiple modules.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-puzzle-piece"></i> Modules Explained</h4>
+                    <p>Modules serve two main purposes in Ruby:</p>
+                    
+                    <h5>1. Mixins</h5>
+                    <p>Share functionality between classes:</p>
+                    <ul>
+                        <li><code>include</code>: Adds methods as instance methods</li>
+                        <li><code>extend</code>: Adds methods as class methods</li>
+                        <li><code>prepend</code>: Inserts module before class in method lookup</li>
+                    </ul>
+                    
+                    <h5>2. Namespacing</h5>
+                    <p>Organize code and prevent naming conflicts:</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>module Payment
+  class Invoice
+    # ...
+  end
+  
+  class Receipt
+    # ...
+  end
+end
+
+invoice = Payment::Invoice.new</code></pre>
+                    </div>
+                    
+                    <h5>Common Ruby Modules</h5>
+                    <ul>
+                        <li><strong>Enumerable</strong>: Collection methods (<code>each</code>, <code>map</code>, etc.)</li>
+                        <li><strong>Comparable</strong>: Comparison methods (<code><</code>, <code>></code>, etc.)</li>
+                        <li><strong>Kernel</strong>: Core methods available everywhere</li>
+                    </ul>
+                    
+                    <h5>When to Use Modules</h5>
+                    <ul>
+                        <li>When you need to share behavior between classes</li>
+                        <li>When you need to organize related classes</li>
+                        <li>When you want to add functionality without inheritance</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Metaprogramming</h3>
+                <p>Ruby allows you to write code that writes code, known as metaprogramming.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code># Dynamically define methods
+class Person
+  %w[name age email].each do |attribute|
+    define_method(attribute) do
+      instance_variable_get("@#{attribute}")
+    end
+    
+    define_method("#{attribute}=") do |value|
+      instance_variable_set("@#{attribute}", value)
+    end
+  end
+end
+
+person = Person.new
+person.name = "Alice"
+puts person.name # => "Alice"
+
+# method_missing
+class Roman
+  def method_missing(name, *args)
+    roman = name.to_s
+    roman.gsub!("IV", "IIII")
+    roman.gsub!("IX", "VIIII")
+    roman.gsub!("XL", "XXXX")
+    roman.gsub!("XC", "LXXXX")
+    
+    (roman.count("I") +
+     roman.count("V") * 5 +
+     roman.count("X") * 10 +
+     roman.count("L") * 50 +
+     roman.count("C") * 100)
+  end
+end
+
+r = Roman.new
+puts r.iv # => 4
+puts r.ix # => 9
+puts r.xl # => 40
+
+# send method
+class Test
+  def hello(name)
+    puts "Hello, #{name}!"
+  end
+end
+
+t = Test.new
+t.send(:hello, "Alice") # => "Hello, Alice!"
+
+# eval and friends (use with caution!)
+code = "2 + 2"
+puts eval(code) # => 4
+
+# Class macros
+class Vehicle
+  def self.types(*types)
+    types.each do |type|
+      define_method("#{type}?") do
+        @type == type
+      end
+    end
+  end
+  
+  types :car, :truck, :bus
+end
+
+v = Vehicle.new
+v.instance_variable_set("@type", :car)
+puts v.car? # => true
+puts v.truck? # => false</code></pre>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Metaprogramming Caution:</strong> While powerful, metaprogramming can make code harder to understand and debug. Use it judiciously and document thoroughly. Always prefer clear, explicit code over clever metaprogramming when possible.</p>
+                </div>
+                
+                <!-- Enhanced Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-magic"></i> Metaprogramming Explained</h4>
+                    <p>Metaprogramming is writing code that writes code. Here's what beginners should know:</p>
+                    
+                    <h5>Common Techniques</h5>
+                    <ul>
+                        <li><strong>define_method</strong>: Create methods dynamically</li>
+                        <li><strong>method_missing</strong>: Handle calls to undefined methods</li>
+                        <li><strong>send</strong>: Call methods dynamically</li>
+                        <li><strong>eval</strong>: Execute strings as code (use carefully)</li>
+                        <li><strong>Class macros</strong>: Methods that define other methods</li>
+                    </ul>
+                    
+                    <h5>Practical Uses</h5>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code># Dynamic finders (like ActiveRecord)
+class Record
+  def self.find_by(attribute, value)
+    # ... database lookup ...
+  end
+  
+  def self.method_missing(name, *args)
+    if name.to_s.start_with?("find_by_")
+      attribute = name.to_s.split("find_by_").last
+      find_by(attribute, args.first)
+    else
+      super
+    end
+  end
+end
+
+# Record.find_by_name("Alice") would call find_by(:name, "Alice")
+
+# Configuration DSL
+class Config
+  def self.setting(name)
+    define_method(name) do
+      instance_variable_get("@#{name}")
+    end
+    
+    define_method("#{name}=") do |value|
+      instance_variable_set("@#{name}", value)
+    end
+  end
+end
+
+class AppConfig < Config
+  setting :title
+  setting :version
+end
+
+config = AppConfig.new
+config.title = "My App"
+puts config.title # => "My App"</code></pre>
+                    </div>
+                    
+                    <h5>When to Use Metaprogramming</h5>
+                    <ul>
+                        <li>When you need to reduce repetitive code</li>
+                        <li>When creating domain-specific languages (DSLs)</li>
+                        <li>When building flexible APIs</li>
+                        <li>When implementing dynamic behavior</li>
+                    </ul>
+                    
+                    <h5>When to Avoid</h5>
+                    <ul>
+                        <li>When simple methods would suffice</li>
+                        <li>When clarity is more important than cleverness</li>
+                        <li>When performance is critical</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section - Matching Kotlin site -->
+    <section class="youtube-links" id="resources">
+        <div class="container">
+            <h2>Recommended Ruby Learning Resources</h2>
+            <p>Here are some excellent resources to help you learn Ruby programming:</p>
+            
+            <div class="youtube-grid">
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=t_ispmWmdjY" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/t_ispmWmdjY/maxresdefault.jpg" alt="Ruby Tutorial for Beginners">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Ruby Tutorial for Beginners</h3>
+                            <p>Programming with Mosh</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=Dji9ALCgfpM" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/Dji9ALCgfpM/maxresdefault.jpg" alt="Ruby Full Course">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Ruby Full Course</h3>
+                            <p>freeCodeCamp.org</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=ciU1Ih6J8Lg" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/ciU1Ih6J8Lg/maxresdefault.jpg" alt="Ruby Programming">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Ruby Programming</h3>
+                            <p>Derek Banas</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=6KILLYQJ-7Y" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/6KILLYQJ-7Y/maxresdefault.jpg" alt="Ruby for Absolute Beginners">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Ruby for Absolute Beginners</h3>
+                            <p>Learn Enough</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="content-card" style="margin-top: 30px; background-color: rgba(255,255,255,0.1); color: white;">
+                <h3>Additional Learning Resources</h3>
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-book"></i> Official Documentation</h4>
+                    <ul>
+                        <li><a href="https://www.ruby-lang.org/en/documentation/" target="_blank" style="color: white;">Ruby Documentation</a></li>
+                        <li><a href="https://ruby-doc.org/" target="_blank" style="color: white;">Ruby API Documentation</a></li>
+                        <li><a href="https://guides.rubyonrails.org/" target="_blank" style="color: white;">Ruby on Rails Guides</a></li>
+                    </ul>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-graduation-cap"></i> Courses & Books</h4>
+                    <ul>
+                        <li><a href="https://www.railstutorial.org/book" target="_blank" style="color: white;">Ruby on Rails Tutorial</a></li>
+                        <li><a href="https://www.ruby-lang.org/en/documentation/quickstart/" target="_blank" style="color: white;">Ruby in Twenty Minutes</a></li>
+                        <li><a href="https://www.udemy.com/course/learn-to-code-with-ruby-lang/" target="_blank" style="color: white;">Udemy Ruby Course</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - Exactly matching Kotlin site -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Beginner's Guide</span>
+                    </div>
+                    <p>Master the art of programming with our comprehensive resources and tutorials designed for beginners.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Learn Ruby</h3>
+                    <ul>
+                        <li><a href="#what-is-ruby">What is Ruby?</a></li>
+                        <li><a href="#getting-started">Getting Started</a></li>
+                        <li><a href="#syntax-basics">Syntax Basics</a></li>
+                        <li><a href="#ruby-features">Advanced Features</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://www.ruby-lang.org/" target="_blank">Ruby Official Site</a></li>
+                        <li><a href="https://rubygems.org/" target="_blank">RubyGems</a></li>
+                        <li><a href="https://rubyonrails.org/" target="_blank">Ruby on Rails</a></li>
+                        <li><a href="https://try.ruby-lang.org/" target="_blank">Try Ruby Online</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="https://www.ruby-lang.org/en/community/" target="_blank">Ruby Community</a></li>
+                        <li><a href="https://www.reddit.com/r/ruby/" target="_blank">Ruby Subreddit</a></li>
+                        <li><a href="https://stackoverflow.com/questions/tagged/ruby" target="_blank">Stack Overflow</a></li>
+                        <li><a href="https://discord.gg/ruby" target="_blank">Ruby Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Ruby Basics. All rights reserved.</p>
+                <p>Ruby and the Ruby logo are trademarks of Yukihiro Matsumoto.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle - Matching Kotlin site -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.querySelector('i').classList.toggle('fa-bars');
+                this.querySelector('i').classList.toggle('fa-times');
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Copy code button functionality
+            function copyCode(button) {
+                const codeBlock = button.parentElement;
+                const code = codeBlock.querySelector('pre').textContent;
+                
+                navigator.clipboard.writeText(code).then(() => {
+                    button.textContent = 'Copied!';
+                    setTimeout(() => {
+                        button.textContent = 'Copy';
+                    }, 2000);
+                });
+            }
+            
+            // Assign copy functionality to all copy buttons
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    copyCode(this);
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            menuToggle.querySelector('i').classList.remove('fa-times');
+                            menuToggle.querySelector('i').classList.add('fa-bars');
+                        }
+                    }
+                });
+            });
+            
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.content-card, .section-title, .youtube-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.content-card, .section-title, .youtube-card');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+        });
+    </script>
+</body>
+</html>

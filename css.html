@@ -1,0 +1,2584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Beginner Tutorial | Beginner's Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --gray: #94a3b8;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav {
+            width: 100%;
+            order: 1;
+            margin-top: 15px;
+            display: none;
+        }
+
+        nav.active {
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: block;
+            cursor: pointer;
+            font-size: 1.5rem;
+            order: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Content Section */
+        .content-section {
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .content-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .content-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .content-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .code-example {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .example-image {
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .tip-box {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .note-box {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary-light);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .learning-objectives {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(37, 99, 235, 0.05);
+            border-radius: 8px;
+        }
+
+        .learning-objectives h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .learning-objectives ul {
+            margin-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .learning-objectives li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .prerequisites {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(245, 158, 11, 0.05);
+            border-radius: 8px;
+        }
+
+        .prerequisites h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--warning);
+        }
+
+        .prerequisites p {
+            margin-bottom: 5px;
+        }
+
+        .beginner-tips {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(236, 72, 153, 0.05);
+            border-radius: 8px;
+        }
+
+        .beginner-tips h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .beginner-tips p {
+            margin-bottom: 5px;
+        }
+
+        .tutorial-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-link:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .tutorial-link i {
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-link:hover i {
+            margin-left: 10px;
+        }
+
+        /* YouTube Links Section */
+        .youtube-links {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .youtube-links::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .youtube-links h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .youtube-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .youtube-thumbnail {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .youtube-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .youtube-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            font-size: 3rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+        }
+
+        .youtube-info {
+            padding: 15px;
+            color: var(--dark);
+        }
+
+        .youtube-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .youtube-info p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 50px 0 25px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Current Date */
+        .current-date {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .content-card {
+            background-color: #1e293b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .content-card h3,
+        body.dark-mode .section-title h2 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .code-example {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border-left: 4px solid var(--accent);
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        body.dark-mode .footer-links ul li a:hover {
+            color: var(--primary-light);
+        }
+
+        body.dark-mode .learning-objectives {
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        body.dark-mode .prerequisites {
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        body.dark-mode .beginner-tips {
+            background-color: rgba(236, 72, 153, 0.1);
+        }
+
+        body.dark-mode .youtube-info {
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .youtube-info p {
+            color: #94a3b8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (min-width: 576px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .content-card {
+                padding: 30px;
+            }
+            
+            .youtube-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            nav {
+                width: auto;
+                order: 0;
+                margin-top: 0;
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: row;
+                gap: 25px;
+            }
+            
+            nav ul li a {
+                padding: 5px 0;
+                display: inline-block;
+            }
+            
+            .menu-toggle {
+                display: none;
+            }
+            
+            .hero {
+                padding: 100px 0;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+            
+            .content-card {
+                padding: 40px;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) {
+            section {
+                padding: 80px 0;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .youtube-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+            </div>
+            <nav id="navMenu">
+                <ul>
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Master CSS Styling</h1>
+            <p>Learn how to transform your web pages with the power of Cascading Style Sheets - from basic properties to advanced layout techniques</p>
+            <a href="#what-is-css" class="btn">Begin Learning</a>
+        </div>
+    </section>
+
+    <!-- What is CSS Section -->
+    <section class="content-section" id="what-is-css">
+        <div class="container">
+            <div class="section-title">
+                <h2>What is CSS?</h2>
+                <p>The foundation of web styling and design</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>The Styling Language of the Web</h3>
+                <p><strong>CSS (Cascading Style Sheets)</strong> is a stylesheet language used to describe the presentation of a document written in HTML or XML. It controls how elements are displayed on screen, on paper, in speech, or on other media.</p>
+                
+                <div class="example-image">
+                    <img src="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics/css-declaration-small.png" alt="CSS Syntax">
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Key Features of CSS</h4>
+                    <ul>
+                        <li><strong>Separation of concerns</strong>: CSS separates content (HTML) from presentation (styling)</li>
+                        <li><strong>Cascading nature</strong>: Multiple style rules can apply to the same element</li>
+                        <li><strong>Responsive design</strong>: Adapt layouts to different screen sizes</li>
+                        <li><strong>Animation capabilities</strong>: Create movement and transitions</li>
+                        <li><strong>Powerful selectors</strong>: Precisely target elements to style</li>
+                    </ul>
+                </div>
+                
+                <div class="code-example">
+                    <pre><code>/* This is a simple CSS rule */
+h1 {
+    color: blue;
+    font-size: 2em;
+    margin-bottom: 20px;
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Did you know?</strong> The "cascading" in CSS refers to how styles can inherit and override each other based on specificity and source order. Styles can come from multiple sources (browser defaults, user stylesheets, author stylesheets), and CSS determines which styles take precedence.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Absolute Beginner's Guide</h4>
+                    <p>If you're completely new to CSS, here's what you need to know to get started:</p>
+                    <ol>
+                        <li><strong>CSS works with HTML</strong>: You write CSS rules that target HTML elements to style them</li>
+                        <li><strong>Three ways to add CSS</strong>:
+                            <ul>
+                                <li>Inline styles (directly in HTML elements)</li>
+                                <li>Internal stylesheet (in the &lt;style&gt; tag)</li>
+                                <li>External stylesheet (separate .css file linked to HTML)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Basic syntax</strong>: A CSS rule has a selector and declaration block with properties and values</li>
+                        <li><strong>Start simple</strong>: Begin with basic properties like color, font-size, and margin</li>
+                    </ol>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>First Steps Exercise:</strong> Try creating a simple HTML file and add some CSS to change the text color and background. Experiment with different selectors like element names, classes, and IDs.</p>
+                </div>
+                
+                <a href="css-tutorial.html" class="tutorial-link">Continue to CSS Basics <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CSS Basics Section -->
+    <section class="content-section" id="css-basics">
+        <div class="container">
+            <div class="section-title">
+                <h2>Basic CSS Properties</h2>
+                <p>Essential styling properties every developer should know</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Text Styling Properties</h3>
+                <p>CSS provides numerous properties to style text content. Here are some of the most fundamental ones:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Text styling example */
+.article-title {
+    font-family: 'Georgia', serif;  /* Font family */
+    font-size: 2.5rem;             /* Font size */
+    font-weight: 700;              /* Boldness */
+    line-height: 1.5;              /* Line spacing */
+    color: #2d3748;                /* Text color */
+    text-align: center;            /* Alignment */
+    text-transform: uppercase;     /* Text transformation */
+    text-decoration: underline;    /* Underline */
+    letter-spacing: 1px;           /* Character spacing */
+    word-spacing: 2px;             /* Space between words */
+}</code></pre>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://www.w3schools.com/css/example_withoutcss.jpg" alt="Before CSS" style="width: 48%; display: inline-block;">
+                    <img src="https://www.w3schools.com/css/example_withcss.jpg" alt="After CSS" style="width: 48%; display: inline-block;">
+                    <p style="text-align: center; margin-top: 10px; font-size: 0.9rem;">Comparison of unstyled vs styled text</p>
+                </div>
+                
+                <div class="prerequisites">
+                    <h4><i class="fas fa-info-circle"></i> Font Stack Best Practices</h4>
+                    <p>Always specify a font stack (multiple font options) to ensure fallbacks if your preferred font isn't available. Example: <code>font-family: 'Helvetica Neue', Arial, sans-serif;</code></p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Text Styling Tips for Beginners</h4>
+                    <ul>
+                        <li>Start with a base font size of 16px (1rem) for body text</li>
+                        <li>Use relative units (em, rem) for font sizes to support accessibility</li>
+                        <li>Limit your font choices to 2-3 fonts per page for consistency</li>
+                        <li>Ensure sufficient contrast between text and background colors</li>
+                        <li>Use line-height between 1.4-1.6 for optimal readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Color and Background Properties</h3>
+                <p>CSS offers multiple ways to specify colors and style backgrounds:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Color and background example */
+.header {
+    color: white;                  /* Text color */
+    background-color: #2563eb;      /* Background color */
+    
+    /* Gradient background */
+    background-image: linear-gradient(to right, #2563eb, #7c3aed);
+    
+    /* Multiple background images */
+    background-image: url('pattern.png'), linear-gradient(to bottom, #2563eb, #7c3aed);
+    background-blend-mode: overlay;
+    
+    /* Background control */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;   /* Parallax effect */
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Color Formats:</strong> CSS supports several color formats: HEX (#RRGGBB), RGB (rgb(255,0,0)), HSL (hsl(0,100%,50%)), and named colors (red, blue, etc.). Modern CSS also supports alpha transparency with RGBA and HSLA.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Beginner Tip</h4>
+                    <p>Use CSS variables for colors to make your stylesheets more maintainable. Define them in the <code>:root</code> selector and reference them with <code>var(--variable-name)</code>.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="note-box">
+                    <h4><i class="fas fa-paint-brush"></i> Color Theory Basics</h4>
+                    <p>When starting with CSS colors, keep these principles in mind:</p>
+                    <ul>
+                        <li><strong>Color harmony</strong>: Use complementary or analogous color schemes</li>
+                        <li><strong>Contrast</strong>: Ensure text is readable against backgrounds</li>
+                        <li><strong>Consistency</strong>: Limit your palette to 3-5 main colors</li>
+                        <li><strong>Accessibility</strong>: Check color contrast ratios (minimum 4.5:1 for normal text)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Box Model Properties</h3>
+                <p>The CSS box model is fundamental to understanding layout. Every element is a rectangular box with these properties:</p>
+                
+                <div class="example-image">
+                    <img src="https://www.w3.org/TR/css-box-3/images/box.png" alt="CSS Box Model">
+                </div>
+                
+                <div class="code-example">
+                    <pre><code>/* Box model example */
+.box {
+    width: 300px;
+    height: 200px;
+    padding: 20px;          /* Inner spacing */
+    border: 5px solid black; /* Border around padding */
+    margin: 30px;           /* Outer spacing */
+    
+    /* Box sizing - includes padding/border in width/height */
+    box-sizing: border-box;
+    
+    /* Border radius for rounded corners */
+    border-radius: 10px;
+    
+    /* Box shadow */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}</code></pre>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Warning:</strong> The default <code>box-sizing: content-box</code> can cause layout issues. Most developers recommend setting <code>box-sizing: border-box</code> globally for all elements.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-cube"></i> Box Model Practice</h4>
+                    <p>To understand the box model, try this exercise:</p>
+                    <ol>
+                        <li>Create a div with some content</li>
+                        <li>Add different padding, border, and margin values</li>
+                        <li>Toggle between <code>box-sizing: content-box</code> and <code>border-box</code></li>
+                        <li>Use your browser's developer tools to inspect the box model</li>
+                    </ol>
+                    <p>This hands-on approach will help solidify your understanding of how these properties interact.</p>
+                </div>
+                
+                <a href="#box-model" class="tutorial-link">Learn More About the Box Model <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Box Model Section -->
+    <section class="content-section" id="box-model">
+        <div class="container">
+            <div class="section-title">
+                <h2>CSS Box Model</h2>
+                <p>Understanding the foundation of CSS layout</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Mastering the Box Model</h3>
+                <p>Every element in CSS is a rectangular box with the following properties:</p>
+                
+                <div class="example-image">
+                    <img src="https://www.w3.org/TR/css-box-3/images/box.png" alt="CSS Box Model">
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Box Model Components</h4>
+                    <ul>
+                        <li><strong>Content</strong>: The actual content (text, images, etc.)</li>
+                        <li><strong>Padding</strong>: Space between content and border (inside the element)</li>
+                        <li><strong>Border</strong>: Line surrounding padding and content</li>
+                        <li><strong>Margin</strong>: Space outside the border (between elements)</li>
+                    </ul>
+                </div>
+                
+                <div class="code-example">
+                    <pre><code>/* Box model demonstration */
+.box {
+    width: 300px;           /* Content width */
+    height: 200px;          /* Content height */
+    padding: 20px;          /* Inner spacing */
+    border: 5px solid #000; /* Visible border */
+    margin: 30px;           /* Outer spacing */
+    
+    /* Total width calculation: */
+    /* content + padding + border = 300 + 40 + 10 = 350px */
+    /* (margin adds to the space between elements) */
+}</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Box-Sizing Property:</strong> The <code>box-sizing</code> property changes how width and height are calculated. <code>content-box</code> (default) only includes content, while <code>border-box</code> includes padding and border in the dimensions.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-ruler-combined"></i> Practical Box Model Tips</h4>
+                    <p>When working with the box model:</p>
+                    <ul>
+                        <li>Use consistent spacing units (like multiples of 8px)</li>
+                        <li>Start with margin: 0 and padding: 0 in your CSS reset</li>
+                        <li>Use browser dev tools to visualize the box model</li>
+                        <li>Remember that margins can collapse vertically</li>
+                        <li>Consider using CSS variables for consistent spacing</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Margin Collapsing</h3>
+                <p>One of the most important concepts to understand about the box model is margin collapsing:</p>
+                
+                <div class="example-image">
+                    <img src="https://sabe.io/classes/css/css-box-model/css-margin-collapse-vertical.png" alt="Margin Collapsing">
+                </div>
+                
+                <p>When two vertical margins meet, they collapse to form a single margin whose size is the largest of the individual margins. This only happens with vertical margins (top and bottom), not horizontal (left and right) margins.</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Margin collapsing example */
+.box1 {
+    margin-bottom: 30px;
+}
+
+.box2 {
+    margin-top: 20px;
+}
+
+/* The space between .box1 and .box2 will be 30px (not 50px) */
+/* because the margins collapse into the larger value */</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Tip:</strong> To prevent margin collapsing, you can use padding instead, add a border, or use flexbox/grid layout which doesn't have margin collapsing.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="warning-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Common Box Model Mistakes</h4>
+                    <p>Beginners often struggle with:</p>
+                    <ul>
+                        <li>Forgetting to reset default margins/padding</li>
+                        <li>Not understanding margin collapsing</li>
+                        <li>Using width: 100% with padding (causing overflow)</li>
+                        <li>Mixing absolute and relative units inconsistently</li>
+                    </ul>
+                    <p>Practice identifying and fixing these issues in your projects.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Positioning Section -->
+    <section class="content-section" id="positioning">
+        <div class="container">
+            <div class="section-title">
+                <h2>CSS Positioning</h2>
+                <p>Control the layout and placement of elements</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Position Property</h3>
+                <p>The <code>position</code> property specifies the type of positioning method used for an element:</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Position Values</h4>
+                    <ul>
+                        <li><strong>static</strong>: Default. Elements render in order of document flow</li>
+                        <li><strong>relative</strong>: Positioned relative to its normal position</li>
+                        <li><strong>absolute</strong>: Positioned relative to nearest positioned ancestor</li>
+                        <li><strong>fixed</strong>: Positioned relative to viewport (stays on screen during scroll)</li>
+                        <li><strong>sticky</strong>: Hybrid of relative and fixed positioning</li>
+                    </ul>
+                </div>
+                
+                <div class="code-example">
+                    <pre><code>/* Positioning examples */
+.relative-box {
+    position: relative;
+    top: 20px;
+    left: 30px;
+}
+
+.absolute-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.fixed-box {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0;
+}</code></pre>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://www.w3schools.com/css/positioning.gif" alt="CSS Positioning Examples">
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Warning:</strong> Absolutely positioned elements are removed from the normal document flow, which can cause layout issues if overused. Use them judiciously.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-map-marker-alt"></i> Positioning Practice</h4>
+                    <p>To master CSS positioning:</p>
+                    <ol>
+                        <li>Create a container with several child elements</li>
+                        <li>Experiment with each position value</li>
+                        <li>Notice how each affects document flow</li>
+                        <li>Combine with top/right/bottom/left properties</li>
+                        <li>Try creating a sticky header and fixed footer</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Z-Index and Stacking Context</h3>
+                <p>When elements overlap, the <code>z-index</code> property determines which appears on top:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Z-index example */
+.modal {
+    position: fixed;
+    z-index: 1000; /* Higher z-index appears on top */
+}
+
+.dropdown {
+    position: absolute;
+    z-index: 100;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 200;
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Stacking Context:</strong> Z-index only works on positioned elements (anything except static). Each stacking context is like a separate "layer" where z-index values are compared only within that context.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Beginner Tip</h4>
+                    <p>If z-index isn't working as expected, check if any parent element creates a new stacking context (common causes: opacity < 1, transform, filter, or isolation properties).</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="note-box">
+                    <h4><i class="fas fa-layer-group"></i> Understanding Stacking Order</h4>
+                    <p>Elements stack in this order (from bottom to top):</p>
+                    <ol>
+                        <li>Non-positioned elements in normal flow</li>
+                        <li>Positioned elements (in order of appearance)</li>
+                        <li>Elements with z-index ≥ 1</li>
+                    </ol>
+                    <p>Remember that z-index only works within the same stacking context.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flexbox Section -->
+    <section class="content-section" id="flexbox">
+        <div class="container">
+            <div class="section-title">
+                <h2>Flexbox Layout</h2>
+                <p>The modern way to create flexible one-dimensional layouts</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Flexbox Fundamentals</h3>
+                <p>Flexbox (Flexible Box Layout) is a one-dimensional layout method for arranging items in rows or columns.</p>
+                
+                <div class="example-image">
+                    <img src="https://css-tricks.com/wp-content/uploads/2018/11/flexbox.svg" alt="Flexbox Diagram">
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Flexbox Concepts</h4>
+                    <ul>
+                        <li><strong>Flex container</strong>: Parent element with <code>display: flex</code></li>
+                        <li><strong>Flex items</strong>: Direct children of the flex container</li>
+                        <li><strong>Main axis</strong>: Primary axis (row or column) defined by <code>flex-direction</code></li>
+                        <li><strong>Cross axis</strong>: Perpendicular to main axis</li>
+                    </ul>
+                </div>
+                
+                <div class="code-example">
+                    <pre><code>/* Flexbox container */
+.container {
+    display: flex;           /* Activate flexbox */
+    flex-direction: row;     /* Main axis direction (row|row-reverse|column|column-reverse) */
+    justify-content: center; /* Main axis alignment */
+    align-items: center;     /* Cross axis alignment */
+    gap: 20px;              /* Space between items */
+    flex-wrap: wrap;        /* Allow items to wrap */
+}
+
+/* Flex items */
+.item {
+    flex: 1;               /* Grow/shrink proportionally */
+    min-width: 100px;      /* Minimum size */
+}</code></pre>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-align-left"></i> Flexbox Learning Path</h4>
+                    <p>To learn Flexbox effectively:</p>
+                    <ol>
+                        <li>Start with <code>display: flex</code> on a container</li>
+                        <li>Experiment with <code>flex-direction</code></li>
+                        <li>Try different <code>justify-content</code> values</li>
+                        <li>Explore <code>align-items</code> and <code>align-self</code></li>
+                        <li>Learn about <code>flex-grow</code>, <code>flex-shrink</code>, and <code>flex-basis</code></li>
+                        <li>Practice creating common layouts (navbars, cards, etc.)</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Flexbox Properties</h3>
+                <p>Flexbox provides powerful properties to control layout:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Container properties */
+.flex-container {
+    display: flex;
+    flex-direction: row; /* or column */
+    justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly;
+    align-items: stretch | flex-start | flex-end | center | baseline;
+    align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+    flex-wrap: nowrap | wrap | wrap-reverse;
+    gap: 10px;
+}
+
+/* Item properties */
+.flex-item {
+    order: 0; /* Change visual order */
+    flex-grow: 0; /* Ability to grow */
+    flex-shrink: 1; /* Ability to shrink */
+    flex-basis: auto; /* Default size */
+    align-self: auto | flex-start | flex-end | center | baseline | stretch;
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Shorthand:</strong> The <code>flex</code> property is shorthand for <code>flex-grow</code>, <code>flex-shrink</code>, and <code>flex-basis</code>. Common values: <code>flex: 1</code> (grow equally), <code>flex: 0 0 200px</code> (fixed width), <code>flex: 1 0 auto</code> (grow but don't shrink below content size).</p>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://css-tricks.com/wp-content/uploads/2018/10/justify-content.svg" alt="Flexbox justify-content examples">
+                    <img src="https://css-tricks.com/wp-content/uploads/2018/10/align-items.svg" alt="Flexbox align-items examples">
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="note-box">
+                    <h4><i class="fas fa-thumbtack"></i> Flexbox Cheat Sheet</h4>
+                    <p>Quick reference for common Flexbox needs:</p>
+                    <ul>
+                        <li><strong>Center items</strong>: <code>justify-content: center; align-items: center;</code></li>
+                        <li><strong>Space evenly</strong>: <code>justify-content: space-between;</code></li>
+                        <li><strong>Equal height columns</strong>: <code>align-items: stretch;</code> (default)</li>
+                        <li><strong>Mobile menu</strong>: <code>flex-direction: column;</code></li>
+                        <li><strong>Responsive grid</strong>: <code>flex-wrap: wrap;</code> with percentage widths</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Practical Flexbox Examples</h3>
+                <p>Here are some common use cases for Flexbox:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Navigation bar */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+/* Card layout */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    flex: 1 0 300px; /* Grow, don't shrink, base 300px */
+}
+
+/* Centering content */
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Holy Grail Layout */
+.holy-grail {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.holy-grail main {
+    display: flex;
+    flex: 1;
+}
+
+.holy-grail .content {
+    flex: 1;
+}
+
+.holy-grail .sidebar {
+    flex: 0 0 250px;
+}</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Browser Support:</strong> Flexbox is supported in all modern browsers. For very old browsers, consider using feature queries (<code>@supports</code>) to provide fallbacks.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-laptop-code"></i> Flexbox Learning Resources</h4>
+                    <p>To deepen your Flexbox knowledge:</p>
+                    <ul>
+                        <li><a href="https://flexboxfroggy.com/" target="_blank">Flexbox Froggy</a> - Game to learn Flexbox</li>
+                        <li><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank">CSS Tricks Flexbox Guide</a></li>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox" target="_blank">MDN Flexbox Guide</a></li>
+                        <li>Practice by recreating common layouts (headers, forms, galleries)</li>
+                    </ul>
+                </div>
+                
+                <a href="#css-grid" class="tutorial-link">Continue to CSS Grid <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CSS Grid Section -->
+    <section class="content-section" id="css-grid">
+        <div class="container">
+            <div class="section-title">
+                <h2>CSS Grid Layout</h2>
+                <p>The most powerful two-dimensional layout system</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Grid Fundamentals</h3>
+                <p>CSS Grid is a two-dimensional layout system that handles both rows and columns.</p>
+                
+                <div class="example-image">
+                    <img src="https://css-tricks.com/wp-content/uploads/2018/11/grid.svg" alt="CSS Grid Diagram">
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Grid Concepts</h4>
+                    <ul>
+                        <li><strong>Grid container</strong>: Parent element with <code>display: grid</code></li>
+                        <li><strong>Grid items</strong>: Direct children of the grid container</li>
+                        <li><strong>Grid lines</strong>: The dividing lines that make up the grid</li>
+                        <li><strong>Grid tracks</strong>: The space between two adjacent grid lines (rows or columns)</li>
+                        <li><strong>Grid cells</strong>: A single unit of the grid</li>
+                        <li><strong>Grid areas</strong>: Rectangular space surrounded by four grid lines</li>
+                    </ul>
+                </div>
+                
+                <div class="code-example">
+                    <pre><code>/* Basic grid example */
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
+    grid-template-rows: 100px auto 100px; /* Three rows */
+    gap: 20px; /* Space between items */
+}
+
+/* Using grid areas */
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        "header header header"
+        "sidebar main aside"
+        "footer footer footer";
+    min-height: 100vh;
+}
+
+.header { grid-area: header; }
+.main   { grid-area: main; }
+.sidebar { grid-area: sidebar; }
+.footer { grid-area: footer; }</code></pre>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-th-large"></i> Grid Learning Path</h4>
+                    <p>To master CSS Grid:</p>
+                    <ol>
+                        <li>Start with simple grid definitions</li>
+                        <li>Practice with <code>grid-template-columns</code> and <code>grid-template-rows</code></li>
+                        <li>Learn about the <code>fr</code> unit</li>
+                        <li>Experiment with <code>gap</code> for spacing</li>
+                        <li>Try grid line placement</li>
+                        <li>Move to named grid areas</li>
+                        <li>Explore responsive techniques</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Grid Properties</h3>
+                <p>CSS Grid provides an extensive set of properties for creating complex layouts:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Container properties */
+.grid-container {
+    display: grid | inline-grid;
+    grid-template-columns: track-size | line-name track-size ...;
+    grid-template-rows: track-size | line-name track-size ...;
+    grid-template-areas: grid-area-names | none;
+    grid-column-gap: line-size;
+    grid-row-gap: line-size;
+    justify-items: start | end | center | stretch;
+    align-items: start | end | center | stretch;
+    place-items: align-items justify-items;
+    justify-content: start | end | center | stretch | space-around | space-between | space-evenly;
+    align-content: start | end | center | stretch | space-around | space-between | space-evenly;
+    grid-auto-columns: track-size;
+    grid-auto-rows: track-size;
+    grid-auto-flow: row | column | row dense | column dense;
+}
+
+/* Item properties */
+.grid-item {
+    grid-column: start-line / end-line | start-line / span value;
+    grid-row: start-line / end-line | start-line / span value;
+    grid-area: name | row-start / column-start / row-end / column-end;
+    justify-self: start | end | center | stretch;
+    align-self: start | end | center | stretch;
+    place-self: align-self justify-self;
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Fr Units:</strong> The <code>fr</code> unit represents a fraction of the available space in the grid container. For example, <code>grid-template-columns: 1fr 2fr</code> creates two columns where the second is twice as wide as the first.</p>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://css-tricks.com/wp-content/uploads/2018/11/grid-template-areas.svg" alt="Grid template areas example">
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="note-box">
+                    <h4><i class="fas fa-clipboard-list"></i> Grid Cheat Sheet</h4>
+                    <p>Quick reference for common Grid needs:</p>
+                    <ul>
+                        <li><strong>12-column grid</strong>: <code>grid-template-columns: repeat(12, 1fr);</code></li>
+                        <li><strong>Responsive grid</strong>: <code>grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));</code></li>
+                        <li><strong>Center items</strong>: <code>place-items: center;</code></li>
+                        <li><strong>Gap control</code>: <code>gap: 20px;</code> or <code>row-gap</code>/<code>column-gap</code></li>
+                        <li><strong>Explicit placement</strong>: <code>grid-column: 1 / 3;</code> or <code>grid-area: header;</code></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Practical Grid Examples</h3>
+                <p>CSS Grid excels at creating complex layouts with minimal code:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Responsive gallery */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+/* Magazine layout */
+.magazine {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+}
+
+.feature {
+    grid-column: 1 / -1;
+}
+
+.article {
+    grid-column: span 4;
+}
+
+.sidebar {
+    grid-column: span 3;
+}
+
+/* Holy Grail Layout */
+.holy-grail {
+    display: grid;
+    grid-template:
+        "header header header" auto
+        "nav content aside" 1fr
+        "footer footer footer" auto
+        / auto 1fr auto;
+    min-height: 100vh;
+}
+
+.header { grid-area: header; }
+.nav { grid-area: nav; }
+.content { grid-area: content; }
+.aside { grid-area: aside; }
+.footer { grid-area: footer; }</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Grid vs Flexbox:</strong> Use Grid for overall page layout (2D) and Flexbox for components within those sections (1D). They work beautifully together!</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-book"></i> Grid Learning Resources</h4>
+                    <p>To deepen your Grid knowledge:</p>
+                    <ul>
+                        <li><a href="https://cssgridgarden.com/" target="_blank">CSS Grid Garden</a> - Game to learn Grid</li>
+                        <li><a href="https://css-tricks.com/snippets/css/complete-guide-grid/" target="_blank">CSS Tricks Grid Guide</a></li>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout" target="_blank">MDN Grid Guide</a></li>
+                        <li>Practice by recreating magazine layouts, image galleries, and dashboards</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Responsive Design Section -->
+    <section class="content-section" id="responsive">
+        <div class="container">
+            <div class="section-title">
+                <h2>Responsive Design</h2>
+                <p>Create websites that work on any device</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Media Queries</h3>
+                <p>Media queries allow you to apply CSS styles depending on device characteristics:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Basic media query */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        display: none;
+    }
+}
+
+/* Common breakpoints */
+/* Small devices (phones) */
+@media (max-width: 576px) { ... }
+
+/* Medium devices (tablets) */
+@media (min-width: 576px) and (max-width: 992px) { ... }
+
+/* Large devices (desktops) */
+@media (min-width: 992px) { ... }
+
+/* Orientation */
+@media (orientation: portrait) { ... }
+@media (orientation: landscape) { ... }
+
+/* Pixel density */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+    /* High resolution styles */
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Mobile-First Approach:</strong> Start with styles for mobile devices (small screens) and then add media queries to adjust for larger screens. This is often more efficient than the opposite approach.</p>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://www.w3schools.com/css/responsive.gif" alt="Responsive Design Example">
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-mobile-alt"></i> Responsive Design Tips</h4>
+                    <p>For beginners implementing responsive design:</p>
+                    <ul>
+                        <li>Always include the viewport meta tag</li>
+                        <li>Start with mobile styles first</li>
+                        <li>Use relative units (rem, em, %) instead of pixels</li>
+                        <li>Test on actual devices when possible</li>
+                        <li>Use Chrome DevTools device toolbar for testing</li>
+                        <li>Consider using CSS Grid and Flexbox for layouts</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Responsive Units</h3>
+                <p>CSS provides several units that work well for responsive design:</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Relative Units</h4>
+                    <ul>
+                        <li><strong>%</strong>: Percentage of parent element</li>
+                        <li><strong>vw/vh</strong>: Percentage of viewport width/height</li>
+                        <li><strong>rem</strong>: Relative to root element's font-size</li>
+                        <li><strong>em</strong>: Relative to current element's font-size</li>
+                        <li><strong>ch</strong>: Width of the "0" character</li>
+                        <li><strong>fr</strong>: Fractional unit (Grid only)</li>
+                    </ul>
+                </div>
+                
+                <div class="code-example">
+                    <pre><code>/* Responsive typography */
+html {
+    font-size: 16px;
+}
+
+h1 {
+    font-size: 2rem; /* 32px */
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+    /* h1 now equals 28px */
+}
+
+/* Fluid spacing */
+.container {
+    padding: 2vw;
+}
+
+/* Responsive grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}</code></pre>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Beginner Tip</h4>
+                    <p>Use <code>rem</code> units for font sizes and spacing to create a consistent, scalable layout. Reserve <code>px</code> for borders and other cases where you need precise control.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="note-box">
+                    <h4><i class="fas fa-ruler"></i> Unit Selection Guide</h4>
+                    <p>When to use which units:</p>
+                    <ul>
+                        <li><strong>rem</strong>: Font sizes, padding, margin (for scalability)</li>
+                        <li><strong>em</strong>: When you need sizing relative to parent font size</li>
+                        <li><strong>%</strong>: Widths, heights relative to parent</li>
+                        <li><strong>vw/vh</strong>: Full-viewport elements (hero sections)</li>
+                        <li><strong>px</strong>: Borders, shadows, precise positioning</li>
+                        <li><strong>fr</strong>: Grid layouts</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Responsive Images</h3>
+                <p>Ensure images adapt to different screen sizes and resolutions:</p>
+                
+                <div class="code-example">
+                    <pre><code>&lt;!-- Responsive image --&gt;
+&lt;img src="image.jpg" alt="Description" 
+     srcset="image-small.jpg 480w,
+             image-medium.jpg 768w,
+             image-large.jpg 1200w"
+     sizes="(max-width: 600px) 480px,
+            (max-width: 1000px) 768px,
+            1200px"&gt;
+
+&lt;!-- Art direction --&gt;
+&lt;picture&gt;
+    &lt;source media="(max-width: 768px)" srcset="mobile.jpg"&gt;
+    &lt;source media="(min-width: 769px)" srcset="desktop.jpg"&gt;
+    &lt;img src="desktop.jpg" alt="Description"&gt;
+&lt;/picture&gt;
+
+/* CSS solution */
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+}</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Performance Matters:</strong> Always optimize images for the web. Use modern formats like WebP, compress images, and serve appropriately sized versions for each device.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-images"></i> Responsive Images Checklist</h4>
+                    <p>For beginners implementing responsive images:</p>
+                    <ol>
+                        <li>Always include the <code>alt</code> attribute</li>
+                        <li>Use <code>max-width: 100%</code> for simple responsive images</li>
+                        <li>Consider <code>srcset</code> for resolution switching</li>
+                        <li>Use <code>&lt;picture&gt;</code> for art direction</li>
+                        <li>Compress images (aim for <100KB where possible)</li>
+                        <li>Lazy load images below the fold</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transitions and Animations Section -->
+    <section class="content-section" id="animations">
+        <div class="container">
+            <div class="section-title">
+                <h2>Transitions & Animations</h2>
+                <p>Bring your interfaces to life with motion</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>CSS Transitions</h3>
+                <p>Transitions allow you to smoothly animate property changes over a specified duration:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Basic transition */
+.button {
+    background-color: #2563eb;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #1e40af;
+}
+
+/* Multiple properties */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Transition shorthand */
+.element {
+    transition: property duration timing-function delay;
+    
+    /* Example */
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) 0.1s;
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Transition Properties:</strong> Not all CSS properties can be transitioned. Generally, properties that accept numeric values (colors, sizes, positions) can be animated, while properties like <code>display</code> cannot.</p>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://css-tricks.com/wp-content/uploads/2018/07/css-transitions-timing-functions.png" alt="CSS transition timing functions">
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-exchange-alt"></i> Transition Practice</h4>
+                    <p>To practice CSS transitions:</p>
+                    <ol>
+                        <li>Create a button with hover effects</li>
+                        <li>Add transitions to color changes</li>
+                        <li>Experiment with different timing functions</li>
+                        <li>Try transitioning multiple properties</li>
+                        <li>Add delays to create sequenced animations</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>CSS Animations</h3>
+                <p>For more complex animations, CSS provides the <code>@keyframes</code> rule:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Keyframes animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Applying animation */
+.slide-in {
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Animation shorthand */
+.element {
+    animation: name duration timing-function delay iteration-count direction fill-mode;
+    
+    /* Example */
+    animation: pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Animation Properties</h4>
+                    <ul>
+                        <li><strong>animation-name</strong>: The @keyframes name</li>
+                        <li><strong>animation-duration</strong>: How long the animation lasts</li>
+                        <li><strong>animation-timing-function</strong>: Speed curve (ease, linear, etc.)</li>
+                        <li><strong>animation-delay</strong>: Time before animation starts</li>
+                        <li><strong>animation-iteration-count</strong>: How many times to play (number or infinite)</li>
+                        <li><strong>animation-direction</strong>: normal, reverse, alternate, alternate-reverse</li>
+                        <li><strong>animation-fill-mode</strong>: What values apply before/after animation</li>
+                        <li><strong>animation-play-state</strong>: running or paused</li>
+                    </ul>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="note-box">
+                    <h4><i class="fas fa-film"></i> Animation Ideas for Beginners</h4>
+                    <p>Simple animations to practice:</p>
+                    <ul>
+                        <li>Fade-in effects for page elements</li>
+                        <li>Loading spinners</li>
+                        <li>Hover animations for buttons/cards</li>
+                        <li>Slide-in menus</li>
+                        <li>Attention-grabbing call-to-action elements</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Performance Considerations</h3>
+                <p>Animations can impact performance if not implemented carefully:</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Best Practices</h4>
+                    <ul>
+                        <li><strong>Use transform and opacity</strong>: These properties can be hardware-accelerated</li>
+                        <li><strong>Avoid animating width/height</strong>: Use transform: scale() instead</li>
+                        <li><strong>Limit simultaneous animations</strong>: Too many animations can cause jank</li>
+                        <li><strong>Use will-change</strong>: Hint to browser which properties will change</li>
+                        <li><strong>Test on mobile</strong>: Mobile devices have less processing power</li>
+                    </ul>
+                </div>
+                
+                <div class="code-example">
+                    <pre><code>/* Performant animations */
+.performant-box {
+    transform: translateZ(0); /* Trigger hardware acceleration */
+    will-change: transform, opacity;
+}
+
+/* Bad practice - may cause layout recalculations */
+.slow-animation {
+    animation: changeWidth 2s infinite;
+}
+
+@keyframes changeWidth {
+    from { width: 100px; }
+    to { width: 200px; }
+}</code></pre>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Accessibility:</strong> Some users prefer reduced motion due to vestibular disorders. Always respect the <code>prefers-reduced-motion</code> media query and provide alternatives.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-tachometer-alt"></i> Animation Performance Tips</h4>
+                    <p>For beginners creating animations:</p>
+                    <ul>
+                        <li>Start simple - don't over-animate</li>
+                        <li>Test on lower-powered devices</li>
+                        <li>Use the Chrome Performance tab to check for jank</li>
+                        <li>Prefer transforms/opacity over layout-changing properties</li>
+                        <li>Consider using <code>will-change</code> for complex animations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CSS Variables Section -->
+    <section class="content-section" id="variables">
+        <div class="container">
+            <div class="section-title">
+                <h2>CSS Variables</h2>
+                <p>Custom properties for more maintainable stylesheets</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Custom Properties Basics</h3>
+                <p>CSS variables (custom properties) allow you to store values for reuse throughout your stylesheet:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Defining variables */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #7c3aed;
+    --spacing-unit: 1rem;
+    --max-width: 1200px;
+    --box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Using variables */
+.button {
+    background-color: var(--primary-color);
+    padding: var(--spacing-unit) calc(var(--spacing-unit) * 2);
+}
+
+.card {
+    max-width: var(--max-width);
+    box-shadow: var(--box-shadow);
+}
+
+/* Fallback values */
+.element {
+    color: var(--undefined-var, #000); /* Falls back to #000 */
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Naming Convention:</strong> Use descriptive names for variables. Common patterns include <code>--color-primary</code>, <code>--spacing-medium</code>, <code>--font-heading</code>. Group related variables together in your <code>:root</code> declaration.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-variable"></i> CSS Variables Practice</h4>
+                    <p>To get started with CSS variables:</p>
+                    <ol>
+                        <li>Identify values you reuse frequently (colors, spacing)</li>
+                        <li>Define them as variables in <code>:root</code></li>
+                        <li>Replace hardcoded values with variables</li>
+                        <li>Experiment with changing values in one place</li>
+                        <li>Try using variables for calculations</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Dynamic Theming</h3>
+                <p>CSS variables can be updated with JavaScript, enabling dynamic theming:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* CSS */
+:root {
+    --bg-color: #fff;
+    --text-color: #333;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-mode {
+    --bg-color: #1a202c;
+    --text-color: #f7fafc;
+}
+
+/* JavaScript */
+const toggle = document.querySelector('.theme-toggle');
+toggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+});</code></pre>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://miro.medium.com/max/1400/1*_1VBZfHLz3YVW2z8x2H9GQ.gif" alt="Dark mode toggle with CSS variables">
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Browser Support:</strong> CSS variables are supported in all modern browsers. For Internet Explorer, you'll need to provide fallback values or use a polyfill.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-palette"></i> Theming Tips</h4>
+                    <p>When implementing themes with CSS variables:</p>
+                    <ul>
+                        <li>Define all theme-related values as variables</li>
+                        <li>Use semantic names (--text-color, --bg-color)</li>
+                        <li>Provide proper contrast in all themes</li>
+                        <li>Consider system preference (<code>prefers-color-scheme</code>)</li>
+                        <li>Store user preference in localStorage</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Advanced Techniques</h3>
+                <p>CSS variables can be used for more than just simple value storage:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Calculations */
+:root {
+    --base-size: 16px;
+    --header-size: calc(var(--base-size) * 2.5);
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    :root {
+        --base-size: 14px;
+    }
+}
+
+/* Component-scoped variables */
+.alert {
+    --alert-bg: #f8d7da;
+    --alert-color: #721c24;
+    background-color: var(--alert-bg);
+    color: var(--alert-color);
+}
+
+.alert.success {
+    --alert-bg: #d4edda;
+    --alert-color: #155724;
+}
+
+/* Manipulating with JavaScript */
+element.style.setProperty('--primary-color', newColor);</code></pre>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Beginner Tip</h4>
+                    <p>Start by converting your most reused values (colors, spacing, font sizes) into variables. As you become comfortable, explore more advanced uses like theming and dynamic updates.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="note-box">
+                    <h4><i class="fas fa-magic"></i> Creative Uses of CSS Variables</h4>
+                    <p>Beyond basic theming, CSS variables can be used for:</p>
+                    <ul>
+                        <li>Responsive typography scaling</li>
+                        <li>Interactive components (sliders, color pickers)</li>
+                        <li>Animation control (timing, distances)</li>
+                        <li>Theme variations (light/dark/high contrast)</li>
+                        <li>Dynamic grid layouts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Layout Section -->
+    <section class="content-section" id="advanced-layout">
+        <div class="container">
+            <div class="section-title">
+                <h2>Advanced Layout Techniques</h2>
+                <p>Modern CSS features for complex layouts</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Multi-column Layout</h3>
+                <p>The CSS Multi-column Layout module allows content to flow between columns:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Basic multi-column layout */
+.article {
+    column-count: 3;
+    column-gap: 2em;
+    column-rule: 1px solid #ddd;
+}
+
+/* Controlling column breaks */
+h2 {
+    column-span: all; /* Span all columns */
+    break-after: avoid; /* Avoid breaking after */
+}
+
+/* Responsive columns */
+@media (max-width: 768px) {
+    .article {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 480px) {
+    .article {
+        column-count: 1;
+    }
+}</code></pre>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://www.w3.org/TR/css-multicol-1/multicol.png" alt="Multi-column layout example">
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Use Cases:</strong> Multi-column is perfect for newspaper-style layouts, long lists, or any content that benefits from a vertical reading flow. It's especially useful for text-heavy pages.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-columns"></i> Multi-column Tips</h4>
+                    <p>When using multi-column layout:</p>
+                    <ul>
+                        <li>Consider readability - don't make columns too narrow</li>
+                        <li>Use <code>column-gap</code> for proper spacing</li>
+                        <li>Control breaks with <code>break-inside</code> and <code>break-after</code></li>
+                        <li>Use <code>column-span</code> for elements that should span all columns</li>
+                        <li>Test on mobile - you may need to reduce columns</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>CSS Shapes</h3>
+                <p>The CSS Shapes module allows text to flow around custom shapes:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Circle shape */
+.circle {
+    width: 200px;
+    height: 200px;
+    background-color: #2563eb;
+    float: left;
+    shape-outside: circle(50%);
+    clip-path: circle(50%);
+    margin-right: 20px;
+}
+
+/* Polygon shape */
+.polygon {
+    width: 200px;
+    height: 200px;
+    background-color: #7c3aed;
+    float: right;
+    shape-outside: polygon(0 0, 100% 0, 100% 100%, 0 50%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 50%);
+    margin-left: 20px;
+}</code></pre>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://developer.mozilla.org/en-US/docs/Web/CSS/shape-outside/shapes-overview.png" alt="CSS Shapes examples">
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Browser Support:</strong> CSS Shapes work best when combined with floats. For full support, check compatibility as some newer features might not be available in all browsers.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-shapes"></i> Shapes Learning Path</h4>
+                    <p>To get started with CSS Shapes:</p>
+                    <ol>
+                        <li>Start with basic shapes (circle, ellipse)</li>
+                        <li>Experiment with polygon shapes</li>
+                        <li>Combine with <code>float</code> for text wrapping</li>
+                        <li>Use <code>clip-path</code> to visually match the shape</li>
+                        <li>Try using images with alpha channels as shapes</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>CSS Subgrid</h3>
+                <p>Subgrid allows grid items to inherit the grid of their parent, enabling more complex layouts:</p>
+                
+                <div class="code-example">
+                    <pre><code>/* Parent grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+}
+
+/* Child with subgrid */
+.grid-item {
+    display: grid;
+    grid-column: span 6;
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+}
+
+/* Practical example */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 15px;
+}
+
+.card-header, .card-footer {
+    grid-column: 1 / -1;
+}</code></pre>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Browser Support:</strong> Subgrid is relatively new (as of 2023) and may not be supported in all browsers. Always check current compatibility and provide fallbacks where needed.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Beginner Tip</h4>
+                    <p>Start with mastering basic Grid before diving into Subgrid. The concepts build on each other, and you'll better appreciate Subgrid's benefits after working with regular Grid.</p>
+                </div>
+                
+                <!-- New Beginner-Friendly Content -->
+                <div class="note-box">
+                    <h4><i class="fas fa-project-diagram"></i> When to Use Subgrid</h4>
+                    <p>Subgrid is particularly useful for:</p>
+                    <ul>
+                        <li>Card layouts with aligned content</li>
+                        <li>Forms with complex layouts</li>
+                        <li>Dashboards with nested components</li>
+                        <li>Any design where child elements need to align with parent grid</li>
+                    </ul>
+                    <p>For simpler layouts, regular Grid might be sufficient.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Links Section -->
+    <section class="youtube-links">
+        <div class="container">
+            <h2>Video Tutorials on YouTube</h2>
+            <div class="youtube-grid">
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=1Rs2ND1ryYc" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/1Rs2ND1ryYc/maxresdefault.jpg" alt="CSS Crash Course">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>CSS Crash Course</h3>
+                            <p>Learn CSS in 1.5 hours</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=jx5jmI0UlXU" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/jx5jmI0UlXU/maxresdefault.jpg" alt="CSS Grid Tutorial">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>CSS Grid Tutorial</h3>
+                            <p>Master Grid in 30 minutes</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=YszONjKpgg4" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/YszONjKpgg4/maxresdefault.jpg" alt="Flexbox Tutorial">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>Flexbox Tutorial</h3>
+                            <p>Learn Flexbox in 20 minutes</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=fqm8fQgsuko" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/fqm8fQgsuko/maxresdefault.jpg" alt="CSS Animations">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>CSS Animations</h3>
+                            <p>Create stunning animations</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">CSS Mastery</span>
+                    </div>
+                    <p>Master the art of web styling with our comprehensive CSS resources and tutorials.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Learn CSS</h3>
+                    <ul>
+                        <li><a href="#what-is-css">CSS Basics</a></li>
+                        <li><a href="#css-basics">Properties</a></li>
+                        <li><a href="#box-model">Box Model</a></li>
+                        <li><a href="#flexbox">Flexbox</a></li>
+                        <li><a href="#css-grid">CSS Grid</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">MDN Reference</a></li>
+                        <li><a href="https://css-tricks.com/" target="_blank">CSS Tricks</a></li>
+                        <li><a href="https://web.dev/learn/css/" target="_blank">Web.dev</a></li>
+                        <li><a href="https://www.w3.org/Style/CSS/" target="_blank">W3C CSS</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="#">Forums</a></li>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">Code Challenges</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Beginner's Guide. All rights reserved.</p>
+                <p class="current-date" id="currentDate"></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.querySelector('i').classList.toggle('fa-bars');
+                this.querySelector('i').classList.toggle('fa-times');
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Update current date
+            function updateCurrentDate() {
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const currentDate = new Date().toLocaleDateString('en-US', options);
+                document.getElementById('currentDate').textContent = currentDate;
+            }
+            updateCurrentDate();
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            menuToggle.querySelector('i').classList.remove('fa-times');
+                            menuToggle.querySelector('i').classList.add('fa-bars');
+                        }
+                    }
+                });
+            });
+            
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.content-card, .section-title, .youtube-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.content-card, .section-title, .youtube-card');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+        });
+    </script>
+</body>
+</html>

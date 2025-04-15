@@ -1,0 +1,2332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C# Fundamentals | Beginner's Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary: #68217A;
+            --primary-light: #8a3da1;
+            --secondary: #0078D7;
+            --accent: #ec4899;
+            --light: #f8fafc;
+            --dark: #201F1E;
+            --text: #323130;
+            --gray: #8A8886;
+            --white: #ffffff;
+            --black: #000000;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqJOfx2yBmNNuN710PElRGv-CXaQW_XjCWRw&s');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px 15px;
+            border-radius: 30px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav {
+            width: 100%;
+            order: 1;
+            margin-top: 15px;
+            display: none;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        nav.active {
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: block;
+            cursor: pointer;
+            font-size: 1.5rem;
+            order: 1;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px 15px;
+            border-radius: 30px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://learn.microsoft.com/en-us/media/learn/csharp/csharp-fundamentals.svg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Content Section */
+        .content-section {
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .content-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .content-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .content-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .code-example {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Consolas', monospace;
+            border-left: 4px solid var(--primary);
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: rgba(104, 33, 122, 0.1);
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(104, 33, 122, 0.2);
+        }
+
+        .example-image {
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .tip-box {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .note-box {
+            background-color: rgba(104, 33, 122, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .learning-objectives {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(104, 33, 122, 0.05);
+            border-radius: 8px;
+        }
+
+        .learning-objectives h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .learning-objectives ul {
+            margin-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .learning-objectives li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .prerequisites {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(245, 158, 11, 0.05);
+            border-radius: 8px;
+        }
+
+        .prerequisites h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--warning);
+        }
+
+        .prerequisites p {
+            margin-bottom: 5px;
+        }
+
+        .beginner-tips {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(236, 72, 153, 0.05);
+            border-radius: 8px;
+        }
+
+        .beginner-tips h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .beginner-tips p {
+            margin-bottom: 5px;
+        }
+
+        .tutorial-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-link:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .tutorial-link i {
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-link:hover i {
+            margin-left: 10px;
+        }
+
+        /* YouTube Links Section */
+        .youtube-links {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .youtube-links::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://learn.microsoft.com/en-us/media/learn/csharp/csharp-fundamentals.svg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .youtube-links h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .youtube-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .youtube-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .youtube-thumbnail {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .youtube-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .youtube-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            font-size: 3rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+        }
+
+        .youtube-info {
+            padding: 15px;
+            color: var(--dark);
+        }
+
+        .youtube-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .youtube-info p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 50px 0 25px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent));
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode header {
+            background-color: #1e293b;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode nav ul li a {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .content-card {
+            background-color: #1e293b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .content-card h3,
+        body.dark-mode .section-title h2 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .code-example {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border-left: 4px solid var(--accent);
+        }
+
+        body.dark-mode footer {
+            background-color: #020617;
+        }
+
+        body.dark-mode .footer-links ul li a:hover {
+            color: var(--primary-light);
+        }
+
+        body.dark-mode .learning-objectives {
+            background-color: rgba(104, 33, 122, 0.1);
+        }
+
+        body.dark-mode .prerequisites {
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        body.dark-mode .beginner-tips {
+            background-color: rgba(236, 72, 153, 0.1);
+        }
+
+        body.dark-mode .youtube-info {
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .youtube-info p {
+            color: #94a3b8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (min-width: 576px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .content-card {
+                padding: 30px;
+            }
+            
+            .youtube-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            nav {
+                width: auto;
+                order: 0;
+                margin-top: 0;
+                display: block;
+                background-color: transparent;
+                padding: 0;
+            }
+            
+            nav ul {
+                flex-direction: row;
+                gap: 25px;
+            }
+            
+            nav ul li a {
+                padding: 5px 0;
+                display: inline-block;
+            }
+            
+            .menu-toggle {
+                display: none;
+            }
+            
+            .hero {
+                padding: 100px 0;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+            
+            .content-card {
+                padding: 40px;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) {
+            section {
+                padding: 80px 0;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .youtube-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjU2M2ViIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwWm0tMzItMzEyaDMydjEwNGgzMnYtMTA0aDMydjE2MGgtOTZ2LTE2MFoiLz48L3N2Zz4=" alt="Logo" class="logo-img">
+                <span class="logo-text">Beginner's Guide</span>
+            </div>
+            <nav id="navMenu">
+                <ul id="navMenu">
+                    <li><a href="Index.html">Home</a></li> 
+                    <li><a href="IDEs.html">IDEs</a></li>
+                    <li><a href="Tutorials.html">Tutorials</a></li>  
+                    <li><a href="Articles.html">Articles</a></li>
+                    <li><a href="About.html">About</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Master C# Programming</h1>
+            <p>Learn one of the most versatile programming languages from the ground up - perfect for beginners and aspiring developers</p>
+            <a href="#what-is-csharp" class="btn">Begin Learning</a>
+        </div>
+    </section>
+
+    <!-- What is C# Section -->
+    <section class="content-section" id="what-is-csharp">
+        <div class="container">
+            <div class="section-title">
+                <h2>What is C#?</h2>
+                <p>The powerful, modern programming language from Microsoft</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>The C# Programming Language</h3>
+                <p><strong>C#</strong> (pronounced "C Sharp") is a modern, object-oriented programming language developed by Microsoft in 2000 as part of its .NET initiative. It was created by Anders Hejlsberg and his team with the goal of combining the computing power of C++ with the programming ease of Visual Basic.</p>
+                
+                <div class="example-image">
+                    <img src="https://learn.microsoft.com/en-us/media/learn/csharp/csharp-fundamentals.svg" alt="C# Programming">
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Key Features of C#</h4>
+                    <ul>
+                        <li><strong>Object-Oriented:</strong> Pure OOP language with support for encapsulation, inheritance, and polymorphism</li>
+                        <li><strong>Type-Safe:</strong> Prevents unsafe type conversions and provides memory safety through garbage collection</li>
+                        <li><strong>Modern Language Features:</strong> Includes properties, LINQ, async/await, lambda expressions, and more</li>
+                        <li><strong>Cross-Platform:</strong> With .NET Core (now .NET 5+), C# can run on Windows, Linux, and macOS</li>
+                        <li><strong>Rich Ecosystem:</strong> Extensive standard library and NuGet package ecosystem</li>
+                        <li><strong>Versatile:</strong> Used for web, desktop, mobile, cloud, gaming, IoT, and AI applications</li>
+                        <li><strong>Strongly Typed:</strong> Variables must be declared with specific types</li>
+                        <li><strong>Automatic Memory Management:</strong> Garbage collector handles memory allocation and deallocation</li>
+                    </ul>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Understanding the .NET Ecosystem</h3>
+                    <p>C# is part of the larger .NET platform which consists of several key components:</p>
+                    
+                    <div class="learning-objectives">
+                        <h4><i class="fas fa-cogs"></i> .NET Platform Components</h4>
+                        <ul>
+                            <li><strong>.NET SDK:</strong> Contains tools for developing .NET applications (compiler, CLI tools, etc.)</li>
+                            <li><strong>.NET Runtime:</strong> Needed to run .NET applications (includes CLR and core libraries)</li>
+                            <li><strong>Common Language Runtime (CLR):</strong> Executes C# intermediate language (IL) code</li>
+                            <li><strong>Base Class Library (BCL):</strong> Extensive collection of ready-made classes for common tasks</li>
+                            <li><strong>ASP.NET Core:</strong> Framework for building web applications</li>
+                            <li><strong>Entity Framework:</strong> Object-Relational Mapping (ORM) for database access</li>
+                            <li><strong>NuGet:</strong> Package manager for .NET libraries</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-image">
+                        <img src="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/media/net-core-positioning.png" alt=".NET Ecosystem">
+                    </div>
+                    
+                    <div class="note-box">
+                        <p><strong>How C# Works:</strong> C# source code (.cs files) is compiled by the Roslyn compiler into intermediate language (IL) code. The CLR then compiles this IL code into native machine code at runtime using Just-In-Time (JIT) compilation.</p>
+                    </div>
+                </div>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Simple C# program
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Hello, C#!");
+        
+        // Variables
+        string name = "Alice";
+        int age = 30;
+        
+        // String interpolation
+        Console.WriteLine($"My name is {name} and I'm {age} years old.");
+    }
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Did you know?</strong> C# was originally called "Cool" (C-like Object Oriented Language) during development. The name was changed to C# before release, with the # symbol representing four plus signs (++++) to indicate it was an evolution beyond C++.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Absolute Beginner's Guide</h4>
+                    <p>If you're completely new to C#, here's what you need to know to get started:</p>
+                    <ol>
+                        <li><strong>C# is versatile:</strong> Used in web apps, desktop apps, mobile apps (Xamarin), games (Unity), and more</li>
+                        <li><strong>You'll need the .NET SDK:</strong> To compile and run C# programs</li>
+                        <li><strong>It's strongly typed:</strong> You must declare variable types</li>
+                        <li><strong>Object-oriented:</strong> Everything in C# is associated with classes and objects</li>
+                        <li><strong>Memory management:</strong> C# handles memory automatically with garbage collection</li>
+                        <li><strong>Case sensitive:</strong> 'MyVariable' and 'myvariable' are different</li>
+                        <li><strong>Main method:</strong> Execution starts from the Main() method</li>
+                    </ol>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>First Steps Exercise:</strong> Try installing the .NET SDK and writing the HelloWorld program above. Then modify it to print your name. This simple exercise will help you understand the basic structure of a C# program.</p>
+                </div>
+                
+                <a href="#getting-started" class="tutorial-link">Continue to Getting Started <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section class="content-section" id="getting-started">
+        <div class="container">
+            <div class="section-title">
+                <h2>Getting Started with C#</h2>
+                <p>Set up your development environment and write your first program</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Installing .NET SDK</h3>
+                <p>To start programming in C#, you'll need to install the .NET SDK which includes the runtime and developer tools.</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Installation Steps</h4>
+                    <ol>
+                        <li>Download the latest .NET SDK from <a href="https://dotnet.microsoft.com/download" target="_blank">Microsoft's website</a></li>
+                        <li>Run the installer for your operating system</li>
+                        <li>Verify installation by running <code>dotnet --version</code> in your terminal</li>
+                        <li>Optionally install Visual Studio or VS Code for a better development experience</li>
+                    </ol>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://learn.microsoft.com/en-us/dotnet/core/install/media/windows-install-32-64-bit.png" alt=".NET SDK Installation">
+                </div>
+                
+                <div class="prerequisites">
+                    <h4><i class="fas fa-info-circle"></i> SDK vs Runtime</h4>
+                    <p>The <strong>.NET SDK</strong> is for developers (contains compiler and tools) while the <strong>.NET Runtime</strong> is for running .NET applications. When installing for development, always choose the SDK.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Beginner Tip</h4>
+                    <p>If you're using Windows, Visual Studio provides the most complete C# development experience. On macOS/Linux or for a lighter option, use VS Code with the C# extension.</p>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Choosing an IDE</h3>
+                <p>While you can write C# in any text editor, an Integrated Development Environment (IDE) provides powerful tools to make development easier.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Popular C# IDEs
+1. Visual Studio (Recommended for Windows)
+2. Visual Studio Code (Cross-platform)
+3. JetBrains Rider (Cross-platform)
+4. MonoDevelop (Linux/macOS)</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Recommendation:</strong> For beginners, we recommend starting with Visual Studio Community Edition (Windows) or VS Code with C# extension (cross-platform). Both are free and provide excellent code completion and debugging.</p>
+                </div>
+                
+                <div class="example-image">
+                    <img src="https://visualstudio.microsoft.com/wp-content/uploads/2021/10/Product-Icon.svg" alt="Visual Studio">
+                </div>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-laptop-code"></i> IDE Features to Look For</h4>
+                    <p>When choosing an IDE, consider these helpful features:</p>
+                    <ul>
+                        <li>Code completion and suggestions (IntelliSense)</li>
+                        <li>Debugging tools with breakpoints</li>
+                        <li>Built-in terminal</li>
+                        <li>Version control integration</li>
+                        <li>Extension/plugin ecosystem</li>
+                        <li>Refactoring tools</li>
+                        <li>Built-in documentation</li>
+                        <li>Project management tools</li>
+                        <li>NuGet package manager</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Your First C# Program</h3>
+                <p>Let's create the traditional "Hello World" program to understand C#'s basic structure.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Hello, World!");
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Program Breakdown</h4>
+                    <ul>
+                        <li><code>using System;</code>: Imports the System namespace for basic functionality</li>
+                        <li><code>class Program</code>: Defines a class named Program</li>
+                        <li><code>static void Main(string[] args)</code>: The Main method - program entry point</li>
+                        <li><code>Console.WriteLine()</code>: Prints output to the console</li>
+                        <li><code>//</code>: Single-line comment</li>
+                        <li><code>/* */</code>: Multi-line comment</li>
+                        <li><code>///</code>: XML documentation comment</li>
+                    </ul>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Important:</strong> The Main method must be static and is case-sensitive. In .NET 6+ with top-level statements, the Main method is generated automatically.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-terminal"></i> Compiling and Running</h4>
+                    <p>To compile and run your program:</p>
+                    <ol>
+                        <li>Save the file as Program.cs</li>
+                        <li>Open terminal in the file's directory</li>
+                        <li>Run: <code>dotnet run</code> (for .NET projects)</li>
+                        <li>Or compile with: <code>csc Program.cs</code> (Windows only, using CSC compiler)</li>
+                    </ol>
+                    <p>You should see "Hello, World!" printed in your terminal.</p>
+                </div>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-book"></i> Common Beginner Mistakes</h4>
+                    <ul>
+                        <li>Forgetting that C# is case-sensitive</li>
+                        <li>Missing semicolons at line endings</li>
+                        <li>Not properly closing blocks with }</li>
+                        <li>Forgetting to declare variable types</li>
+                        <li>Using the wrong type of quotes (should be double quotes for Strings)</li>
+                        <li>Mixing up == (equality) and = (assignment)</li>
+                    </ul>
+                </div>
+                
+                <a href="#syntax-basics" class="tutorial-link">Continue to C# Syntax Basics <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Syntax Basics Section -->
+    <section class="content-section" id="syntax-basics">
+        <div class="container">
+            <div class="section-title">
+                <h2>C# Syntax Basics</h2>
+                <p>Learn the fundamental building blocks of C# programming</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Variables and Data Types</h3>
+                <p>C# is a statically-typed language, meaning variables must be declared with a specific type.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Value types (stored on stack)
+byte age = 30;                  // 8-bit unsigned integer (0 to 255)
+short year = 2023;              // 16-bit integer (-32,768 to 32,767)
+int population = 8000000;       // 32-bit integer (-2^31 to 2^31-1)
+long globalPopulation = 7800000000L; // 64-bit integer (add L suffix)
+float price = 19.99f;           // 32-bit floating point (add f suffix)
+double pi = 3.1415926535;       // 64-bit floating point (default for decimals)
+decimal money = 100.50m;        // 128-bit precise decimal (add m suffix)
+char grade = 'A';               // Single 16-bit Unicode character
+bool isCSharpFun = true;        // true or false
+
+// Reference types (stored on heap)
+string name = "C# Beginner";    // Sequence of characters
+int[] numbers = {1, 2, 3};      // Array of integers
+object obj = new object();      // Any C# object
+
+// Constants (readonly variables)
+const double PI = 3.14159;
+
+// Type inference with var
+var message = "Hello";          // Compiler infers string
+var number = 42;                // Compiler infers int
+
+// Nullable types (value types that can be null)
+int? nullableInt = null;</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Naming Conventions:</strong> Use camelCase for variables (myVariableName), PascalCase for classes and methods (MyClassName), and UPPER_CASE for constants (MAX_VALUE). Choose descriptive names that indicate the variable's purpose.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Beginner Tip</h4>
+                    <p>Start with <code>int</code> for whole numbers, <code>double</code> for decimal numbers, and <code>string</code> for text unless you have specific requirements. These are the most commonly used types in C#.</p>
+                </div>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-code"></i> Type Casting</h4>
+                    <p>C# supports both implicit (safe) and explicit (manual) type conversions:</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Implicit conversion (safe, no data loss)
+int myInt = 9;
+double myDouble = myInt;  // Automatic casting: int to double
+
+// Explicit conversion (manual, potential data loss)
+double myDouble = 9.78;
+int myInt = (int)myDouble; // Manual casting: double to int
+
+// Conversion methods
+string strNumber = "123";
+int parsedInt = int.Parse(strNumber); // String to int
+string intString = 123.ToString();    // Int to string</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Operators</h3>
+                <p>C# provides various operators for performing operations on variables and values.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Arithmetic operators
+int sum = 10 + 20;      // Addition
+int difference = 20 - 10; // Subtraction
+int product = 10 * 20;  // Multiplication
+int quotient = 20 / 10; // Division
+int remainder = 11 % 3; // Modulus (remainder)
+
+// Assignment operators
+int x = 10;
+x += 5;  // Equivalent to x = x + 5
+x -= 3;  // Equivalent to x = x - 3
+x *= 2;  // Equivalent to x = x * 2
+x /= 4;  // Equivalent to x = x / 4
+
+// Comparison operators
+bool isEqual = (10 == 20);    // Equal to
+bool isNotEqual = (10 != 20); // Not equal to
+bool isGreater = (10 > 20);   // Greater than
+bool isLess = (10 < 20);      // Less than
+bool isGreaterOrEqual = (10 >= 20);
+
+// Logical operators
+bool andResult = (true && false); // Logical AND
+bool orResult = (true || false);  // Logical OR
+bool notResult = !true;           // Logical NOT
+
+// Ternary operator
+int time = 20;
+string result = (time < 18) ? "Good day." : "Good evening.";
+
+// Null-coalescing operator
+string name = null;
+string displayName = name ?? "Guest"; // If name is null, use "Guest"</code></pre>
+                </div>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-calculator"></i> Operator Precedence</h4>
+                    <p>C# evaluates expressions according to operator precedence (order of operations):</p>
+                    <ol>
+                        <li>Parentheses <code>()</code></li>
+                        <li>Unary operators <code>++ -- !</code></li>
+                        <li>Multiplicative <code>* / %</code></li>
+                        <li>Additive <code>+ -</code></li>
+                        <li>Relational <code>< > <= >=</code></li>
+                        <li>Equality <code>== !=</code></li>
+                        <li>Logical AND <code>&&</code></li>
+                        <li>Logical OR <code>||</code></li>
+                        <li>Assignment <code>= += -= etc.</code></li>
+                    </ol>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Common Operator Mistakes</h4>
+                    <ul>
+                        <li>Using <code>=</code> (assignment) instead of <code>==</code> (equality)</li>
+                        <li>Forgetting that integer division truncates decimals</li>
+                        <li>Not understanding operator precedence</li>
+                        <li>Using <code>&</code> (bitwise AND) instead of <code>&&</code> (logical AND)</li>
+                        <li>Confusing prefix (<code>++x</code>) and postfix (<code>x++</code>) increment</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Control Flow Statements</h3>
+                <p>Control flow statements allow you to control the execution flow of your program.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// If-else statement
+int age = 18;
+if (age < 13) {
+    Console.WriteLine("Child");
+} else if (age < 20) {
+    Console.WriteLine("Teenager");
+} else {
+    Console.WriteLine("Adult");
+}
+
+// Switch statement (C# 8+ enhanced)
+string day = "Monday";
+switch (day) {
+    case "Monday":
+        Console.WriteLine("Start of work week");
+        break;
+    case "Friday":
+        Console.WriteLine("End of work week");
+        break;
+    default:
+        Console.WriteLine("Midweek day");
+        break;
+}
+
+// Switch expression (C# 8+)
+string message = day switch {
+    "Monday" => "Start of work week",
+    "Friday" => "End of work week",
+    _ => "Midweek day"
+};
+
+// Traditional for loop
+for (int i = 0; i < 5; i++) {
+    Console.WriteLine("Iteration: " + i);
+}
+
+// Foreach loop
+int[] numbers = {1, 2, 3, 4, 5};
+foreach (int num in numbers) {
+    Console.WriteLine(num);
+}
+
+// While loop
+int count = 0;
+while (count < 5) {
+    Console.WriteLine("Count: " + count);
+    count++;
+}
+
+// Do-while loop
+int num = 1;
+do {
+    Console.WriteLine("Number: " + num);
+    num++;
+} while (num <= 5);
+
+// Break and continue
+for (int i = 0; i < 10; i++) {
+    if (i == 4) {
+        continue; // Skip iteration
+    }
+    if (i == 8) {
+        break; // Exit loop
+    }
+    Console.WriteLine(i);
+}</code></pre>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Foreach Loop:</strong> C# provides a simplified loop for iterating through collections: <code>foreach (var item in collection) { ... }</code></p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-code-branch"></i> Control Flow Tips</h4>
+                    <p>When working with control flow:</p>
+                    <ul>
+                        <li>Always use braces <code>{}</code> even for single statements</li>
+                        <li>Indent code properly for readability</li>
+                        <li>Use <code>break</code> in switch statements to prevent fall-through</li>
+                        <li>Consider using foreach loops when possible</li>
+                        <li>Avoid deep nesting of control structures</li>
+                        <li>Use meaningful conditions in loops and if statements</li>
+                    </ul>
+                </div>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-project-diagram"></i> Control Flow Exercises</h4>
+                    <p>Try these exercises to practice control flow:</p>
+                    <ol>
+                        <li>Write a program that prints numbers 1-100, but for multiples of 3 print "Fizz", for multiples of 5 print "Buzz", and for multiples of both print "FizzBuzz"</li>
+                        <li>Create a calculator program that takes two numbers and an operator (+, -, *, /) as input and outputs the result</li>
+                        <li>Write a program that prints a pyramid pattern using nested loops</li>
+                    </ol>
+                </div>
+                
+                <a href="#oop" class="tutorial-link">Continue to OOP Concepts <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- OOP Concepts Section -->
+    <section class="content-section" id="oop">
+        <div class="container">
+            <div class="section-title">
+                <h2>Object-Oriented Programming in C#</h2>
+                <p>Learn the core concepts of OOP with C#</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Classes and Objects</h3>
+                <p>C# is fundamentally object-oriented. A class is a blueprint for objects, and an object is an instance of a class.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Class definition
+public class Car {
+    // Fields (attributes)
+    private string brand;
+    private string model;
+    private int year;
+    
+    // Constructor
+    public Car(string brand, string model, int year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+    }
+    
+    // Properties (getters/setters)
+    public string Brand {
+        get { return brand; }
+        set { brand = value; }
+    }
+    
+    public string Model {
+        get => model;
+        set => model = value;
+    }
+    
+    public int Year { get; set; } // Auto-implemented property
+    
+    // Method
+    public void StartEngine() {
+        Console.WriteLine($"Starting the {brand} {model}");
+    }
+    
+    // Method with return value
+    public int CalculateAge(int currentYear) {
+        return currentYear - year;
+    }
+}
+
+// Creating and using objects
+class Program {
+    static void Main(string[] args) {
+        // Create Car object
+        Car myCar = new Car("Toyota", "Camry", 2020);
+        
+        // Call methods
+        myCar.StartEngine();  // Output: Starting the Toyota Camry
+        
+        // Access properties
+        Console.WriteLine("Brand: " + myCar.Brand);
+        
+        // Calculate car age
+        int carAge = myCar.CalculateAge(2023);
+        Console.WriteLine("Car age: " + carAge + " years");
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Class Components</h4>
+                    <ul>
+                        <li><strong>Fields:</strong> Variables that hold the object's state (should usually be private)</li>
+                        <li><strong>Constructor:</strong> Special method for object initialization (same name as class)</li>
+                        <li><strong>Properties:</strong> Provide controlled access to fields (prefer over public fields)</li>
+                        <li><strong>Methods:</strong> Functions that define object behavior</li>
+                        <li><strong>this keyword:</strong> Refers to the current object</li>
+                        <li><strong>new keyword:</strong> Creates a new object instance</li>
+                    </ul>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Best Practice:</strong> Follow the principle of encapsulation by making fields private and providing public properties to access them. This protects the object's internal state and allows for validation.</p>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Object-Oriented Thinking</h4>
+                    <p>When designing classes:</p>
+                    <ol>
+                        <li>Identify real-world objects your program needs</li>
+                        <li>Determine each object's attributes (fields) and behaviors (methods)</li>
+                        <li>Define relationships between objects</li>
+                        <li>Keep classes focused on a single responsibility</li>
+                        <li>Use meaningful names that reflect the object's purpose</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Four Pillars of OOP</h3>
+                <p>Object-Oriented Programming in C# is built on four main principles:</p>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> 1. Encapsulation</h4>
+                    <p>Bundling data and methods that operate on that data within one unit (class) and restricting access to some of the object's components.</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>public class BankAccount {
+    private decimal balance;  // Private field
+    
+    // Public methods to interact with balance
+    public void Deposit(decimal amount) {
+        if (amount > 0) {
+            balance += amount;
+        }
+    }
+    
+    public void Withdraw(decimal amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+        }
+    }
+    
+    public decimal GetBalance() {
+        return balance;
+    }
+}</code></pre>
+                    </div>
+                    <p><strong>Benefits:</strong> Prevents unauthorized access, allows validation, makes code more maintainable</p>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> 2. Inheritance</h4>
+                    <p>Creating new classes (derived classes) from existing ones (base classes) to reuse code and establish relationships.</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Base class
+class Vehicle {
+    protected string brand;  // Protected allows access by derived classes
+    
+    public Vehicle(string brand) {
+        this.brand = brand;
+    }
+    
+    public void Honk() {
+        Console.WriteLine("Honk honk!");
+    }
+}
+
+// Derived class
+class Car : Vehicle {
+    private string model;
+    
+    public Car(string brand, string model) : base(brand) {
+        this.model = model;
+    }
+    
+    public void DisplayInfo() {
+        Console.WriteLine($"Brand: {brand}, Model: {model}");
+    }
+}
+
+// Using inheritance
+class Program {
+    static void Main(string[] args) {
+        Car myCar = new Car("Toyota", "Camry");
+        myCar.Honk();       // Inherited method
+        myCar.DisplayInfo(); // Derived class method
+    }
+}</code></pre>
+                    </div>
+                    <p><strong>Benefits:</strong> Code reuse, logical hierarchy, polymorphism</p>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> 3. Polymorphism</h4>
+                    <p>The ability of an object to take on many forms, typically through method overriding and interfaces.</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>class Animal {
+    public virtual void MakeSound() {
+        Console.WriteLine("Some sound");
+    }
+}
+
+class Dog : Animal {
+    public override void MakeSound() {
+        Console.WriteLine("Bark");
+    }
+}
+
+class Cat : Animal {
+    public override void MakeSound() {
+        Console.WriteLine("Meow");
+    }
+}
+
+// Using polymorphism
+class Program {
+    static void Main(string[] args) {
+        Animal myAnimal = new Animal();  // Animal object
+        Animal myDog = new Dog();        // Dog object
+        Animal myCat = new Cat();        // Cat object
+        
+        myAnimal.MakeSound();  // Output: Some sound
+        myDog.MakeSound();     // Output: Bark
+        myCat.MakeSound();     // Output: Meow
+    }
+}</code></pre>
+                    </div>
+                    <p><strong>Benefits:</strong> Flexible code, easier to extend, cleaner interfaces</p>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> 4. Abstraction</h4>
+                    <p>Hiding complex implementation details and showing only the necessary features of an object.</p>
+                    <div class="code-example">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code>// Abstract class
+abstract class Shape {
+    // Abstract method (no implementation)
+    public abstract double Area();
+    
+    // Concrete method
+    public void Display() {
+        Console.WriteLine("Area: " + Area());
+    }
+}
+
+// Concrete derived class
+class Circle : Shape {
+    private double radius;
+    
+    public Circle(double r) { radius = r; }
+    
+    public override double Area() {
+        return Math.PI * radius * radius;
+    }
+}
+
+// Using abstraction
+class Program {
+    static void Main(string[] args) {
+        Shape myCircle = new Circle(5.0);
+        myCircle.Display();  // Output: Area: 78.53981633974483
+    }
+}</code></pre>
+                    </div>
+                    <p><strong>Benefits:</strong> Simplifies complex systems, reduces complexity, focuses on what rather than how</p>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>SOLID Principles:</strong> Beyond the four pillars, good OOP design follows SOLID principles:</p>
+                    <ol>
+                        <li><strong>Single Responsibility:</strong> A class should have one reason to change</li>
+                        <li><strong>Open-Closed:</strong> Open for extension, closed for modification</li>
+                        <li><strong>Liskov Substitution:</strong> Derived classes should be substitutable for their base classes</li>
+                        <li><strong>Interface Segregation:</strong> Many specific interfaces are better than one general one</li>
+                        <li><strong>Dependency Inversion:</strong> Depend on abstractions, not concretions</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Interfaces and Abstract Classes</h3>
+                <p>Interfaces and abstract classes are key tools for implementing abstraction in C#.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>// Interface definition
+interface IDrawable {
+    void Draw();  // Interface members are implicitly public
+    
+    // Default implementation (C# 8+)
+    void Resize() {
+        Console.WriteLine("Resizing");
+    }
+    
+    // Static method (C# 8+)
+    static void PrintInfo() {
+        Console.WriteLine("This is a IDrawable interface");
+    }
+}
+
+// Abstract class
+abstract class Shape {
+    protected string color;
+    
+    public Shape(string color) {
+        this.color = color;
+    }
+    
+    // Abstract method
+    public abstract double Area();
+    
+    // Concrete method
+    public string GetColor() {
+        return color;
+    }
+}
+
+// Concrete class implementing interface and extending abstract class
+class Circle : Shape, IDrawable {
+    private double radius;
+    
+    public Circle(string color, double radius) : base(color) {
+        this.radius = radius;
+    }
+    
+    public override double Area() {
+        return Math.PI * radius * radius;
+    }
+    
+    public void Draw() {
+        Console.WriteLine($"Drawing a {color} circle");
+    }
+}
+
+// Using interface and abstract class
+class Program {
+    static void Main(string[] args) {
+        Circle myCircle = new Circle("red", 5.0);
+        myCircle.Draw();          // Output: Drawing a red circle
+        myCircle.Resize();        // Output: Resizing
+        Console.WriteLine("Area: " + myCircle.Area());
+        IDrawable.PrintInfo();    // Output: This is a IDrawable interface
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Interfaces vs Abstract Classes</h4>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Interface</th>
+                            <th>Abstract Class</th>
+                        </tr>
+                        <tr>
+                            <td>Methods</td>
+                            <td>Abstract (default/static in C# 8+)</td>
+                            <td>Can have both abstract and concrete</td>
+                        </tr>
+                        <tr>
+                            <td>Fields</td>
+                            <td>Not allowed</td>
+                            <td>Can have any fields</td>
+                        </tr>
+                        <tr>
+                            <td>Constructors</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Multiple Inheritance</td>
+                            <td>Class can implement multiple</td>
+                            <td>Class can inherit only one</td>
+                        </tr>
+                        <tr>
+                            <td>Access Modifiers</td>
+                            <td>Members are public by default</td>
+                            <td>Can have any access modifier</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="beginner-tips">
+                    <h4><i class="fas fa-lightbulb"></i> Interface Tips</h4>
+                    <p>When working with interfaces:</p>
+                    <ul>
+                        <li>Use interfaces to define behavior contracts</li>
+                        <li>A class can implement multiple interfaces</li>
+                        <li>C# 8+ allows default and static methods in interfaces</li>
+                        <li>Prefer interfaces to abstract classes when possible</li>
+                        <li>Use the <code>I</code> prefix for interface names (e.g., IDrawable)</li>
+                    </ul>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Modern C# Features:</strong> C# continues to evolve with features that make OOP more powerful:</p>
+                    <ul>
+                        <li>Records (immutable data types)</li>
+                        <li>Pattern matching</li>
+                        <li>Init-only properties</li>
+                        <li>Nullable reference types</li>
+                        <li>Top-level statements</li>
+                    </ul>
+                </div>
+                
+                <a href="#advanced-topics" class="tutorial-link">Continue to Advanced Topics <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Topics Section -->
+    <section class="content-section" id="advanced-topics">
+        <div class="container">
+            <div class="section-title">
+                <h2>Advanced C# Topics</h2>
+                <p>Exploring more complex C# concepts</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Collections and Generics</h3>
+                <p>C# provides a rich set of collection types and generics for working with groups of data.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>using System;
+using System.Collections.Generic;
+
+class CollectionsDemo {
+    static void Main() {
+        // List - ordered collection (allows duplicates)
+        List<string> fruits = new List<string>();
+        fruits.Add("Apple");
+        fruits.Add("Banana");
+        fruits.Insert(1, "Orange"); // Insert at index 1
+        
+        // Dictionary - key-value pairs
+        Dictionary<string, int> ages = new Dictionary<string, int>();
+        ages["John"] = 25;
+        ages["Alice"] = 30;
+        ages["Bob"] = 28;
+        
+        // HashSet - unordered collection of unique items
+        HashSet<int> uniqueNumbers = new HashSet<int>();
+        uniqueNumbers.Add(10);
+        uniqueNumbers.Add(20);
+        uniqueNumbers.Add(10); // Duplicate, won't be added
+        
+        // Queue - FIFO collection
+        Queue<string> queue = new Queue<string>();
+        queue.Enqueue("First");
+        queue.Enqueue("Second");
+        queue.Enqueue("Third");
+        
+        // Stack - LIFO collection
+        Stack<string> stack = new Stack<string>();
+        stack.Push("First");
+        stack.Push("Second");
+        stack.Push("Third");
+        
+        // Iterating through collections
+        Console.WriteLine("Fruits:");
+        foreach (string fruit in fruits) {
+            Console.WriteLine(fruit);
+        }
+        
+        Console.WriteLine("\nAges:");
+        foreach (KeyValuePair<string, int> entry in ages) {
+            Console.WriteLine($"{entry.Key}: {entry.Value}");
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Common Collection Types</h4>
+                    <ul>
+                        <li><strong>List<T>:</strong> Dynamic array (most commonly used collection)</li>
+                        <li><strong>Dictionary<TKey,TValue>:</strong> Key-value pairs</li>
+                        <li><strong>HashSet<T>:</strong> Collection of unique values</li>
+                        <li><strong>Queue<T>:</strong> First-In-First-Out (FIFO) collection</li>
+                        <li><strong>Stack<T>:</strong> Last-In-First-Out (LIFO) collection</li>
+                        <li><strong>LinkedList<T>:</strong> Doubly-linked list</li>
+                        <li><strong>SortedDictionary<TKey,TValue>:</strong> Sorted key-value pairs</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Generics:</strong> C# collections use generics (<code><T></code>) to provide type safety. Always specify the type when declaring collections: <code>List<string></code> rather than non-generic <code>ArrayList</code>.</p>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Exception Handling</h3>
+                <p>C# provides a robust exception handling mechanism to deal with runtime errors.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>using System;
+using System.IO;
+
+class ExceptionHandling {
+    static void Main() {
+        // Try-catch block
+        try {
+            int[] numbers = {1, 2, 3};
+            Console.WriteLine(numbers[5]); // IndexOutOfRangeException
+        } catch (IndexOutOfRangeException e) {
+            Console.WriteLine("Array index out of bounds!");
+        }
+        
+        // Multiple catch blocks
+        try {
+            File.ReadAllText("nonexistent.txt"); // FileNotFoundException
+        } catch (FileNotFoundException e) {
+            Console.WriteLine("File not found: " + e.Message);
+        } catch (Exception e) {
+            Console.WriteLine("Something went wrong");
+        }
+        
+        // Finally block
+        FileStream fileStream = null;
+        try {
+            fileStream = File.OpenRead("example.txt");
+            // Work with file
+        } catch (IOException e) {
+            Console.WriteLine("IO error: " + e.Message);
+        } finally {
+            if (fileStream != null) {
+                fileStream.Close(); // Always executed
+            }
+        }
+        
+        // Try-with-resources (using statement)
+        try (FileStream autoCloseStream = File.OpenRead("example.txt")) {
+            // Work with file
+        } catch (IOException e) {
+            Console.WriteLine("IO error: " + e.Message);
+        } // Stream automatically closed
+        
+        // Throwing exceptions
+        try {
+            ValidateAge(15);
+        } catch (InvalidAgeException e) {
+            Console.WriteLine(e.Message);
+        }
+    }
+    
+    // Custom exception
+    class InvalidAgeException : Exception {
+        public InvalidAgeException(string message) : base(message) {}
+    }
+    
+    // Method throwing exception
+    static void ValidateAge(int age) {
+        if (age < 18) {
+            throw new InvalidAgeException("Age must be 18 or older");
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Exception Hierarchy</h4>
+                    <ul>
+                        <li><strong>Exception:</strong> Base class for all exceptions</li>
+                        <li><strong>SystemException:</strong> Base class for system exceptions</li>
+                        <li><strong>ApplicationException:</strong> Base class for application exceptions</li>
+                        <li><strong>IOException:</strong> For I/O operation errors</li>
+                        <li><strong>ArgumentException:</strong> For invalid arguments</li>
+                        <li><strong>NullReferenceException:</strong> When null object is accessed</li>
+                        <li><strong>IndexOutOfRangeException:</strong> When array index is invalid</li>
+                    </ul>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Best Practices:</strong></p>
+                    <ul>
+                        <li>Use specific exception types rather than catching general Exception</li>
+                        <li>Don't catch exceptions you can't handle</li>
+                        <li>Clean up resources in finally blocks or use using statements</li>
+                        <li>Document exceptions your methods throw with XML comments</li>
+                        <li>Create meaningful custom exceptions when appropriate</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>File I/O and Serialization</h3>
+                <p>C# provides comprehensive APIs for working with files and serialization.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>using System;
+using System.IO;
+using System.Text.Json;
+
+class FileIO {
+    static void Main() {
+        // Writing to a file
+        try {
+            File.WriteAllText("output.txt", "Hello, File I/O!\n");
+            File.AppendAllText("output.txt", "This is a second line.\n");
+        } catch (IOException e) {
+            Console.WriteLine("Error writing to file: " + e.Message);
+        }
+        
+        // Reading from a file
+        try {
+            string content = File.ReadAllText("output.txt");
+            Console.WriteLine(content);
+        } catch (IOException e) {
+            Console.WriteLine("Error reading file: " + e.Message);
+        }
+        
+        // Working with streams
+        try {
+            using (StreamWriter writer = new StreamWriter("stream.txt")) {
+                writer.WriteLine("Line 1");
+                writer.WriteLine("Line 2");
+            }
+            
+            using (StreamReader reader = new StreamReader("stream.txt")) {
+                string line;
+                while ((line = reader.ReadLine()) != null) {
+                    Console.WriteLine(line);
+                }
+            }
+        } catch (IOException e) {
+            Console.WriteLine("Stream error: " + e.Message);
+        }
+        
+        // Object serialization (JSON)
+        Person person = new Person("Alice", 30);
+        string json = JsonSerializer.Serialize(person);
+        File.WriteAllText("person.json", json);
+        
+        // Object deserialization
+        string jsonFromFile = File.ReadAllText("person.json");
+        Person deserializedPerson = JsonSerializer.Deserialize<Person>(jsonFromFile);
+        Console.WriteLine($"Deserialized: {deserializedPerson.Name}, {deserializedPerson.Age}");
+    }
+}
+
+// Serializable class
+class Person {
+    public string Name { get; set; }
+    public int Age { get; set; }
+    
+    public Person(string name, int age) {
+        Name = name;
+        Age = age;
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Key I/O Concepts</h4>
+                    <ul>
+                        <li><strong>File class:</strong> Static methods for file operations</li>
+                        <li><strong>Directory class:</strong> Static methods for directory operations</li>
+                        <li><strong>StreamReader/StreamWriter:</strong> For text file I/O</li>
+                        <li><strong>FileStream:</strong> For binary file I/O</li>
+                        <li><strong>Serialization:</strong> Converting objects to formats like JSON or XML</li>
+                        <li><strong>Deserialization:</strong> Converting back from formats to objects</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Using Statement:</strong> Always use the <code>using</code> statement for I/O operations to ensure proper resource cleanup. This works with any class implementing <code>IDisposable</code>.</p>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Asynchronous Programming</h3>
+                <p>C# supports asynchronous programming with async/await for non-blocking operations.</p>
+                
+                <div class="code-example">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code>using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+class AsyncDemo {
+    static async Task Main() {
+        Console.WriteLine("Starting async operations...");
+        
+        // Start multiple async operations
+        Task<string> downloadTask = DownloadWebsiteAsync("https://example.com");
+        Task<int> calculationTask = CalculateFactorialAsync(5);
+        
+        // Do other work while waiting
+        Console.WriteLine("Working on other tasks...");
+        
+        // Wait for all tasks to complete
+        string websiteContent = await downloadTask;
+        int factorialResult = await calculationTask;
+        
+        Console.WriteLine($"Downloaded {websiteContent.Length} characters");
+        Console.WriteLine($"Factorial result: {factorialResult}");
+    }
+    
+    static async Task<string> DownloadWebsiteAsync(string url) {
+        using (HttpClient client = new HttpClient()) {
+            Console.WriteLine($"Downloading {url}...");
+            string result = await client.GetStringAsync(url);
+            Console.WriteLine($"Finished downloading {url}");
+            return result;
+        }
+    }
+    
+    static async Task<int> CalculateFactorialAsync(int n) {
+        return await Task.Run(() => {
+            Console.WriteLine($"Calculating factorial of {n}...");
+            int result = 1;
+            for (int i = 2; i <= n; i++) {
+                result *= i;
+            }
+            Console.WriteLine($"Finished calculating factorial of {n}");
+            return result;
+        });
+    }
+}</code></pre>
+                </div>
+                
+                <div class="learning-objectives">
+                    <h4><i class="fas fa-check-circle"></i> Async Concepts</h4>
+                    <ul>
+                        <li><strong>async/await:</strong> Keywords for writing asynchronous code</li>
+                        <li><strong>Task:</strong> Represents an asynchronous operation</li>
+                        <li><strong>Task<T>:</strong> Represents an operation that returns a value</li>
+                        <li><strong>Non-blocking:</strong> Async methods don't block the calling thread</li>
+                        <li><strong>Exception handling:</strong> Use try/catch with await</li>
+                        <li><strong>Task.Run:</strong> For CPU-bound operations</li>
+                    </ul>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Async Best Practices:</strong> Avoid <code>async void</code> methods (except event handlers), always await Tasks, use <code>ConfigureAwait(false)</code> in library code, and don't block on async code with <code>.Result</code> or <code>.Wait()</code>.</p>
+                </div>
+                
+                <div class="note-box">
+                    <p><strong>Modern C# Async Features:</strong> C# continues to enhance async programming with:</p>
+                    <ul>
+                        <li>Async streams (IAsyncEnumerable<T>)</li>
+                        <li>ValueTask for performance optimization</li>
+                        <li>Async disposables (IAsyncDisposable)</li>
+                        <li>Enhanced pattern matching with async</li>
+                    </ul>
+                </div>
+                
+                <a href="#resources" class="tutorial-link">Continue to Learning Resources <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Links Section -->
+    <section class="youtube-links" id="resources">
+        <div class="container">
+            <h2>Recommended C# Learning Videos</h2>
+            <div class="youtube-grid">
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=gfkTfcpWqAY" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/gfkTfcpWqAY/maxresdefault.jpg" alt="C# Tutorial for Beginners">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>C# Tutorial for Beginners</h3>
+                            <p>Programming with Mosh</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=GhQdlIFylQ8" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/GhQdlIFylQ8/maxresdefault.jpg" alt="C# Full Course">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>C# Full Course for Beginners</h3>
+                            <p>freeCodeCamp.org</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=IFS1nNQDRpE" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/IFS1nNQDRpE/maxresdefault.jpg" alt="C# OOP Concepts">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>C# OOP Concepts</h3>
+                            <p>Bro Code</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/watch?v=pSiIHe2uZ2w" target="_blank">
+                        <div class="youtube-thumbnail">
+                            <img src="https://i.ytimg.com/vi/pSiIHe2uZ2w/maxresdefault.jpg" alt="C# for Absolute Beginners">
+                            <div class="youtube-play"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="youtube-info">
+                            <h3>C# for Absolute Beginners</h3>
+                            <p>IAmTimCorey</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHptLTMyLTMxMmgzMnYxMDRoMzJ2LTEwNGgzMnYxNjBoLTk2di0xNjBaIi8+PC9zdmc+" alt="Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Beginner's Guide</span>
+                    </div>
+                    <p>Master the art of programming with our comprehensive resources and tutorials designed for beginners.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://github.com" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Learn C#</h3>
+                    <ul>
+                        <li><a href="#what-is-csharp">What is C#?</a></li>
+                        <li><a href="#getting-started">Getting Started</a></li>
+                        <li><a href="#syntax-basics">Syntax Basics</a></li>
+                        <li><a href="#oop">OOP Concepts</a></li>
+                        <li><a href="#advanced-topics">Advanced Topics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank">Official C# Docs</a></li>
+                        <li><a href="https://www.w3schools.com/cs/" target="_blank">W3Schools C#</a></li>
+                        <li><a href="https://www.pluralsight.com/paths/csharp" target="_blank">Pluralsight</a></li>
+                        <li><a href="https://www.udemy.com/topic/c-sharp/" target="_blank">Udemy Courses</a></li>
+                        <li><a href="https://www.codecademy.com/learn/learn-c-sharp" target="_blank">Codecademy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="https://www.reddit.com/r/csharp/" target="_blank">C# Subreddit</a></li>
+                        <li><a href="https://stackoverflow.com/questions/tagged/c%23" target="_blank">Stack Overflow</a></li>
+                        <li><a href="https://discord.gg/csharp" target="_blank">C# Discord</a></li>
+                        <li><a href="https://devblogs.microsoft.com/dotnet/" target="_blank">.NET Blog</a></li>
+                        <li><a href="https://github.com/dotnet/csharplang" target="_blank">C# Language GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> Beginner's Guide. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.querySelector('nav');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.querySelector('i').classList.toggle('fa-bars');
+                this.querySelector('i').classList.toggle('fa-times');
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            menuToggle.querySelector('i').classList.remove('fa-times');
+                            menuToggle.querySelector('i').classList.add('fa-bars');
+                        }
+                    }
+                });
+            });
+            
+            // Copy code button functionality
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.parentElement;
+                    const code = codeBlock.querySelector('code').textContent;
+                    
+                    navigator.clipboard.writeText(code).then(() => {
+                        this.textContent = 'Copied!';
+                        setTimeout(() => {
+                            this.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+            
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.content-card, .section-title, .youtube-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animation
+            const animatedElements = document.querySelectorAll('.content-card, .section-title, .youtube-card');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+        });
+    </script>
+</body>
+</html>
